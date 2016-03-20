@@ -31,7 +31,7 @@
         android:layout_marginTop="92dp"
         android:layout_below="@+id/sign_in_title"
         android:layout_centerHorizontal="true"
-        android:typrface= "sans"/>
+        android:typeface= "sans"/>
 
     <EditText
         android:layout_width="wrap_content"
