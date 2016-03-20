@@ -14,9 +14,8 @@ import android.content.Intent;
 import android.widget.TextView;
 
 public class SignPage extends AppCompatActivity {
-
-    Button signIn;
-    Button signUp;
+    private Button signIn;
+    private Button signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +26,11 @@ public class SignPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Create buttons.
-        signIn = (Button)findViewById(R.id.sign_page_sign_in);
-        signUp = (Button)findViewById(R.id.sign_page_sign_up);
+        this.signIn = (Button)findViewById(R.id.sign_page_sign_in);
+        this.signUp = (Button)findViewById(R.id.sign_page_sign_up);
 
         // Setup callbacks.
-        signIn.setOnClickListener(
+        this.signIn.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View v) {
                     startActivity(new Intent(SignPage.this, SignIn.class));
@@ -39,7 +38,7 @@ public class SignPage extends AppCompatActivity {
             }
         );
 
-        signUp.setOnClickListener(
+        this.signUp.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View v) {
                     startActivity(new Intent(SignPage.this, SignUp.class));

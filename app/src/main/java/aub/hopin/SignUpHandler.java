@@ -1,24 +1,26 @@
 package aub.hopin;
 
+import java.io.IOException;
 import java.net.Socket;
 
 public class SignUpHandler extends ServerRequestHandler {
-    UserInfo info;
+    private UserInfo info;
 
     public SignUpHandler(Socket socket, ServerRequest request, UserInfo info) {
         super(socket, request);
         this.info = info;
     }
 
-    public void handle() {
-        writer.println(ServerRequestTag.SignUp.ordinal());
-        writer.println(info.firstName);
-        writer.println(info.lastName);
-        writer.println(info.email);
-        writer.println(info.age);
-        writer.println(info.gender.ordinal());
-        writer.println(info.mode.ordinal());
-        writer.flush();
-        success();
+    public void handle() throws Exception {
+        this.writer.writeUTF(this.info.firstName);
+        this.writer.writeUTF(this.info.lastName);
+        this.writer.writeUTF(this.info.email);
+        this.writer.writeInt(this.info.age);
+        this.writer.writeInt(this.info.gender.ordinal());
+        this.writer.writeInt(this.info.mode.ordinal());
+        this.writer.flush();
+
+        this.respond(this.reader.readObject());
+        this.success();
     }
 }

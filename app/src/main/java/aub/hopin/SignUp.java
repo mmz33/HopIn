@@ -17,20 +17,20 @@ import java.net.Socket;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText firstNameBox;
-    EditText lastNameBox;
-    EditText emailBox;
-    EditText ageBox;
+    private EditText firstNameBox;
+    private EditText lastNameBox;
+    private EditText emailBox;
+    private EditText ageBox;
 
-    RadioButton optionMale;
-    RadioButton optionFemale;
-    RadioButton optionOther;
+    private RadioButton optionMale;
+    private RadioButton optionFemale;
+    private RadioButton optionOther;
 
-    RadioButton optionDriver;
-    RadioButton optionPassenger;
+    private RadioButton optionDriver;
+    private RadioButton optionPassenger;
 
-    Button signUp;
-    TextView errorText;
+    private Button signUp;
+    private TextView errorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,57 +40,57 @@ public class SignUp extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        firstNameBox = (EditText)findViewById(R.id.sign_up_first_name);
-        lastNameBox = (EditText)findViewById(R.id.sign_up_last_name);
-        emailBox = (EditText)findViewById(R.id.sign_up_email);
-        ageBox = (EditText)findViewById(R.id.sign_up_age);
+        this.firstNameBox = (EditText)findViewById(R.id.sign_up_first_name);
+        this.lastNameBox = (EditText)findViewById(R.id.sign_up_last_name);
+        this.emailBox = (EditText)findViewById(R.id.sign_up_email);
+        this.ageBox = (EditText)findViewById(R.id.sign_up_age);
 
-        optionMale = (RadioButton)findViewById(R.id.sign_up_male);
-        optionFemale = (RadioButton)findViewById(R.id.sign_up_female);
-        optionOther = (RadioButton)findViewById(R.id.sign_up_other);
+        this.optionMale = (RadioButton)findViewById(R.id.sign_up_male);
+        this.optionFemale = (RadioButton)findViewById(R.id.sign_up_female);
+        this.optionOther = (RadioButton)findViewById(R.id.sign_up_other);
 
-        optionDriver = (RadioButton)findViewById(R.id.sign_up_driver);
-        optionPassenger = (RadioButton)findViewById(R.id.sign_up_passenger);
+        this.optionDriver = (RadioButton)findViewById(R.id.sign_up_driver);
+        this.optionPassenger = (RadioButton)findViewById(R.id.sign_up_passenger);
 
-        signUp = (Button)findViewById(R.id.sign_up_okay);
+        this.signUp = (Button)findViewById(R.id.sign_up_okay);
 
-        signUp.setOnClickListener(
+        this.signUp.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        String firstName = firstNameBox.getText().toString();
-                        String lastName  = lastNameBox.getText().toString();
-                        String email     = emailBox.getText().toString();
-                        String age       = ageBox.getText().toString();
+                        String firstName = SignUp.this.firstNameBox.getText().toString();
+                        String lastName  = SignUp.this.lastNameBox.getText().toString();
+                        String email     = SignUp.this.emailBox.getText().toString();
+                        String age       = SignUp.this.ageBox.getText().toString();
 
                         UserGender gender = UserGender.Unspecified;
                         UserMode mode     = UserMode.Unspecified;
 
                         // Find the selected gender
-                        if (optionMale.isChecked())        gender = UserGender.Male;
-                        else if (optionFemale.isChecked()) gender = UserGender.Female;
-                        else if (optionOther.isChecked())  gender = UserGender.Other;
+                        if (SignUp.this.optionMale.isChecked())        gender = UserGender.Male;
+                        else if (SignUp.this.optionFemale.isChecked()) gender = UserGender.Female;
+                        else if (SignUp.this.optionOther.isChecked())  gender = UserGender.Other;
 
                         // Find the selected mode.
-                        if (optionDriver.isChecked())         mode = UserMode.DriverMode;
-                        else if (optionPassenger.isChecked()) mode = UserMode.PassengerMode;
+                        if (SignUp.this.optionDriver.isChecked())         mode = UserMode.DriverMode;
+                        else if (SignUp.this.optionPassenger.isChecked()) mode = UserMode.PassengerMode;
 
                         // Find problems with the user input and report them.
                         if (firstName.length() == 0)
-                            errorText.setText("Please input first name.");
+                            SignUp.this.errorText.setText("Please input first name.");
                         else if (lastName.length() == 0)
-                            errorText.setText("Please input last name.");
+                            SignUp.this.errorText.setText("Please input last name.");
                         else if (email.length() == 0)
-                            errorText.setText("Please input email.");
+                            SignUp.this.errorText.setText("Please input email.");
                         else if (!email.endsWith("@aub.edu.lb") && !email.endsWith("@mail.aub.edu") && !email.endsWith("@aub.edu"))
-                            errorText.setText("Please use your university email.");
+                            SignUp.this.errorText.setText("Please use your university email.");
                         else if (age.length() == 0)
-                            errorText.setText("Please input age.");
+                            SignUp.this.errorText.setText("Please input age.");
                         else if (gender == UserGender.Unspecified)
-                            errorText.setText("Please specify gender.");
+                            SignUp.this.errorText.setText("Please specify gender.");
                         else if (mode == UserMode.Unspecified)
-                            errorText.setText("Please specify mode.");
+                            SignUp.this.errorText.setText("Please specify mode.");
                         else if (Integer.parseInt(age)  < 16 )
-                            errorText.setText("You must be 16 or older.");
+                            SignUp.this.errorText.setText("You must be 16 or older.");
                         else {
                             // The input passed the filters, so send the
                             // user sign up data over to the server.
@@ -103,10 +103,7 @@ public class SignUp extends AppCompatActivity {
                             info.gender = gender;
                             info.mode = mode;
 
-                            Server.signUp(info);
-
-                            // TODO:
-                            // Make the signUp automatically login.
+                            ServerRequest request = Server.signUp(info);
                         }
                     }
                 }

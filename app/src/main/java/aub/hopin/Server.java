@@ -24,51 +24,111 @@ public class Server {
     // Implement the stubs.
 
     public static ServerRequest signIn(String email, String password) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.SignIn);
+        SignInHandler handler = new SignInHandler(socket, request, email, password);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendSchedule(UserSession session, String filename) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeSchedule);
+        ScheduleSendHandler handler = new ScheduleSendHandler(socket, request, session, filename);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendPhoneNumber(UserSession session, String phoneNumber) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangePhoneNumber);
+        MobileNumberSendHandler handler = new MobileNumberSendHandler(socket, request, session, phoneNumber);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendVehicleType(UserSession session, String vehicleType) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeVehicleType);
+        VehicleTypeSendHandler handler = new VehicleTypeSendHandler(socket, request, session, vehicleType);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendVehiclePassengerCount(UserSession session, int passengers) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeVehiclePassengerCount);
+        VehicleMaxPassengerCountSendHandler handler = new VehicleMaxPassengerCountSendHandler(socket, request, session, passengers);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendProfilePicture(UserSession session, String filename) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeProfilePicture);
+        ProfilePictureSendHandler handler = new ProfilePictureSendHandler(socket, request, session, filename);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendStatus(UserSession session, String status) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeStatus);
+        StatusSwitchSendHandler handler = new StatusSwitchSendHandler(socket, request, session, status);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendModeSwitch(UserSession session, UserMode mode) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeMode);
+        ModeSwitchSendHandler handler = new ModeSwitchSendHandler(socket, request, session, mode);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest queryMapHistory(UserSession session) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.QueryMapHistory);
+        MapHistoryQueryHandler handler = new MapHistoryQueryHandler(socket, request, session);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendUserRating(UserSession session, int stars) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.RateApp);
+        AppRatingSendHandler handler = new AppRatingSendHandler(socket, request, session, stars);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendProblem(UserSession session, String problemMessage) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ReportProblem);
+        ProblemSendHandler handler = new ProblemSendHandler(socket, request, session, problemMessage);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     public static ServerRequest sendFeedback(UserSession session, String feedbackMessage) {
-        return null;
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.GiveFeedback);
+        FeedbackSendHandler handler = new FeedbackSendHandler(socket, request, session, feedbackMessage);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
     }
 
     // Gets an output stream to the socket.

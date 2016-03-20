@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class SignIn extends AppCompatActivity {
-    EditText email;
-    EditText password;
-    TextView forgotPassword;
-    Button signIn;
+    private EditText email;
+    private EditText password;
+    private TextView forgotPassword;
+    private Button signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +20,10 @@ public class SignIn extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        email = (EditText)findViewById(R.id.sign_in_email);
-        password = (EditText)findViewById(R.id.sign_in_password);
-        forgotPassword = (TextView)findViewById(R.id.sign_in_forgot_password);
-        signIn = (Button)findViewById(R.id.sign_in_button);
+        this.email = (EditText)findViewById(R.id.sign_in_email);
+        this.password = (EditText)findViewById(R.id.sign_in_password);
+        this.forgotPassword = (TextView)findViewById(R.id.sign_in_forgot_password);
+        this.signIn = (Button)findViewById(R.id.sign_in_button);
 
         //TODO
         //Set up action listener to sign in && send data to server
