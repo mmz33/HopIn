@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">HopIn</string>
+    <string name="action_settings">Settings</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="slogan">so that we all can HopIn with others\nand save time, resources, and money!</string>
+    <string name="title_activity_sign_in">SignIn</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="forget_account">Forgot account?</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="aub_mail">Email</string>
+    <string name="driver">Driver</string>
+    <string name="passenger">Passenger</string>
+    <string name="enter_code">Enter the code shown below:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="title_activity_confirmation_page">ConfirmationPage</string>
+    <string name="confirmation_message">A confirmation email has been sent to you. Please enter the code:</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
