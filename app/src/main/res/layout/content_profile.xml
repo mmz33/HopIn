@@ -9,14 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.Profile"
+    tools:context=".ProfileSettings"
     tools:showIn="@layout/activity_profile">
 
     <ImageView
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:id="@+id/profie_image_view"
+        android:id="@+id/profile_image_view"
         android:src="@drawable/missing_profile"
+        android:onClick="loadProfileImage"
         android:layout_below="@+id/profile_title"
         android:layout_centerHorizontal="true" />
 

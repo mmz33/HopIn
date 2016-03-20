@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.Car"
+    tools:context=".CarSettings"
     tools:showIn="@layout/activity_car">
 
     <TextView
@@ -34,8 +34,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/number_of_passengers"
-        android:id="@+id/car_number_of_passengers"
+        android:text="Car Capacity"
+        android:id="@+id/car_car_capacity"
         android:layout_marginTop="58dp"
         android:textSize="25dp"
         android:layout_below="@+id/car_vehicle_type_edit_text"
@@ -46,9 +46,9 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="4"
-        android:id="@+id/car_number_of_passenger_edit_text"
-        android:layout_below="@+id/car_number_of_passengers"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/car_car_capacity_edit_text"
+        android:layout_alignBottom="@+id/car_car_capacity"
+        android:layout_alignStart="@+id/car_title" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.NavigationSettigns"
+    tools:context=".NavigationSettings"
     tools:showIn="@layout/activity_navigation_settigns">
 
     <TextView
@@ -48,4 +48,21 @@
         android:src="@drawable/audio_icon"
         android:layout_above="@+id/navigation_settings_seek_bar"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tilt map"
+        android:id="@+id/navigation_setting_tilt_map"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigation_setting_switch"
+        android:checked="false"
+        android:layout_alignTop="@+id/navigation_setting_tilt_map"
+        android:layout_alignStart="@+id/navigation_settings_guidence_volume" />
 </RelativeLayout>
