@@ -62,22 +62,19 @@ public class SignUp extends AppCompatActivity {
                         String email     = emailBox.getText().toString();
                         String age       = ageBox.getText().toString();
 
-                        // Find the selected gender.
-                        int gender = -1;
-                        if (optionMale.isChecked())
-                            gender = 0;
-                        else if (optionFemale.isChecked())
-                            gender = 1;
-                        else if (optionOther.isChecked())
-                            gender = 2;
+                        UserGender gender = UserGender.Unspecified;
+                        UserMode mode     = UserMode.Unspecified;
+
+                        // Find the selected gender
+                        if (optionMale.isChecked())        gender = UserGender.Male;
+                        else if (optionFemale.isChecked()) gender = UserGender.Female;
+                        else if (optionOther.isChecked())  gender = UserGender.Other;
 
                         // Find the selected mode.
-                        int mode = -1;
-                        if (optionDriver.isChecked())
-                            mode = 0;
-                        else if (optionPassenger.isChecked())
-                            mode = 1;
+                        if (optionDriver.isChecked())         mode = UserMode.DriverMode;
+                        else if (optionPassenger.isChecked()) mode = UserMode.PassengerMode;
 
+                        // Find problems with the user input and report them.
                         if (firstName.length() == 0)
                             errorText.setText("Please input first name.");
                         else if (lastName.length() == 0)
@@ -88,28 +85,28 @@ public class SignUp extends AppCompatActivity {
                             errorText.setText("Please use your university email.");
                         else if (age.length() == 0)
                             errorText.setText("Please input age.");
-                        else if (gender == -1)
+                        else if (gender == UserGender.Unspecified)
                             errorText.setText("Please specify gender.");
-                        else if (mode == -1)
+                        else if (mode == UserMode.Unspecified)
                             errorText.setText("Please specify mode.");
                         else if (Integer.parseInt(age)  < 16 )
                             errorText.setText("You must be 16 or older.");
                         else {
-                            try {
-                                Socket socket = new Socket("192.168.192.161", 2525);
-                                OutputStream oStream = socket.getOutputStream();
-                                PrintWriter streamWriter = new PrintWriter(oStream);
-                                streamWriter.println("*25*NEW_USER");
-                                streamWriter.println(firstName);
-                                streamWriter.println(lastName);
-                                streamWriter.println(email);
-                                streamWriter.println(age);
-                                streamWriter.println(gender);
-                                streamWriter.println(mode);
+                            // The input passed the filters, so send the
+                            // user sign up data over to the server.
+                            UserInfo info = new UserInfo();
 
+                            info.firstName = firstName;
+                            info.lastName = lastName;
+                            info.email = email;
+                            info.age = Integer.parseInt(age);
+                            info.gender = gender;
+                            info.mode = mode;
 
-                            } catch(Exception e) {
-                            }
+                            Server.signUp(info);
+
+                            // TODO:
+                            // Make the signUp automatically login.
                         }
                     }
                 }
