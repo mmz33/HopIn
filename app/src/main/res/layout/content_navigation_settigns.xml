@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="aub.hopin.NavigationSettigns"
+    tools:showIn="@layout/activity_navigation_settigns">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Navigation Settings"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp"
+        android:id="@+id/navigation_settings_title" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigation_settings_seek_bar"
+        android:layout_below="@+id/navigation_settings_guidence_volume"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="38dp"
+        android:max="100"
+        android:indeterminate="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guidance volume"
+        android:id="@+id/navigation_settings_guidence_volume"
+        android:layout_marginTop="93dp"
+        android:textSize="23dp"
+        android:layout_below="@+id/navigation_settings_title"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/navigation_settings_audio_image_view"
+        android:src="@drawable/audio_icon"
+        android:layout_above="@+id/navigation_settings_seek_bar"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
