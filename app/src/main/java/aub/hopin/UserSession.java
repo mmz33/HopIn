@@ -1,6 +1,8 @@
 package aub.hopin;
 
 public class UserSession {
+    private static UserSession activeSession = null;
+
     private UserInfo info;
     private long sessionId_1;
     private long sessionId_2;
@@ -25,5 +27,15 @@ public class UserSession {
 
     public UserInfo getUserInfo() {
         return this.info;
+    }
+
+    // Returns the active session in the application.
+    public static UserSession getActiveSession() {
+        return activeSession;
+    }
+
+    // Sets the active session in the application.
+    public static void setActiveSession(UserSession session) {
+        activeSession = session;
     }
 }
