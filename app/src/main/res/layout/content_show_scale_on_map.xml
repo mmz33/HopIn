@@ -15,34 +15,35 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show scale on map"
+        android:text="Show Scale On Map"
         android:id="@+id/show_scale_on_map_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:textColor="#000000" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:id="@+id/show_scale_on_map_radio_group"
         android:layout_below="@+id/show_scale_on_map_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:id="@+id/show_scale_on_map_radio_group">
+        android:layout_centerHorizontal="true">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="When zooming in and out"
-            android:id="@+id/show_scale_on_map_when_zooming_radio_button"
+            android:id="@+id/show_scale_when_zooming"
             android:checked="false"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Always"
-            android:id="@+id/show_scale_on_map_always_radio_button"
+            android:id="@+id/show_scale_always"
             android:checked="false"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
     </RadioGroup>
 </RelativeLayout>

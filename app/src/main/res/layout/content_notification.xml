@@ -9,19 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.Notification"
+    tools:context=".NotificationSettings"
     tools:showIn="@layout/activity_notification">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Background navigation instructions"
-        android:id="@+id/notification_background_navigation_instructions"
-        android:textSize="20dp"
-        android:layout_marginTop="81dp"
-        android:layout_below="@+id/notification_title"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/notification_title" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,14 +19,35 @@
         android:id="@+id/notification_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:textColor="#000000" />
 
-    <Switch
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/notification_background_navigation_switch"
+        android:text="Background Navigation Instructions"
+        android:id="@+id/notifications_navigation"
+        android:layout_marginTop="31dp"
         android:checked="false"
-        android:layout_alignTop="@+id/notification_background_navigation_instructions"
-        android:layout_toEndOf="@+id/notification_background_navigation_instructions" />
+        android:layout_below="@+id/notification_title"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receive Requests from Drivers"
+        android:id="@+id/notifications_receive_drivers"
+        android:checked="false"
+        android:layout_below="@+id/notifications_navigation"
+        android:layout_alignStart="@+id/notifications_navigation" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receive Requests from Passengers"
+        android:id="@+id/notifications_receive_passengers"
+        android:checked="false"
+        android:layout_below="@+id/notifications_receive_drivers"
+        android:layout_alignStart="@+id/notifications_receive_drivers" />
 
 </RelativeLayout>

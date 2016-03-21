@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:2:1-77:12
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:2:1-138:12
 	package
 		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:3:5-24
 		INJECTED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml
@@ -25,12 +25,16 @@ uses-permission#android.permission.READ_CONTACTS
 ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:8:5-72
 	android:name
 		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:8:22-69
-uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:15:5-79
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:9:5-81
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:15:22-76
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:9:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:16:5-79
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:16:22-76
 application
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:17:5-75:19
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:18:5-136:19
 MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.1.1] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.1.1] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
@@ -133,89 +137,230 @@ MERGED from [com.google.android.gms:play-services-wearable:8.4.0] /Users/cmps/De
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.1.1] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:20:9-41
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:21:9-41
 	android:supportsRtl
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:21:9-35
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:9-35
 	android:allowBackup
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:18:9-35
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:19:9-35
 	android:icon
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:19:9-43
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:20:9-43
 	android:theme
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:9-40
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:23:9-40
 activity#aub.hopin.SignPage
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:23:9-32:20
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:24:9-33:20
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:25:13-45
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:26:13-45
 	android:theme
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:26:13-56
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:27:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:24:13-37
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:25:13-37
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:27:13-31:29
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:28:13-32:29
 action#android.intent.action.MAIN
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:28:17-69
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:29:17-69
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:28:25-66
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:29:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:30:17-77
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:31:17-77
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:30:27-74
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:31:27-74
 activity#aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:33:9-36:59
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:34:9-37:59
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:35:13-59
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:36:13-59
 	android:theme
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:36:13-56
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:37:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:34:13-35
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:35:13-35
 intent-filter#android.intent.category.DEFAULT+aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:38:9-42:25
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:39:9-43:25
 action#aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:39:13-55
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:40:13-55
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:39:21-52
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:40:21-52
 category#android.intent.category.DEFAULT
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:41:13-72
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:42:13-72
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:41:23-69
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:42:23-69
 activity#aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:44:9-47:59
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:45:9-48:59
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:46:13-59
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:47:13-59
 	android:theme
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:47:13-56
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:48:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:45:13-35
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:46:13-35
 intent-filter#android.intent.category.DEFAULT+aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:49:9-53:25
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:50:9-54:25
 action#aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:50:13-55
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:51:13-55
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:50:21-52
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:51:21-52
 activity#aub.hopin.ConfirmationPage
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:55:9-58:59
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:56:9-59:59
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:57:13-69
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:58:13-69
 	android:theme
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:58:13-56
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:59:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:56:13-45
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:57:13-45
 activity#aub.hopin.SwipeLeft
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:59:9-47
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:60:9-47
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:59:19-44
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:60:19-44
 meta-data#com.google.android.geo.API_KEY
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:68:9-70:55
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:69:9-71:55
 	android:value
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:70:13-52
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:71:13-52
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:69:13-58
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:70:13-58
 activity#aub.hopin.MapsActivity
-ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:72:9-74:68
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:73:9-75:59
 	android:label
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:74:13-56
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:75:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:73:13-41
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:74:13-41
+meta-data#com.google.android.gms.version
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:80:9-82:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:82:13-66
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:81:13-58
+activity#aub.hopin.ScheduleSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:84:9-87:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:86:13-60
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:87:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:85:13-45
+activity#aub.hopin.ContactInformationSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:88:9-91:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:90:13-71
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:91:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:89:13-55
+activity#aub.hopin.CarSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:92:9-95:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:94:13-55
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:95:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:93:13-40
+activity#aub.hopin.ProfileSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:96:9-99:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:98:13-59
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:99:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:97:13-44
+activity#aub.hopin.DistanceUnitsSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:100:9-103:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:102:13-66
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:103:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:101:13-50
+activity#aub.hopin.NotificationSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:104:9-107:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:106:13-64
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:107:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:105:13-49
+activity#aub.hopin.NavigationSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:108:9-111:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:110:13-71
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:111:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:109:13-47
+activity#aub.hopin.MapHistorySettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:112:9-115:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:114:13-63
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:115:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:113:13-47
+activity#aub.hopin.ShowScaleOnMap
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:116:9-119:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:118:13-69
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:119:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:117:13-43
+activity#aub.hopin.TermsAndPrivacy
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:120:9-123:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:122:13-69
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:123:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:121:13-44
+activity#aub.hopin.FeedbackSettings
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:124:9-127:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:126:13-60
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:127:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:125:13-45
+activity#aub.hopin.SendFeedback
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:128:9-131:59
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:130:13-65
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:131:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:129:13-41
+activity#aub.hopin.ReportProblem
+ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:132:9-135:68
+	android:label
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:134:13-66
+	android:theme
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:135:13-56
+	android:name
+		ADDED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml:133:13-42
 uses-sdk
 INJECTED from /Users/cmps/Desktop/Bdeir/HopIn/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
@@ -392,42 +537,6 @@ ADDED from [com.google.android.gms:play-services-ads:8.4.0] /Users/cmps/Desktop/
 		ADDED from [com.google.android.gms:play-services-ads:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/AndroidManifest.xml:31:13-50
 	android:name
 		ADDED from [com.google.android.gms:play-services-ads:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/AndroidManifest.xml:30:19-91
-meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
-	android:value
-		ADDED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:23:13-66
-	android:name
-		ADDED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:22:13-58
 activity#com.google.android.gms.appinvite.PreviewActivity
 ADDED from [com.google.android.gms:play-services-appinvite:8.4.0] /Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/AndroidManifest.xml:21:9-29:20
 	android:exported

@@ -9,65 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.ContactInformation"
+    tools:context=".ContactInformationSettings"
     tools:showIn="@layout/activity_contact_information">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/phone_number"
-        android:id="@+id/contact_information_phone_number"
-        android:textSize="25dp"
-        android:layout_marginTop="44dp"
+        android:id="@+id/contact_info_phone_number"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_marginTop="67dp"
         android:layout_below="@+id/contact_information_title"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_information_phone_edit_text"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_below="@+id/contact_information_phone_number"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fax"
-        android:id="@+id/contact_information_fax"
-        android:layout_marginTop="38dp"
-        android:textSize="25dp"
-        android:layout_below="@+id/contact_information_phone_edit_text"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_information_fax_edit_text"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_below="@+id/contact_information_fax"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/backup_email_address"
-        android:id="@+id/contact_information_backup_email_address"
-        android:textSize="25dp"
-        android:layout_below="@+id/contact_information_fax_edit_text"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="34dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_information_backup_edit_text"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:layout_below="@+id/contact_information_backup_email_address"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Phone Number" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,6 +30,15 @@
         android:id="@+id/contact_information_title"
         android:textSize="35dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Okay"
+        android:id="@+id/contact_info_okay"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

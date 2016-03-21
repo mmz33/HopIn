@@ -339,9 +339,11 @@
     <string name="age">Age</string>
     <string name="app_name">HopIn</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
-    <string name="aub_mail">AUB mail</string>
+    <string name="aub_mail">Email</string>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
     <string name="auth_google_play_services_client_google_display_name">Google</string>
+    <string name="automatic">Automatic</string>
+    <string name="backup_email_address">Backup Email Address</string>
     <string name="cast_notification_connected_message">Connected to <ns1:g id="name">%1$s</ns1:g></string>
     <string name="cast_notification_connecting_message">Connecting to <ns1:g id="name">%1$s</ns1:g></string>
     <string name="cast_notification_disconnect">Disconnect</string>
@@ -375,21 +377,25 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <string name="confirmation_message">A confirmation email has been sent to your AUB mail. Please check your email and write the code</string>
+    <string name="confirmation_message">A confirmation email has been sent to you. Please enter the code:</string>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
     <string name="decline">Decline</string>
+    <string name="distance_units">Distance Units</string>
     <string name="driver">Driver</string>
-    <string name="enter_code">Enter the code shown</string>
+    <string name="enter_code">Enter the code shown below:</string>
+    <string name="fax">Fax/P.O.Box</string>
     <string name="female">Female</string>
     <string name="first_name">First Name</string>
-    <string name="forget_account">Forget account?</string>
+    <string name="forget_account">Forgot account?</string>
     <string name="gender">Gender</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         YOUR_KEY_HERE
     </string>
+    <string name="imperial">Imperial</string>
     <string name="last_name">Last Name</string>
     <string name="male">Male</string>
+    <string name="metric">Metric</string>
     <string name="mr_media_route_button_content_description">Cast</string>
     <string name="mr_media_route_chooser_searching">Searching for devices\u2026</string>
     <string name="mr_media_route_chooser_title">Connect to device</string>
@@ -401,21 +407,42 @@
     <string name="mr_media_route_controller_stop">Stop casting</string>
     <string name="mr_system_route_name">System</string>
     <string name="mr_user_route_category_name">Devices</string>
-    <string name="notation_1">so that we all can Hop in with others and save time, resources, and money</string>
+    <string name="number_of_passengers">Number of passengers per car</string>
     <string name="passenger">Passenger</string>
     <string name="password">Password</string>
+    <string name="phone_number">Phone Number</string>
     <string name="place_autocomplete_clear_button">Clear search</string>
     <string name="place_autocomplete_search_hint">Search</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="slogan">so that we all can HopIn with others\nand save time, resources, and money!</string>
+    <string name="status">Status</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
+    <string name="switch_user_type">Switch User Type</string>
+    <string name="title_activity_car">Car</string>
     <string name="title_activity_confirmation_page">ConfirmationPage</string>
+    <string name="title_activity_contact_information">ContactInformation</string>
+    <string name="title_activity_distance_units">Distance Units</string>
+    <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_map_history">MapHistory</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_navigation_settigns">NavigationSettigns</string>
+    <string name="title_activity_notification">Notification</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_report_problem">ReportProblem</string>
+    <string name="title_activity_s">Notification</string>
+    <string name="title_activity_schedule">Schedule</string>
+    <string name="title_activity_send_feedback">SendFeedback</string>
+    <string name="title_activity_show_scale_on_map">ShowScaleOnMap</string>
     <string name="title_activity_sign_in">SignIn</string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_terms_and_privacy">TermsAndPrivacy</string>
+    <string name="upload">Upload</string>
+    <string name="upload_schedule">Upload Schedule Link</string>
     <string name="user_name">Username</string>
+    <string name="vehicle_type">Vehicle Type</string>
     <string name="wallet_buy_button_place_holder">Buy with Google</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>

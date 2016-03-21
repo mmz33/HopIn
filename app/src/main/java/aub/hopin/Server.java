@@ -104,7 +104,7 @@ public class Server {
         return request;
     }
 
-    public static ServerRequest sendUserRating(UserSession session, int stars) {
+    public static ServerRequest sendUserRating(UserSession session, float stars) {
         Socket socket = open();
         ServerRequest request = new ServerRequest(ServerRequestTag.RateApp);
         AppRatingSendHandler handler = new AppRatingSendHandler(socket, request, session, stars);

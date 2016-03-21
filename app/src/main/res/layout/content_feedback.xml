@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="aub.hopin.Feedback"
+    tools:context=".FeedbackSettings"
     tools:showIn="@layout/activity_feedback">
 
     <TextView
@@ -19,34 +19,42 @@
         android:id="@+id/feedback_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:textColor="#000000" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Rate us"
         android:id="@+id/feedback_rate_us"
-        android:layout_marginTop="85dp"
         android:textSize="25dp"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/feedback_title"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/feedback_rating_bar"
-        android:layout_alignTop="@+id/feedback_rate_us"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/feedback_rate_us"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report a problem"
-        android:id="@+id/feedback_report_a_problem"
-        android:textSize="20dp"
-        android:layout_below="@+id/feedback_rating_bar"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:text="Send Feedback"
+        android:id="@+id/feedback_send_feedback"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report a Problem"
+        android:id="@+id/feedback_report_problem"
+        android:layout_below="@+id/feedback_send_feedback"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

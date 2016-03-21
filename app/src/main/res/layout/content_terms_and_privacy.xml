@@ -19,7 +19,8 @@
         android:id="@+id/terms_and_privacy_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,8 +29,8 @@
         android:id="@+id/terms_and_privacy_version"
         android:textSize="25dp"
         android:layout_below="@+id/terms_and_privacy_title"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="34dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,8 +38,7 @@
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         android:id="@+id/terms_and_privacy_lorem"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +46,8 @@
         android:text="Terms and Conditions"
         android:id="@+id/textView3"
         android:textSize="20dp"
+        android:layout_marginTop="61dp"
+        android:textColor="#000000"
         android:layout_below="@+id/terms_and_privacy_version"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="68dp" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
