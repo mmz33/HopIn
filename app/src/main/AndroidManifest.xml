@@ -54,8 +54,8 @@
         </intent-filter>
 
         <activity
-            android:name=".ConfirmationPage"
-            android:label="@string/title_activity_confirmation_page"
+            android:name=".SignUpConfirm"
+            android:label="SignUpConfirm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SwipeLeft" />
         <!--
@@ -66,13 +66,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -86,11 +79,11 @@
             android:label="@string/title_activity_schedule"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ContactInformationSettings"
+            android:name=".ContactInfoSettings"
             android:label="@string/title_activity_contact_information"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CarSettings"
+            android:name=".CarInfoSettings"
             android:label="@string/title_activity_car"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -114,14 +107,6 @@
             android:label="@string/title_activity_map_history"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ShowScaleOnMap"
-            android:label="@string/title_activity_show_scale_on_map"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".TermsAndPrivacy"
-            android:label="@string/title_activity_terms_and_privacy"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".FeedbackSettings"
             android:label="@string/title_activity_feedback"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -133,6 +118,17 @@
             android:name=".ReportProblem"
             android:label="@string/title_activity_report_problem"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Map2Activity"
+            android:label="Map2Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <intent-filter>
+            <action android:name="aub.hopin.Map2Activity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
     </application>
 
 </manifest>
