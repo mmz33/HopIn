@@ -43,8 +43,7 @@ public class ProfileSettings extends AppCompatActivity {
                         String path = selectedImage.getPath();
                         Server.sendProfilePicture(UserSession.getActiveSession(), path);
                     }
-                }
-        );
+                });
 
         this.status.setOnClickListener(
                 new View.OnClickListener() {

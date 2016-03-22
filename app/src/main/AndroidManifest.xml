@@ -117,7 +117,7 @@
         <activity
             android:name=".ReportProblem"
             android:label="@string/title_activity_report_problem"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Map2Activity"
             android:label="Map2Activity"
@@ -125,7 +125,6 @@
 
         <intent-filter>
             <action android:name="aub.hopin.Map2Activity" />
-
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
