@@ -1,5 +1,7 @@
 package aub.hopin;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -12,6 +14,7 @@ public class SignUpHandler extends ServerRequestHandler {
     }
 
     public void handle() throws Exception {
+        Log.d("", "About to write payload to server...");
         this.writer.writeUTF(this.info.firstName);
         this.writer.writeUTF(this.info.lastName);
         this.writer.writeUTF(this.info.email);
@@ -20,7 +23,7 @@ public class SignUpHandler extends ServerRequestHandler {
         this.writer.writeInt(this.info.mode.ordinal());
         this.writer.flush();
 
-        this.respond(this.reader.readObject());
+        Log.d("", "Wrote payload successfully...");
         this.success();
     }
 }

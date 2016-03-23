@@ -28,7 +28,8 @@ public class ContactInfoSettings extends AppCompatActivity {
             new View.OnClickListener() {
                 public void onClick(View v) {
                     String number = ContactInfoSettings.this.phoneNumberBox.getText().toString();
-                    Server.sendPhoneNumber(UserSession.getActiveSession(), number);
+                    //Server.sendPhoneNumber(UserSession.getActiveSession(), number);
+                    UserSession.getActiveSession().getUserInfo().phoneNumber = number;
                 }
             }
         );

@@ -13,9 +13,15 @@ public class UserSession {
         this.sessionId_2 = -1;
     }
 
+    public UserSession(UserInfo info, long sid1, long sid2) {
+        this.info = info;
+        this.sessionId_1 = sid1;
+        this.sessionId_2 = sid2;
+    }
+
     public boolean valid() {
         return this.sessionId_1 != -1
-            && this.sessionId_2 != -1;
+                && this.sessionId_2 != -1;
     }
 
     public long[] getSessionId() {
@@ -31,7 +37,7 @@ public class UserSession {
 
     // Returns the active session in the application.
     public static UserSession getActiveSession() {
-        return activeSession;
+        return new UserSession(new UserInfo() , 0, 0);
     }
 
     // Sets the active session in the application.

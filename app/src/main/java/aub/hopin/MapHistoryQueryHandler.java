@@ -14,6 +14,7 @@ public class MapHistoryQueryHandler extends ServerRequestHandler {
         this.writer.writeObject(this.session);
         this.writer.flush();
 
+        this.respond(this.reader.readObject());
         this.success();
     }
 }

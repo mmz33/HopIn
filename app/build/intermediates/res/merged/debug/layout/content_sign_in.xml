@@ -58,10 +58,21 @@
         android:layout_height="wrap_content"
         android:autoLink= "web"
         android:id="@+id/sign_in_forgot_password"
-        android:text = "Forgot Password?"
+        android:text="Forgot Password?"
         android:textSize="15dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="90dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_in_error_text"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:textColor="#ff0033"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/sign_in_button"/>
 
 </RelativeLayout>

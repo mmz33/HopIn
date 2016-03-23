@@ -49,4 +49,6 @@
     <string name="title_activity_feedback">Feedback</string>
     <string name="title_activity_send_feedback">SendFeedback</string>
     <string name="title_activity_report_problem">ReportProblem</string>
+    <string name="title_activity_left_settings">LeftSettings</string>
+    <string name="title_activity_right_settings">RightSettings</string>
 </resources>

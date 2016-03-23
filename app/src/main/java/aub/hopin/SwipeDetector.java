@@ -4,26 +4,20 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class SwipeDetector implements View.OnTouchListener {
-
     private static final int HORIZONTAL_MIN_DISTANCE = 30;
+    private static final int VERTICAL_MIN_DISTANCE = 80;
+    private float downX, downY, upX, upY;
 
-    private static final int VERTICAL_MIN_DISTANCE = 80; // The minimum distance
-
-    private float downX, downY, upX, upY; // Coordinates
-
-    private Action mSwipeDetected = Action.None; // Last action
+    private Action mSwipeDetected = Action.None;
 
     public boolean swipeDetected() {
         return mSwipeDetected != Action.None;
     }
-
     public Action getAction() {
         return mSwipeDetected;
     }
 
-    /**
-     * Swipe detection
-     */@Override
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

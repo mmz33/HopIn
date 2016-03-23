@@ -26,23 +26,22 @@ public class DistanceUnitsSettings extends AppCompatActivity {
         imperial = (RadioButton)findViewById(R.id.distance_units_imperial);
         metric = (RadioButton)findViewById(R.id.distance_units_metric);
 
-        unitsRadioGroup.setOnClickListener(
-            new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (automatic.getId() == v.getId()) {
+        unitsRadioGroup.setOnCheckedChangeListener(
+            new RadioGroup.OnCheckedChangeListener() {
+                public void onCheckedChanged(RadioGroup group, int id) {
+                    if (automatic.getId() == id) {
                         String locale = getApplicationContext().getResources().getConfiguration().locale.getCountry();
                         if (locale.equals("US")) {
                             LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
                         } else {
                             LocalUserPreferences.setUnit(MeasurementUnits.Metric);
                         }
-                    } else if (metric.getId() == v.getId()) {
+                    } else if (metric.getId() == id) {
                         LocalUserPreferences.setUnit(MeasurementUnits.Metric);
-                    } else if (imperial.getId() == v.getId()) {
+                    } else if (imperial.getId() == id) {
                         LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
                     }
                 }
-            }
-        );
+            });
     }
 }

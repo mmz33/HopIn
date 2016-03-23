@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -66,10 +68,10 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <!--
-             ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -125,9 +127,18 @@
 
         <intent-filter>
             <action android:name="aub.hopin.Map2Activity" />
+
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
+        <activity
+            android:name=".LeftSettings"
+            android:label="@string/title_activity_left_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RightSettings"
+            android:label="@string/title_activity_right_settings"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

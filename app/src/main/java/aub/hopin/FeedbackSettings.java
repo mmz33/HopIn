@@ -31,7 +31,7 @@ public class FeedbackSettings extends AppCompatActivity {
             new RatingBar.OnRatingBarChangeListener() {
                 public void onRatingChanged(RatingBar bar, float rating, boolean fromUser) {
                     if (fromUser) {
-                        Server.sendUserRating(UserSession.getActiveSession(), rating);
+                        //Server.sendUserRating(UserSession.getActiveSession(), rating);
                     }
                 }
             });

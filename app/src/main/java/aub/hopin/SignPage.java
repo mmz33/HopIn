@@ -1,7 +1,9 @@
 package aub.hopin;
 
 import android.content.DialogInterface;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,12 @@ public class SignPage extends AppCompatActivity {
         setContentView(R.layout.activity_sign_page);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // This allows the volume buttons on the device
+        // to directly affect the application itself.
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // Create buttons.
         this.signIn = (Button)findViewById(R.id.sign_page_sign_in);

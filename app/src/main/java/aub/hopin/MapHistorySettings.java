@@ -25,7 +25,7 @@ public class MapHistorySettings extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         historyList = (ListView)findViewById(R.id.map_history_list);
-        historyList.removeAllViews();
+        //historyList.removeAllViews();
 
         // Add a 'No data' view to the list.
         TextView noData = new TextView(getApplicationContext());
@@ -37,15 +37,15 @@ public class MapHistorySettings extends AppCompatActivity {
         Thread handler = new Thread(
             new Runnable() {
                 public void run() {
-                    ServerRequest request = Server.queryMapHistory(UserSession.getActiveSession());
-                    while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
-                        try { wait(32); } catch (Exception e) {}
-                    }
-                    historyList.removeAllViews();
-                    String[] data = (String[])request.response;
-                    for (int i = 0; i < data.length; ++i) {
-                        historyList.addView(makeItem(data[3*i], data[3*i + 1], data[3*i + 2]));
-                    }
+                    //ServerRequest request = Server.queryMapHistory(UserSession.getActiveSession());
+                    //while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
+                    //    try { wait(32); } catch (Exception e) {}
+                    //}
+                    //historyList.removeAllViews();
+                    //String[] data = (String[])request.response;
+                    //for (int i = 0; i < data.length; ++i) {
+                    //    historyList.addView(makeItem(data[3*i], data[3*i + 1], data[3*i + 2]));
+                    //}
                 }
             });
         handler.start();

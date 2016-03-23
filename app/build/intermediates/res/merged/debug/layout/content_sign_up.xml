@@ -96,7 +96,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/radioGroup2"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/sign_up_age"
+        android:layout_marginTop="60dp">
 
         <TextView
             android:layout_width="wrap_content"

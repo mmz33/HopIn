@@ -31,7 +31,7 @@ public class CarInfoSettings extends AppCompatActivity {
         UserInfo info = session.getUserInfo();
 
         this.vehicleType.setText(info.vehicleType);
-        this.carCapacity.setText(info.maximumPassengerCount);
+        this.carCapacity.setText("" + info.maximumPassengerCount);
         this.errorText.setText("");
 
         this.okayButton.setOnClickListener(
@@ -50,8 +50,11 @@ public class CarInfoSettings extends AppCompatActivity {
                         CarInfoSettings.this.errorText.setText("Exceeded maximum passenger count");
                     } else {
                         UserSession session = UserSession.getActiveSession();
-                        Server.sendVehiclePassengerCount(session, count);
-                        Server.sendVehicleType(session, type);
+                        //Server.sendVehiclePassengerCount(session, count);
+                        //Server.sendVehicleType(session, type);
+
+                        session.getUserInfo().maximumPassengerCount = count;
+                        session.getUserInfo().vehicleType = type;
                     }
                 }
             }

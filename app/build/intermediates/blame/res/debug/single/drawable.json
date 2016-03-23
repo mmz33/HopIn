@@ -48,6 +48,10 @@
         "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable/abc_btn_check_material.xml"
     },
     {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/map.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/src/main/res/drawable/map.png"
+    },
+    {
         "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_material.xml",
         "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable/abc_tab_indicator_material.xml"
     },

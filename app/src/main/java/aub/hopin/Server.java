@@ -1,27 +1,30 @@
 package aub.hopin;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.io.PrintWriter;
 import java.io.InputStream;
 
 public class Server {
-    public static final String ipAddress = "192.168.192.161";
+    public static final String ipAddress = "141.138.181.20";
     public static final int portNumber = 2525;
 
     // Sends a sign up request to the server with all the
     // user sign up information.
     public static ServerRequest signUp(UserInfo info) {
+        Log.d("", "Opening socket...");
         Socket socket = open();
+        Log.d("", "Creating request...");
         ServerRequest request = new ServerRequest(ServerRequestTag.SignUp);
+        Log.d("", "Creating handler...");
         SignUpHandler handler = new SignUpHandler(socket, request, info);
+        Log.d("", "Dispatching handler...");
         Thread thread = new Thread(handler);
         thread.start();
         return request;
     }
-
-    // TODO
-    // Implement the stubs.
 
     public static ServerRequest signIn(String email, String password) {
         Socket socket = open();
@@ -131,6 +134,24 @@ public class Server {
         return request;
     }
 
+    public static ServerRequest queryUserInfo(String email) {
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.QueryUserInfo);
+        QueryUserInfoHandler handler = new QueryUserInfoHandler(socket, request, email);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
+    }
+
+    public static ServerRequest confirmCode(String code) {
+        Socket socket = open();
+        ServerRequest request = new ServerRequest(ServerRequestTag.ConfirmCode);
+        ConfirmCodeHandler handler = new ConfirmCodeHandler(socket, request, code);
+        Thread thread = new Thread(handler);
+        thread.start();
+        return request;
+    }
+
     // Gets an output stream to the socket.
     private static PrintWriter getOStream(Socket socket) {
         try {
@@ -160,13 +181,4 @@ public class Server {
             return null;
         }
     }
-
-    //private static void close(Socket socket) {
-    //    try {
-    //        socket.close();
-    //    } catch (IOException e) {}
-    //}
-    //private static void close(PrintWriter writer) {
-    //    writer.close();
-    //}
 }

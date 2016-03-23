@@ -14,6 +14,8 @@ public enum ServerRequestTag {
     QueryMapHistory,
     RateApp,
     ReportProblem,
-    GiveFeedback;
-    ServerRequestTag[] val = ServerRequestTag.values();
+    GiveFeedback,
+    QueryUserInfo,
+    ConfirmCode;
+    public static ServerRequestTag[] val = ServerRequestTag.values();
 }

@@ -31,6 +31,7 @@ public class ScheduleSendHandler extends ServerRequestHandler {
         this.writer.write(bytes);
         this.writer.flush();
 
+        this.respond(this.reader.readUTF());
         this.success();
     }
 }

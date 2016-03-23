@@ -34,22 +34,42 @@ public class ScheduleSettings extends AppCompatActivity {
         this.uploadSchedule.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View v) {
-                    String path = selectedImage.getPath();
-                    Server.sendSchedule(UserSession.getActiveSession(), path);
+                    Thread handler = new Thread(new Runnable() {
+                        public void run() {
+                            String path = selectedImage.getPath();
+                            if (path == null) return;
+                            if (path.length() == 0) return;
+                            try {
+                                //ServerRequest request = Server.sendSchedule(UserSession.getActiveSession(), path);
+                                //while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
+                                //    try {
+                                //        wait(32);
+                                //    } catch (Exception e) {
+                                //        ErrorLogger.error("Something went wrong with the wait.");
+                                //    }
+                                //}
+                                //scheduleImage.setImageBitmap(ResourceManager.loadScheduleImage(getApplicationContext(), (String) request.response));
+                            } catch (Exception e) {
+                                ErrorLogger.error("Something went wrong with the schedule picture uploading.");
+                            }
+                        }
+                    });
+                    handler.start();
                 }
-            }
-        );
+            });
+
+
     }
 
     //click to select image
-    public void loadScheduleImage() {
+    public void loadScheduleImage(View v) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, 1);
     }
 
-    String imgDecodableString;
-    Uri selectedImage;
+    private String imgDecodableString;
+    private Uri selectedImage;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {

@@ -1,13 +1,16 @@
 package aub.hopin;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Button;
 
 public class ReportProblem extends AppCompatActivity {
+
+    private EditText reportProblemBox;
+    private Button sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +19,18 @@ public class ReportProblem extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        this.reportProblemBox = (EditText)findViewById(R.id.report_problem_textbox);
+        this.sendButton = (Button)findViewById(R.id.report_problem_send);
+
+        this.sendButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Server.sendProblem(UserSession.getActiveSession(), reportProblemBox.getText().toString());
+                    finish();
+                }
             }
-        });
+        );
     }
 
 }

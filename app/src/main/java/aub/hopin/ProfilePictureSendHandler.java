@@ -28,9 +28,11 @@ public class ProfilePictureSendHandler extends ServerRequestHandler {
 
         this.writer.writeObject(this.session);
         this.writer.writeUTF(extension);
+        this.writer.writeInt(size);
         this.writer.write(bytes);
         this.writer.flush();
 
+        this.respond(this.reader.readUTF());
         this.success();
     }
 }
