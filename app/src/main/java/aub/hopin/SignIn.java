@@ -47,7 +47,7 @@ public class SignIn extends AppCompatActivity {
                                 errorText.setText("Invalid credentials!");
                             } else {
                                 UserSession.setActiveSession(session);
-                                startActivity(new Intent(SignIn.this, Map2Activity.class));
+                                startActivity(new Intent(SignIn.this, MapsActivity.class));
                                 finish();
                             }
                         }

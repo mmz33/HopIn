@@ -20,13 +20,13 @@ public class SwipeDetector implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            {
+            case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
                 downY = event.getY();
                 mSwipeDetected = Action.None;
                 return false; // allow other events like Click to be processed
             }
+
             case MotionEvent.ACTION_MOVE: {
                 upX = event.getX();
                 upY = event.getY();
