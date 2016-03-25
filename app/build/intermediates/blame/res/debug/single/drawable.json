@@ -32,12 +32,12 @@
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/drawable/mr_ic_pause_light.xml"
     },
     {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable/abc_btn_radio_material.xml"
-    },
-    {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable/abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable/abc_btn_radio_material.xml"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/common_google_signin_btn_icon_light.xml",
@@ -50,6 +50,10 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/map.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/drawable/map.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/menu_button.png",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/drawable/menu_button.png"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_seekbar_track_material.xml",
@@ -108,6 +112,10 @@
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable/abc_ratingbar_small_material.xml"
     },
     {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/ic_action_settings.png",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/drawable/ic_action_settings.png"
+    },
+    {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/mr_ic_media_route_connecting_mono_light.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/drawable/mr_ic_media_route_connecting_mono_light.xml"
     },
@@ -148,12 +156,12 @@
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/drawable/audio_icon.png"
     },
     {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/common_google_signin_btn_icon_dark.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable/common_google_signin_btn_icon_dark.xml"
-    },
-    {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_spinner_textfield_background_material.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable/abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/common_google_signin_btn_icon_dark.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable/common_google_signin_btn_icon_dark.xml"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
@@ -182,6 +190,10 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/mr_ic_media_route_mono_dark.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/drawable/mr_ic_media_route_mono_dark.xml"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/ic_action_about.png",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/drawable/ic_action_about.png"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable/mr_ic_settings_light.xml",

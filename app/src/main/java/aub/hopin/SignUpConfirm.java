@@ -44,7 +44,7 @@ public class SignUpConfirm extends AppCompatActivity {
                                 errorText.setText("Invalid code.");
                             } else {
                                 UserSession.setActiveSession(session);
-                                startActivity(new Intent(SignUpConfirm.this, Map2Activity.class));
+                                startActivity(new Intent(SignUpConfirm.this, MapsActivity.class));
                                 finish();
                             }
                         }

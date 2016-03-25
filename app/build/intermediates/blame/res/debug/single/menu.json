@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_map.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/menu/menu_map.xml"
+    },
+    {
         "merged": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_sign_page.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/bdeir/HopIn/app/src/main/res/menu/menu_sign_page.xml"
     }

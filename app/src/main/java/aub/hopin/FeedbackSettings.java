@@ -50,5 +50,4 @@ public class FeedbackSettings extends AppCompatActivity {
                 }
             });
     }
-
 }

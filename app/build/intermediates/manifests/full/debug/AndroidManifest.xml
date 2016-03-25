@@ -73,7 +73,6 @@
             android:name="aub.hopin.SignUpConfirm"
             android:label="SignUpConfirm"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="aub.hopin.SwipeLeft" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -141,6 +140,17 @@
 
         <intent-filter>
             <action android:name="aub.hopin.Map2Activity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        <activity
+            android:name="aub.hopin.SwipeLeft"
+            android:label="SwipeLeft"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <intent-filter>
+            <action android:name="aub.hopin.SwipeLeft" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>

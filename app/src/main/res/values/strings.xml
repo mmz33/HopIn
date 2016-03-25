@@ -51,4 +51,6 @@
     <string name="title_activity_report_problem">ReportProblem</string>
     <string name="title_activity_left_settings">LeftSettings</string>
     <string name="title_activity_right_settings">RightSettings</string>
+    <string name="drawer_opened">Opened</string>
+    <string name="drawer_closed">Closed</string>
 </resources>

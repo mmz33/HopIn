@@ -392,6 +392,8 @@
     <string name="create_calendar_title">Create calendar event</string>
     <string name="decline">Decline</string>
     <string name="distance_units">Distance Units</string>
+    <string name="drawer_closed">Closed</string>
+    <string name="drawer_opened">Opened</string>
     <string name="driver">Driver</string>
     <string name="enter_code">Enter the code shown below:</string>
     <string name="fax">Fax/P.O.Box</string>
