@@ -4,6 +4,14 @@ public class ItemSlideMenu {
     private int imageId;
     private String title;
 
+    public ItemSlideMenu(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public ItemSlideMenu(String title) {
+        this.title = title;
+    }
+
     public ItemSlideMenu(int imageId, String title) {
         this.imageId = imageId;
         this.title = title;

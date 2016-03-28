@@ -1,88 +1,142 @@
 package aub.hopin;
 
+import android.app.FragmentManager;
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class SlideMenu extends LinearLayout {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-    // References to groups contained in this view.
-    private View menu;
-    private View content;
+public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
-    // Constants
-    protected static final int menuMargin = 150;
+    private SupportMapFragment supportMapFragment;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
+    private GoogleMap mMap;
+    private android.support.v4.app.FragmentManager sFm;
+    private FragmentManager fm;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_2);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    // Position information attributes
-    protected int currentContentOffset = 0;
-    protected MenuState menuCurrentState = MenuState.CLOSED;
+        supportMapFragment = SupportMapFragment.newInstance();
+        supportMapFragment.getMapAsync(this);
 
-    public SlideMenu(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-    public SlideMenu(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-    public SlideMenu(Context context) {
-        super(context);
+        //FragmentManager fm = getFragmentManager();
+        //fm.beginTransaction().replace(R.id.content_frame, new MapFragment()).commit();
+
+        fm = getFragmentManager();
+        sFm = getSupportFragmentManager();
+
+        //Show the map
+        if (!supportMapFragment.isAdded())
+            sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
+        else
+            sFm.beginTransaction().show(supportMapFragment).commit();
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-        this.menu = this.getChildAt(0);
-        this.content = this.getChildAt(1);
+        if (supportMapFragment.isAdded())
+            sFm.beginTransaction().hide(supportMapFragment).commit();
 
-        this.menu.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right,
-                            int bottom) {
-        if (changed)
-            this.calculateChildDimensions();
-
-        this.menu.layout(left, top, right - menuMargin, bottom);
-
-        this.content.layout(left + this.currentContentOffset, top, right
-                + this.currentContentOffset, bottom);
-
-    }
-
-    public void toggleMenu() {
-        switch (this.menuCurrentState) {
-            case CLOSED:
-                this.menu.setVisibility(View.VISIBLE);
-                this.currentContentOffset = this.getMenuWidth();
-                this.content.offsetLeftAndRight(currentContentOffset);
-                this.menuCurrentState = MenuState.OPEN;
-                break;
-            case OPEN:
-                this.content.offsetLeftAndRight(-currentContentOffset);
-                this.currentContentOffset = 0;
-                this.menuCurrentState = MenuState.CLOSED;
-                this.menu.setVisibility(View.GONE);
-                break;
+        if (id == R.id.nav_settings) {
+            //fm.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+            startActivity(new Intent(SlideMenu.this, Settings.class));
+        }
+        else if(id == R.id.nav_map) {
+            /*if (!supportMapFragment.isAdded())
+                sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
+            else*/
+            sFm.beginTransaction().show(supportMapFragment).commit();
         }
 
-        this.invalidate();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    private int getMenuWidth() {
-        return this.menu.getLayoutParams().width;
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    private void calculateChildDimensions() {
-        this.content.getLayoutParams().height = this.getHeight();
-        this.content.getLayoutParams().width = this.getWidth();
-
-        this.menu.getLayoutParams().width = this.getWidth() - menuMargin;
-        this.menu.getLayoutParams().height = this.getHeight();
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        try {mMap.setMyLocationEnabled(true);} catch (SecurityException e) {}
+        if(mMap != null) setUpMap();
+        else             Log.e("map error", "Map is not initialized!");
     }
 
+    //make the current location as default
+    public void setUpMap() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location location = null;
+        try {location = locationManager.getLastKnownLocation(provider);} catch (SecurityException e) {}
+        if (location != null) {
+            LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraPosition.Builder builder = new CameraPosition.Builder();
+            builder.zoom(15);
+            builder.target(target);
+            this.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+            mMap.addMarker(new MarkerOptions().position(target).title("You are here!").snippet("Consider yourself located"));
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_sign_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

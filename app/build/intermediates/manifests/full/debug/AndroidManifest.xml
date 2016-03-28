@@ -133,10 +133,6 @@
             android:name="aub.hopin.ReportProblem"
             android:label="@string/title_activity_report_problem"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="aub.hopin.Map2Activity"
-            android:label="Map2Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <intent-filter>
             <action android:name="aub.hopin.Map2Activity" />
@@ -156,14 +152,6 @@
         </intent-filter>
 
         <activity
-            android:name="aub.hopin.LeftSettings"
-            android:label="@string/title_activity_left_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="aub.hopin.RightSettings"
-            android:label="@string/title_activity_right_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="aub.hopin.MapsActivity"
             android:label="@string/title_activity_maps" />
 
@@ -172,6 +160,22 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
+
+        <activity
+            android:name="aub.hopin.Settings"
+            android:label="Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <intent-filter>
+            <action android:name="aub.hopin.Settings" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        <activity
+            android:name="aub.hopin.SlideMenu"
+            android:label="@string/title_activity_slide_menu"
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

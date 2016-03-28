@@ -39,6 +39,7 @@
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlueGrey800">#00695C</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="common_action_bar_splitter">#d2d2d2</color>
@@ -290,6 +291,8 @@
     <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
     <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
     <dimen name="mr_media_route_controller_art_max_height">320dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
@@ -419,6 +422,8 @@
     <string name="mr_media_route_controller_stop">Stop casting</string>
     <string name="mr_system_route_name">System</string>
     <string name="mr_user_route_category_name">Devices</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="number_of_passengers">Number of passengers per car</string>
     <string name="passenger">Passenger</string>
     <string name="password">Password</string>
@@ -452,6 +457,7 @@
     <string name="title_activity_show_scale_on_map">ShowScaleOnMap</string>
     <string name="title_activity_sign_in">SignIn</string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_slide_menu">SlideMenu</string>
     <string name="title_activity_terms_and_privacy">TermsAndPrivacy</string>
     <string name="upload">Upload</string>
     <string name="upload_schedule">Upload Schedule Link</string>
