@@ -118,10 +118,6 @@
             android:label="@string/title_activity_navigation_settigns"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="aub.hopin.MapHistorySettings"
-            android:label="@string/title_activity_map_history"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="aub.hopin.FeedbackSettings"
             android:label="@string/title_activity_feedback"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -139,12 +135,6 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-
-        <activity
-            android:name="aub.hopin.SwipeLeft"
-            android:label="SwipeLeft"
-            android:theme="@style/AppTheme.NoActionBar" />
-
         <intent-filter>
             <action android:name="aub.hopin.SwipeLeft" />
 

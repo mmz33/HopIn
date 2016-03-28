@@ -32,8 +32,7 @@ public class Settings extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String items[] = {"Profile", "Schedule", "Contact Info", "Car Info","Distance units", "Notification", "Navigation",
-                          "Show scale on Map", "Terms and Privacy", "Feedback"};
+        String items[] = {"Distance units", "Notification", "Navigation", "Show scale on Map"};
 
         settings = new ArrayList<String>(Arrays.asList(items));
         list = (ListView)findViewById(R.id.listView);
@@ -45,11 +44,11 @@ public class Settings extends AppCompatActivity{
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if(position == 0)
-                            startActivity(new Intent(Settings.this, ProfileSettings.class));
+                            startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
                         else if(position == 1)
-                            startActivity(new Intent(Settings.this, ScheduleSettings.class));
+                            startActivity(new Intent(Settings.this, NotificationSettings.class));
                         else if(position == 2)
-                            startActivity(new Intent(Settings.this, ContactInfoSettings.class));
+                            startActivity(new Intent(Settings.this, NavigationSettings.class));
                     }
                 }
         );

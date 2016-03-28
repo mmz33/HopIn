@@ -7,6 +7,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +34,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private NavigationView navigationView;
     private GoogleMap mMap;
     private android.support.v4.app.FragmentManager sFm;
-    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,35 +52,36 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //FragmentManager fm = getFragmentManager();
-        //fm.beginTransaction().replace(R.id.content_frame, new MapFragment()).commit();
-
-        fm = getFragmentManager();
+        navigationView.setItemIconTintList(null);
         sFm = getSupportFragmentManager();
 
         //Show the map
         if (!supportMapFragment.isAdded())
-            sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
-        else
-            sFm.beginTransaction().show(supportMapFragment).commit();
+            sFm.beginTransaction().add(R.id.content_frame, supportMapFragment).commit();
+
+        sFm.beginTransaction().show(supportMapFragment).commit();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (supportMapFragment.isAdded())
             sFm.beginTransaction().hide(supportMapFragment).commit();
 
         if (id == R.id.nav_settings) {
-            //fm.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
             startActivity(new Intent(SlideMenu.this, Settings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
         }
-        else if(id == R.id.nav_map) {
-            /*if (!supportMapFragment.isAdded())
-                sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
-            else*/
+        else if(id == R.id.nav_profile) {
+            startActivity(new Intent(SlideMenu.this, ProfileSettings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        }
+        else if(id == R.id.nav_schedule) {
+            startActivity(new Intent(SlideMenu.this, ScheduleSettings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        }
+        else if(id == R.id.nav_feedback) {
+            startActivity(new Intent(SlideMenu.this, FeedbackSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         }
 
@@ -97,7 +98,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         } else {
             super.onBackPressed();
         }
-    }
+}
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

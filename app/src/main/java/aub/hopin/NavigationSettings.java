@@ -38,11 +38,14 @@ public class NavigationSettings extends AppCompatActivity {
                 }
             });
 
+        seekBar.setMax(10);
         this.seekBar.setOnSeekBarChangeListener(
             new SeekBar.OnSeekBarChangeListener() {
+                int progress = 0;
                 public void onProgressChanged(SeekBar bar, int value, boolean fromUser) {
+                    progress = value;
                     final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, 0);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, progress);
                 }
                 public void onStartTrackingTouch(SeekBar bar) { /* nop. */ }
                 public void onStopTrackingTouch(SeekBar bar) { /* nop. */ }
