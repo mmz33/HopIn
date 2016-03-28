@@ -2,6 +2,8 @@ package aub.hopin;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.io.InputStream;
@@ -15,7 +17,6 @@ public class BitmapDownloader {
         if(downSample < 1) throw new IllegalArgumentException("Down sample cannot be less than 1");
 
         final int max = maxSize <= 0 ? 1000000 : maxSize; //1MB
-        ErrorLogger.info("Downloading " + url);
 
         try {
             URL myURL = new URL(url);
@@ -41,27 +42,27 @@ public class BitmapDownloader {
                 return image;
             }
         } catch (FileNotFoundException e) {
-            ErrorLogger.error("Error loading image: " + url);
+            Log.e("", "Error loading image: " + url);
             return null;
         } catch (MalformedURLException e) {
-            ErrorLogger.error("Error loading image: " + e.getMessage());
+            Log.e("", "Error loading image: " + url);
             return null;
         } catch (IOException e) {
-            ErrorLogger.info("Faced IO Exception, about to double down sampling.");
+            Log.i("", "Faced IO Exception, about to double down sampling.");
             if (downSample < 8) {
                 return downloadBitmap(url, downSample * 2, max);
             } else {
                 return null;
             }
         } catch (OutOfMemoryError th) {
-            ErrorLogger.info("Out of Memory, about to double down sampling.");
+            Log.i("", "Out of Memory, about to double down sampling.");
             if (downSample < 8) {
                 return downloadBitmap(url, downSample * 2, max);
             } else {
                 return null;
             }
         } catch (Throwable t) {
-            ErrorLogger.error("Error loading image: " + t.getMessage());
+            Log.e("", "Error loading image: " + url);
             return null;
         }
     }

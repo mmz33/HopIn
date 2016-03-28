@@ -2,183 +2,244 @@ package aub.hopin;
 
 import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.Socket;
 import java.io.PrintWriter;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Server {
-    public static final String ipAddress = "141.138.181.20";
-    public static final int portNumber = 2525;
+    private static final String IP_ADDRESS = "141.138.181.20";
+    private static final int PORT_NUMBER = 5000;
+    private static final int READ_TIMEOUT = 5000;
+    private static final int CONNECTION_TIMEOUT = 5000;
 
-    // Sends a sign up request to the server with all the
-    // user sign up information.
-    public static ServerRequest signUp(UserInfo info) {
-        Log.d("", "Opening socket...");
-        Socket socket = open();
-        Log.d("", "Creating request...");
-        ServerRequest request = new ServerRequest(ServerRequestTag.SignUp);
-        Log.d("", "Creating handler...");
-        SignUpHandler handler = new SignUpHandler(socket, request, info);
-        Log.d("", "Dispatching handler...");
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
+    // Server url string.
+    private static String urlString() {
+        return "http://" + IP_ADDRESS + ":" + PORT_NUMBER;
     }
 
-    public static ServerRequest signIn(String email, String password) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.SignIn);
-        SignInHandler handler = new SignInHandler(socket, request, email, password);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
+    // Reads all the contents of an InputStream into a String.
+    private static String readContents(InputStream stream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = stream.read(buffer)) != -1) {
+            builder.append(new String(buffer, 0, length));
+        }
+        return builder.toString();
     }
 
-    public static ServerRequest sendSchedule(UserSession session, String filename) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeSchedule);
-        ScheduleSendHandler handler = new ScheduleSendHandler(socket, request, session, filename);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
+    // Reads the contents of an InputStream into a HashMap.
+    private static HashMap<String, String> parseMap(InputStream stream) throws IOException {
+        String contents = readContents(stream);
+        Scanner scanner = new Scanner(contents);
+        HashMap<String, String> result = new HashMap<>();
+        while (scanner.hasNext()) {
+            String key = scanner.next();
+            String val = scanner.next();
+            result.put(key, val);
+        }
+        scanner.close();
+        return result;
     }
 
-    public static ServerRequest sendPhoneNumber(UserSession session, String phoneNumber) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangePhoneNumber);
-        MobileNumberSendHandler handler = new MobileNumberSendHandler(socket, request, session, phoneNumber);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendVehicleType(UserSession session, String vehicleType) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeVehicleType);
-        VehicleTypeSendHandler handler = new VehicleTypeSendHandler(socket, request, session, vehicleType);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendVehiclePassengerCount(UserSession session, int passengers) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeVehiclePassengerCount);
-        VehicleMaxPassengerCountSendHandler handler = new VehicleMaxPassengerCountSendHandler(socket, request, session, passengers);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendProfilePicture(UserSession session, String filename) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeProfilePicture);
-        ProfilePictureSendHandler handler = new ProfilePictureSendHandler(socket, request, session, filename);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendStatus(UserSession session, String status) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeStatus);
-        StatusSwitchSendHandler handler = new StatusSwitchSendHandler(socket, request, session, status);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendModeSwitch(UserSession session, UserMode mode) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ChangeMode);
-        ModeSwitchSendHandler handler = new ModeSwitchSendHandler(socket, request, session, mode);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest queryMapHistory(UserSession session) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.QueryMapHistory);
-        MapHistoryQueryHandler handler = new MapHistoryQueryHandler(socket, request, session);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendUserRating(UserSession session, float stars) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.RateApp);
-        AppRatingSendHandler handler = new AppRatingSendHandler(socket, request, session, stars);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendProblem(UserSession session, String problemMessage) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ReportProblem);
-        ProblemSendHandler handler = new ProblemSendHandler(socket, request, session, problemMessage);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest sendFeedback(UserSession session, String feedbackMessage) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.GiveFeedback);
-        FeedbackSendHandler handler = new FeedbackSendHandler(socket, request, session, feedbackMessage);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest queryUserInfo(String email) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.QueryUserInfo);
-        QueryUserInfoHandler handler = new QueryUserInfoHandler(socket, request, email);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    public static ServerRequest confirmCode(String code) {
-        Socket socket = open();
-        ServerRequest request = new ServerRequest(ServerRequestTag.ConfirmCode);
-        ConfirmCodeHandler handler = new ConfirmCodeHandler(socket, request, code);
-        Thread thread = new Thread(handler);
-        thread.start();
-        return request;
-    }
-
-    // Gets an output stream to the socket.
-    private static PrintWriter getOStream(Socket socket) {
+    // Retrieves a response from the server.
+    private static String getResponse(String link) {
         try {
-            return new PrintWriter(socket.getOutputStream());
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            return responseCode == 200? readContents(connection.getInputStream()) : null;
+        } catch (MalformedURLException e) {
+            Log.e("", "Bad server url");
+            return null;
         } catch (IOException e) {
-            System.out.println("Failed to get output stream: " + e.getMessage());
+            Log.e("", "Could not open url connection.");
             return null;
         }
     }
 
-    // Gets an input stream to the socket.
-    private static InputStream getIStream(Socket socket) {
+    // Retrieves a response from the server in the form of a map.
+    private static HashMap<String, String> getResponseMap(String link) {
         try {
-            return socket.getInputStream();
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            return responseCode == 200? parseMap(connection.getInputStream()) : null;
+        } catch (MalformedURLException e) {
+            Log.e("", "Bad server url.");
+            return null;
         } catch (IOException e) {
-            System.out.println("Failed to get input stream: " + e.getMessage());
+            Log.e("", "Could not open url connection.");
             return null;
         }
     }
 
-    // Opens up a socket to the server.
-    private static Socket open() {
+    // Retrieves a response from the server after an upload.
+    private static String getResponseUpload(String service, String email, String filename) {
+        final String boundary = "*****";
+        final String sep = "--";
+
         try {
-            return new Socket(ipAddress, portNumber);
+            URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("ENCTYPE", "multipart/form-data");
+            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            connection.setRequestProperty("file", filename);
+
+            FileInputStream fis = new FileInputStream(new File(filename));
+            DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+
+            dos.writeBytes(sep + boundary + "\n");
+            dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"file\"\n");
+            dos.writeBytes("\n");
+
+            byte[] buffer = new byte[64 * 1024];
+            int length;
+            while ((length = fis.read(buffer)) != -1) {
+                dos.write(buffer, 0, length);
+            }
+            dos.writeBytes("\n");
+            dos.writeBytes(sep + boundary + sep + "\n");
+            dos.flush();
+            fis.close();
+
+            int responseCode = connection.getResponseCode();
+            return responseCode == 200? readContents(connection.getInputStream()) : null;
+        } catch (MalformedURLException e) {
+            Log.e("", "Bad server url");
+            return null;
         } catch (IOException e) {
-            System.out.println("Connection to server failed. Message: " + e.getMessage());
+            Log.e("", "Could not open url connection.");
             return null;
         }
+    }
+
+    // Constructs a request url.
+    private static String buildRequest(String name, HashMap<String, String> args) {
+        try {
+            String link = "";
+            for (String key : args.keySet()) {
+                if (!link.equals("")) link += '&';
+                link += key + "=" + URLEncoder.encode(args.get(key), "UTF-8");
+            }
+            return urlString() + "/" + name + "?" + link;
+        } catch (UnsupportedEncodingException e) {
+            Log.e("", "Unsupported encoding used in url builder.");
+            return null;
+        }
+    }
+
+    public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("firstname", firstName);
+        args.put("lastname", lastName);
+        args.put("email", email);
+        args.put("age", "" + age);
+        args.put("mode", mode.toString());
+        args.put("gender", gender.toString());
+        return getResponse(buildRequest("signup", args));
+    }
+
+    public static String signIn(String email, String password) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("password", password);
+        return getResponse(buildRequest("signin", args));
+    }
+
+    public static String sendSchedule(String email, String filename) {
+        return getResponseUpload("upschedule", email, filename);
+    }
+
+    public static String sendPhoneNumber(String email, String phoneNumber) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("phone", phoneNumber);
+        return getResponse(buildRequest("upphone", args));
+    }
+
+    public static String sendProfilePicture(String email, String filename) {
+        return getResponseUpload("upprofile", email, filename);
+    }
+
+    public static String sendStatus(String email, String status) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("status", status);
+        return getResponse(buildRequest("updatestatus", args));
+    }
+
+    public static String sendModeSwitch(String email, UserMode mode) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("mode", mode.toString());
+        return getResponse(buildRequest("switchmode", args));
+    }
+
+    public static String sendUserRating(String email, float stars) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("rating", String.format("%.2f", stars));
+        return getResponse(buildRequest("rate", args));
+    }
+
+    public static String sendProblem(String email, String problemMessage) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("message", problemMessage);
+        return getResponse(buildRequest("problem", args));
+    }
+
+    public static String sendFeedback(String email, String feedbackMessage) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("message", feedbackMessage);
+        return getResponse(buildRequest("feedback", args));
+    }
+
+    public static HashMap<String, String> queryUserInfo(String email) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        return getResponseMap(buildRequest("queryuser", args));
+    }
+
+    public static String confirmCode(String email, String code) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("code", code);
+        return getResponse(buildRequest("confirm", args));
     }
 }

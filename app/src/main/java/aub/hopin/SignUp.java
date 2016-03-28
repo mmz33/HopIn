@@ -102,8 +102,12 @@ public class SignUp extends AppCompatActivity {
                         info.gender = gender;
                         info.mode = mode;
 
-                        //ServerRequest request = Server.signUp(info);
-                        startActivity(new Intent(SignUp.this, SignUpConfirm.class));
+                        Server.signUp(info);
+
+                        Intent intent = new Intent(SignUp.this, SignUpConfirm.class);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+
                         finish();
                     }
                 }

@@ -14,6 +14,7 @@ public class SignUpConfirm extends AppCompatActivity {
     private EditText confirmCodeBox;
     private Button confirmButton;
     private TextView errorText;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,8 @@ public class SignUpConfirm extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_confirm);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        this.email = getIntent().getExtras().getString("email");
 
         this.confirmCodeBox = (EditText)findViewById(R.id.sign_up_confirm_box);
         this.confirmButton = (Button)findViewById(R.id.sign_confirm_next);
@@ -34,11 +37,15 @@ public class SignUpConfirm extends AppCompatActivity {
                 public void onClick(View v) {
                     Thread handler = new Thread(new Runnable() {
                         public void run() {
-                            //ServerRequest request = Server.confirmCode(confirmCodeBox.getText().toString());
-                            //while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
-                            //    try { wait(32); } catch (Exception e) {}
-                            //}
-                            //UserSession session = (UserSession)request.response;
+                            String code = confirmCodeBox.getText().toString();
+                            String response = Server.confirmCode(email, code);
+                            if (response.equals("OK")) {
+                                UserSession session = new UserSession();
+                                UserSession.setActiveSession(session);
+                                startActivity(new Intent(SignUpConfirm.this, MapsActivity.class));
+                                finish();
+                            }
+
                             UserSession session = new UserSession(new UserInfo(), 90, 90);
                             if (session == null) {
                                 errorText.setText("Invalid code.");

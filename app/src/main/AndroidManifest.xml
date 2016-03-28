@@ -106,10 +106,6 @@
             android:label="@string/title_activity_navigation_settigns"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MapHistorySettings"
-            android:label="@string/title_activity_map_history"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".FeedbackSettings"
             android:label="@string/title_activity_feedback"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -120,10 +116,6 @@
         <activity
             android:name=".ReportProblem"
             android:label="@string/title_activity_report_problem"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Map2Activity"
-            android:label="Map2Activity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <intent-filter>

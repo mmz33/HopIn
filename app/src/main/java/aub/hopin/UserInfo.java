@@ -1,6 +1,12 @@
 package aub.hopin;
 
+import android.util.Log;
+
+import java.util.HashMap;
+
 public class UserInfo {
+    private boolean infoValid;
+
     public String firstName;
     public String lastName;
     public String email;
@@ -9,27 +15,54 @@ public class UserInfo {
     public UserMode mode;
 
     public String phoneNumber;
-    public String vehicleType;
     public String status;
 
-    public int maximumPassengerCount;
-
-    public String profilePicturePath;
-    public String schedulePath;
+    public String localProfilePicturePath;
+    public String localSchedulePicturePath;
 
     public UserInfo() {
-        this.firstName = "default";
-        this.lastName = "default";
-        this.email = "default";
-        this.age = 0;
-        this.gender = UserGender.Unspecified;
-        this.mode = UserMode.Unspecified;
+        infoValid = false;
+        firstName = "";
+        lastName = "";
+        email = "";
+        age = 0;
+        gender = UserGender.Unspecified;
+        mode = UserMode.Unspecified;
+        phoneNumber = "";
+        status = "";
+        localProfilePicturePath = "";
+        localSchedulePicturePath = "";
+    }
 
-        this.phoneNumber = "default";
-        this.vehicleType = "default";
-        this.status = "Hello, I'm using HopIn!";
-        this.maximumPassengerCount = 0;
-        this.profilePicturePath = "default";
-        this.schedulePath = "default";
+    public UserInfo(String email) {
+        this();
+        load(email);
+    }
+
+    private static class Loader implements Runnable {
+        private UserInfo info;
+        public Loader(UserInfo info) {
+            this.info = info;
+        }
+        public void run() {
+            if (info.email.equals("")) {
+                Log.e("", "Started loader with no email.");
+                return;
+            } else {
+                HashMap<String, String> response = Server.queryUserInfo(info.email);
+            }
+        }
+    }
+
+    public void load(String email) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                String response = Server.queryUserInfo(email);
+            }
+        });
+    }
+
+    public boolean valid() {
+        return infoValid;
     }
 }
