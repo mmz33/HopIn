@@ -153,7 +153,7 @@
 
         <activity
             android:name=".SlideMenu"
-            android:label="@string/title_activity_slide_menu"
+            android:label="Dashboard"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

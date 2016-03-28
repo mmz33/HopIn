@@ -430,7 +430,7 @@ ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidMani
 activity#aub.hopin.SlideMenu
 ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:154:9-157:68
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:156:13-62
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:156:13-38
 	android:theme
 		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:157:13-56
 	android:name
