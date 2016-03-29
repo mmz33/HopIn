@@ -59,6 +59,8 @@ public class Server {
     // Retrieves a response from the server.
     private static String getResponse(String link) {
         try {
+            Log.i("error", "Starting to get response.");
+            Log.i("error", "Creating connection: " + link);
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
@@ -66,15 +68,20 @@ public class Server {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
 
+            Log.i("error", "Connecting...");
             connection.connect();
 
             int responseCode = connection.getResponseCode();
-            return responseCode == 200? readContents(connection.getInputStream()) : null;
+            Log.i("error", "Response code: " + responseCode);
+            String str = responseCode == 200? readContents(connection.getInputStream()) : null;
+            Log.i("error", "Data: " + str);
+
+            return str;
         } catch (MalformedURLException e) {
-            Log.e("", "Bad server url");
+            Log.e("error", "Bad server url");
             return null;
          } catch (IOException e) {
-            Log.e("", "Could not open url connection.");
+            Log.e("error", "Could not open url connection.");
             return null;
         }
     }
@@ -82,6 +89,8 @@ public class Server {
     // Retrieves a response from the server in the form of a map.
     private static HashMap<String, String> getResponseMap(String link) {
         try {
+            Log.i("error", "Starting to get response map.");
+            Log.i("error", "Creating connection: " + link);
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
@@ -89,15 +98,24 @@ public class Server {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
 
+            Log.i("error", "Connecting...");
             connection.connect();
 
             int responseCode = connection.getResponseCode();
-            return responseCode == 200? parseMap(connection.getInputStream()) : null;
+            Log.i("error", "Response code: " + responseCode);
+            HashMap<String, String> res = parseMap(connection.getInputStream());
+            Log.i("error", "Read map:");
+            Log.i("error", "-----");
+            for (String key : res.keySet()) {
+                Log.i("error", key + " -> " + res.get(key));
+            }
+            Log.i("error", "-----");
+            return res;
         } catch (MalformedURLException e) {
-            Log.e("", "Bad server url.");
+            Log.e("error", "Bad server url.");
             return null;
         } catch (IOException e) {
-            Log.e("", "Could not open url connection.");
+            Log.e("error", "Could not open url connection.");
             return null;
         }
     }
@@ -112,19 +130,19 @@ public class Server {
             is.close();
             return image;
         } catch (FileNotFoundException e) {
-            Log.e("", "Error loading image: " + url);
+            Log.e("error", "Error loading image: " + url);
             return null;
         } catch (MalformedURLException e) {
-            Log.e("", "Error loading image: " + url);
+            Log.e("error", "Error loading image: " + url);
             return null;
         } catch (IOException e) {
-            Log.e("", "Faced IO Exception: " + url);
+            Log.e("error", "Faced IO Exception: " + url);
             return null;
         } catch (OutOfMemoryError th) {
-            Log.e("", "Out of Memory: " + url);
+            Log.e("error", "Out of Memory: " + url);
             return null;
         } catch (Throwable t) {
-            Log.e("", "Error loading image: " + url);
+            Log.e("error", "Error loading image: " + url);
             return null;
         }
     }
@@ -174,12 +192,16 @@ public class Server {
             fis.close();
 
             int responseCode = connection.getResponseCode();
-            return responseCode == 200? readContents(connection.getInputStream()) : null;
+            if (responseCode == 200)
+                return readContents(connection.getInputStream());
+
+            Log.e("error", "Response code bad: " + responseCode);
+            return null;
         } catch (MalformedURLException e) {
-            Log.e("", "Bad server url");
+            Log.e("error", "Bad server url");
             return null;
         } catch (IOException e) {
-            Log.e("", "Could not open url connection.");
+            Log.e("error", "Could not open url connection.");
             return null;
         }
     }
@@ -194,9 +216,27 @@ public class Server {
             }
             return urlString() + "/" + name + "?" + link;
         } catch (UnsupportedEncodingException e) {
-            Log.e("", "Unsupported encoding used in url builder.");
+            Log.e("error", "Unsupported encoding used in url builder.");
             return null;
         }
+    }
+
+    public static String getModeString(UserMode mode) {
+        switch (mode) {
+            case DriverMode: return "D";
+            case PassengerMode: return "P";
+            case Unspecified: return "U";
+        }
+        return "?";
+    }
+
+    public static String getGenderString(UserGender gender) {
+        switch (gender) {
+            case Female: return "F";
+            case Male: return "M";
+            case Other: return "O";
+        }
+        return "?";
     }
 
     public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) {
@@ -205,8 +245,8 @@ public class Server {
         args.put("lastname", lastName);
         args.put("email", email);
         args.put("age", "" + age);
-        args.put("mode", mode.toString());
-        args.put("gender", gender.toString());
+        args.put("mode", getModeString(mode));
+        args.put("gender", getGenderString(gender));
         return getResponse(buildRequest("signup", args));
     }
 
@@ -242,7 +282,7 @@ public class Server {
     public static String sendModeSwitch(String email, UserMode mode) {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
-        args.put("mode", mode.toString());
+        args.put("mode", getModeString(mode));
         return getResponse(buildRequest("switchmode", args));
     }
 

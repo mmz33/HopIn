@@ -44,7 +44,7 @@ public class SignUpConfirm extends AppCompatActivity {
             if (errorMessage.length() > 0) {
                 errorText.setText(errorMessage);
             } else {
-                startActivity(new Intent(SignUpConfirm.this, MapsActivity.class));
+                startActivity(new Intent(SignUpConfirm.this, SlideMenu.class));
                 finish();
             }
         }

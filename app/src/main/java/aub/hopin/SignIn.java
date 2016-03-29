@@ -46,7 +46,7 @@ public class SignIn extends AppCompatActivity {
             if (errorMessage.length() > 0) {
                 errorText.setText(errorMessage);
             } else {
-                startActivity(new Intent(SignIn.this, MapsActivity.class));
+                startActivity(new Intent(SignIn.this, SlideMenu.class));
                 finish();
             }
         }
