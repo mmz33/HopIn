@@ -2,85 +2,87 @@ package aub.hopin;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import android.content.Context;
+import android.util.Log;
 
 public class ResourceManager {
-    private static HashMap<String, Bitmap> pcache = null;
-    private static HashMap<String, Bitmap> scache = null;
+    private static HashMap<String, Bitmap> cache = null;
+    private static Bitmap defaultProfileImage = null;
+    private static Bitmap defaultScheduleImage = null;
+
+    public static void init(Context context) {
+        defaultProfileImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.missing_profile);
+        defaultScheduleImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.missing_profile);
+    }
 
     private static void ensureCache() {
-        if (pcache == null) {
-            pcache = new HashMap<String, Bitmap>();
-        }
-        if (scache == null) {
-            scache = new HashMap<String, Bitmap>();
+        if (cache == null) cache = new HashMap<String, Bitmap>();
+    }
+
+    public static Bitmap getProfileImage(String email) {
+        ensureCache();
+        try {
+            if (email == null || email.length() == 0) {
+                return defaultProfileImage;
+            } else {
+                String name = "profile_" + email;
+                if (cache.containsKey(name)) {
+                    return cache.get(name);
+                } else {
+                    cache.put(name, Server.downloadProfileImage(email));
+                    return cache.get(name);
+                }
+            }
+        } catch (Throwable t) {
+            Log.e("", "Failed to get profile image from resource manager.");
+            return null;
         }
     }
 
-    public static Bitmap getProfileImage(String path) {
-        if (path == null || path.length() == 0) path = "default";
+    public static Bitmap getScheduleImage(String email) {
         ensureCache();
-        if (pcache.containsKey(path)) {
-            return pcache.get(path);
+        try {
+            if (email == null || email.length() == 0) {
+                return defaultScheduleImage;
+            } else {
+                String name = "schedule_" + email;
+                if (cache.containsKey(name)) {
+                    return cache.get(name);
+                } else {
+                    cache.put(name, Server.downloadScheduleImage(email));
+                    return cache.get(name);
+                }
+            }
+        } catch (Throwable t) {
+            Log.e("", "Failed to get schedule image from resource manager.");
+            return null;
         }
-        return null;
     }
 
-    public static Bitmap getScheduleImage(String path) {
-        if (path == null || path.length() == 0) path = "default";
+    public static void setProfileImageDirty(String email) {
         ensureCache();
-        if (scache.containsKey(path)) {
-            return scache.get(path);
-        }
-        return null;
-    }
-
-    public static Bitmap loadProfileImage(Context context, String path) {
-        if (path == null || path.length() == 0) path = "default";
-        ensureCache();
-        if (path.equals("default")) {
-            pcache.put(path, BitmapFactory.decodeResource(context.getResources(), R.drawable.missing_profile));
+        if (email == null || email.length() == 0) {
+            return;
         } else {
-            pcache.put(path, BitmapDownloader.downloadBitmap(path, 1, 65536));
+            String name = "profile_" + email;
+            if (cache.containsKey(name)) {
+                cache.remove(name);
+            }
         }
-        return pcache.get(path);
     }
 
-    public static Bitmap loadScheduleImage(Context context, String path) {
-        if (path == null || path.length() == 0) path = "default";
+    public static void setScheduleImageDirty(String email) {
         ensureCache();
-        if (path.equals("default")) {
-            scache.put(path, BitmapFactory.decodeResource(context.getResources(), R.drawable.unknown));
+        if (email == null || email.length() == 0) {
+            return;
         } else {
-            scache.put(path, BitmapDownloader.downloadBitmap(path, 1, 65536));
-        }
-        return scache.get(path);
-    }
-
-    public static boolean isProfileImageLoaded(String path) {
-        if (path == null || path.length() == 0) path = "default";
-        ensureCache();
-        return pcache.containsKey(path);
-    }
-
-    public static boolean isScheduleImageLoaded(String path) {
-        if (path == null || path.length() == 0) path = "default";
-        ensureCache();
-        return scache.containsKey(path);
-    }
-
-    public static void removeProfileImage(String path) {
-        if (path == null || path.length() == 0) path = "default";
-        if (isProfileImageLoaded(path)) {
-            pcache.remove(path);
-        }
-    }
-
-    public static void removeScheduleImage(String path) {
-        if (path == null || path.length() == 0) path = "default";
-        if (isScheduleImageLoaded(path)) {
-            scache.remove(path);
+            String name = "schedule_" + email;
+            if (cache.containsKey(name)) {
+                cache.remove(name);
+            }
         }
     }
 }

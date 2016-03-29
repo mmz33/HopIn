@@ -31,22 +31,21 @@ public class DistanceUnitsSettings extends AppCompatActivity {
         imperial = (RadioButton)findViewById(R.id.distance_units_imperial);
         metric = (RadioButton)findViewById(R.id.distance_units_metric);
 
-        unitsRadioGroup.setOnCheckedChangeListener(
-            new RadioGroup.OnCheckedChangeListener() {
-                public void onCheckedChanged(RadioGroup group, int id) {
-                    if (automatic.getId() == id) {
-                        String locale = getApplicationContext().getResources().getConfiguration().locale.getCountry();
-                        if (locale.equals("US")) {
-                            LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
-                        } else {
-                            LocalUserPreferences.setUnit(MeasurementUnits.Metric);
-                        }
-                    } else if (metric.getId() == id) {
-                        LocalUserPreferences.setUnit(MeasurementUnits.Metric);
-                    } else if (imperial.getId() == id) {
+        unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int id) {
+                if (automatic.getId() == id) {
+                    String locale = getApplicationContext().getResources().getConfiguration().locale.getCountry();
+                    if (locale.equals("US")) {
                         LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
+                    } else {
+                        LocalUserPreferences.setUnit(MeasurementUnits.Metric);
                     }
+                } else if (metric.getId() == id) {
+                    LocalUserPreferences.setUnit(MeasurementUnits.Metric);
+                } else if (imperial.getId() == id) {
+                    LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
                 }
-            });
+            }
+        });
     }
 }

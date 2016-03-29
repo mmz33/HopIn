@@ -1,7 +1,7 @@
 package aub.hopin;
 
+import android.graphics.Bitmap;
 import android.util.Log;
-
 import java.util.HashMap;
 
 public class UserInfo {
@@ -17,8 +17,8 @@ public class UserInfo {
     public String phoneNumber;
     public String status;
 
-    public String localProfilePicturePath;
-    public String localSchedulePicturePath;
+    public Bitmap profileImage;
+    public Bitmap scheduleImage;
 
     public UserInfo() {
         infoValid = false;
@@ -30,13 +30,17 @@ public class UserInfo {
         mode = UserMode.Unspecified;
         phoneNumber = "";
         status = "";
-        localProfilePicturePath = "";
-        localSchedulePicturePath = "";
+        profileImage = null;
+        scheduleImage = null;
+    }
+
+    public UserInfo(String email, boolean blocking) {
+        this();
+        load(email, blocking);
     }
 
     public UserInfo(String email) {
-        this();
-        load(email);
+        this(email, false);
     }
 
     private static class Loader implements Runnable {
@@ -50,16 +54,45 @@ public class UserInfo {
                 return;
             } else {
                 HashMap<String, String> response = Server.queryUserInfo(info.email);
+                info.firstName = response.get("firstname");
+                info.lastName = response.get("lastname");
+                info.email = response.get("email");
+                info.age = Integer.parseInt(response.get("age"));
+                String gender = response.get("gender");
+                String mode = response.get("mode");
+                switch (gender) {
+                    case "F": info.gender = UserGender.Female; break;
+                    case "M": info.gender = UserGender.Male; break;
+                    case "O": info.gender = UserGender.Other; break;
+                    default:  info.gender = UserGender.Unspecified; break;
+                }
+                switch (mode) {
+                    case "D": info.mode = UserMode.DriverMode; break;
+                    case "P": info.mode = UserMode.PassengerMode; break;
+                    default:  info.mode = UserMode.Unspecified; break;
+                }
+                info.phoneNumber = response.get("phone");
+                info.status = response.get("status");
+                info.profileImage = ResourceManager.getProfileImage(info.email);
+                info.scheduleImage = ResourceManager.getScheduleImage(info.email);
+                info.infoValid = true;
             }
         }
     }
 
+    public void load(String email, boolean blocking) {
+        this.email = email;
+        Runnable loader = new Loader(this);
+        if (blocking) {
+            loader.run();
+        } else {
+            Thread thread = new Thread(loader);
+            thread.start();
+        }
+    }
+
     public void load(String email) {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                String response = Server.queryUserInfo(email);
-            }
-        });
+        load(email, false);
     }
 
     public boolean valid() {

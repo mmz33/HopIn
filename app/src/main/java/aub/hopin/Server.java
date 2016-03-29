@@ -1,18 +1,18 @@
 package aub.hopin;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.Socket;
-import java.io.PrintWriter;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -21,14 +21,13 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Server {
-    private static final String IP_ADDRESS = "141.138.181.20";
-    private static final int PORT_NUMBER = 5000;
+    private static final String URL_ADDRESS = "hopin.herokuapp.com";
     private static final int READ_TIMEOUT = 5000;
     private static final int CONNECTION_TIMEOUT = 5000;
 
     // Server url string.
     private static String urlString() {
-        return "http://" + IP_ADDRESS + ":" + PORT_NUMBER;
+        return "http://" + URL_ADDRESS;
     }
 
     // Reads all the contents of an InputStream into a String.
@@ -47,9 +46,10 @@ public class Server {
         String contents = readContents(stream);
         Scanner scanner = new Scanner(contents);
         HashMap<String, String> result = new HashMap<>();
-        while (scanner.hasNext()) {
-            String key = scanner.next();
-            String val = scanner.next();
+        while (scanner.hasNextLine()) {
+            String key = scanner.nextLine();
+            if (!scanner.hasNextLine()) break;
+            String val = scanner.nextLine();
             result.put(key, val);
         }
         scanner.close();
@@ -73,7 +73,7 @@ public class Server {
         } catch (MalformedURLException e) {
             Log.e("", "Bad server url");
             return null;
-        } catch (IOException e) {
+         } catch (IOException e) {
             Log.e("", "Could not open url connection.");
             return null;
         }
@@ -102,9 +102,46 @@ public class Server {
         }
     }
 
+    // Downloads an image from the server.
+    public static Bitmap downloadBitmap(String url) {
+        try {
+            URL myURL = new URL(url);
+            URLConnection connection = myURL.openConnection();
+            InputStream is = connection.getInputStream();
+            Bitmap image = BitmapFactory.decodeStream(new BufferedInputStream(is));
+            is.close();
+            return image;
+        } catch (FileNotFoundException e) {
+            Log.e("", "Error loading image: " + url);
+            return null;
+        } catch (MalformedURLException e) {
+            Log.e("", "Error loading image: " + url);
+            return null;
+        } catch (IOException e) {
+            Log.e("", "Faced IO Exception: " + url);
+            return null;
+        } catch (OutOfMemoryError th) {
+            Log.e("", "Out of Memory: " + url);
+            return null;
+        } catch (Throwable t) {
+            Log.e("", "Error loading image: " + url);
+            return null;
+        }
+    }
+
+    public static Bitmap downloadProfileImage(String email) {
+        String uname = email.replace('@', '_').replace('.', '_');
+        return downloadBitmap(urlString() + "/" + uname + "/pp");
+    }
+
+    public static Bitmap downloadScheduleImage(String email) {
+        String uname = email.replace('@', '_').replace('.', '_');
+        return downloadBitmap(urlString() + "/" + uname + "/ss");
+    }
+
     // Retrieves a response from the server after an upload.
     private static String getResponseUpload(String service, String email, String filename) {
-        final String boundary = "*****";
+        final String boundary = "******";
         final String sep = "--";
 
         try {
@@ -122,17 +159,17 @@ public class Server {
             FileInputStream fis = new FileInputStream(new File(filename));
             DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
 
-            dos.writeBytes(sep + boundary + "\n");
-            dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"file\"\n");
-            dos.writeBytes("\n");
+            dos.writeBytes(sep + boundary + "\r\n");
+            dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"file\"\r\n");
+            dos.writeBytes("\r\n");
 
             byte[] buffer = new byte[64 * 1024];
             int length;
             while ((length = fis.read(buffer)) != -1) {
                 dos.write(buffer, 0, length);
             }
-            dos.writeBytes("\n");
-            dos.writeBytes(sep + boundary + sep + "\n");
+            dos.writeBytes("\r\n");
+            dos.writeBytes(sep + boundary + sep + "\r\n");
             dos.flush();
             fis.close();
 

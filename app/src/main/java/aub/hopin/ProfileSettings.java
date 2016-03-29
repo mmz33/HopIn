@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,11 +24,102 @@ import android.widget.RadioGroup;
 public class ProfileSettings extends AppCompatActivity {
 
     private ImageView profileImage;
-    private Button uploadButton;
     private EditText status;
     private RadioButton passenger;
     private RadioButton driver;
     private RadioGroup modeGroup;
+    private Uri selectedImage;
+
+    private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
+        private boolean success;
+        private UserInfo user;
+        private Uri uri;
+
+        public AsyncUploadProfilePicture(Uri link) {
+            uri = link;
+            user = ActiveUser.getActiveUserInfo();
+            success = false;
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Void doInBackground(Void... params) {
+            if (Server.sendProfilePicture(user.email, selectedImage.getPath()).equals("OK")) {
+                ResourceManager.setProfileImageDirty(user.email);
+                user.profileImage = ResourceManager.getProfileImage(user.email); // updates image from server.
+                success = true;
+                Log.i("", "Successfully uploaded profile picture!");
+            } else {
+                Log.e("", "Something went wrong with the profile picture update.");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success)
+                profileImage.setImageBitmap(user.profileImage);
+        }
+    }
+
+    private class AsyncStatusUpdate extends AsyncTask<Void, Void, Void> {
+        private String email;
+        private String statusMessage;
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            email = ActiveUser.getEmail();
+            statusMessage = status.getText().toString();
+        }
+
+        protected Void doInBackground(Void... params) {
+            if (Server.sendStatus(email, statusMessage).equals("OK")) {
+                Log.i("", "Status update successfully sent to server.");
+            } else {
+                Log.e("", "Something went wrong with the status update.");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
+        private String email;
+        private UserMode mode;
+
+        public AsyncModeChange(int id) {
+            email = ActiveUser.getEmail();
+            if (id == passenger.getId()) {
+                mode = UserMode.PassengerMode;
+            } else if (id == driver.getId()) {
+                mode = UserMode.DriverMode;
+            } else {
+                mode = UserMode.Unspecified;
+            }
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Void doInBackground(Void... params) {
+            if (Server.sendModeSwitch(email, mode).equals("OK")) {
+                Log.i("", "Successfully sent mode switch.");
+            } else {
+                Log.e("", "Something went wrong with the mode switch.");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,86 +128,28 @@ public class ProfileSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.profileImage = (ImageView)findViewById(R.id.profile_image_view);
-        this.uploadButton = (Button)findViewById(R.id.profile_upload_button);
-        this.status = (EditText)findViewById(R.id.profile_status_message);
-        this.passenger = (RadioButton)findViewById(R.id.profile_passenger_radio_button);
-        this.driver = (RadioButton)findViewById(R.id.profile_driver_radio_button);
-        this.modeGroup = (RadioGroup)findViewById(R.id.profile_switch_user_type_radio_group);
+        profileImage = (ImageView)findViewById(R.id.profile_image_view);
+        passenger = (RadioButton)findViewById(R.id.profile_passenger_radio_button);
+        modeGroup = (RadioGroup)findViewById(R.id.profile_switch_user_type_radio_group);
+        status = (EditText)findViewById(R.id.profile_status_message);
+        driver = (RadioButton)findViewById(R.id.profile_driver_radio_button);
 
-        UserSession session = UserSession.getActiveSession();
-        UserInfo info = session.getUserInfo();
-
-        // Load user profile image.
-        // If it's not in the cache, load it from the server.
-        //if (ResourceManager.isProfileImageLoaded(info.profilePicturePath)) {
-        //    this.profileImage.setImageBitmap(ResourceManager.getProfileImage(info.profilePicturePath));
-        //} else {
-        //    Thread loader = new Thread(new Runnable() {
-        //        @Override
-        //        public void run() {
-        //            UserSession session = UserSession.getActiveSession();
-        //            UserInfo info = session.getUserInfo();
-        //            Bitmap bm = ResourceManager.loadProfileImage(getApplicationContext(), info.profilePicturePath);
-        //            profileImage.setImageBitmap(bm);
-        //        }
-        //    });
-        //    loader.start();
-        //}
-
-        // Upload button sends an image to the server.
-        this.uploadButton.setOnClickListener(
-            new View.OnClickListener() {
-                public void onClick(View v) {
-                    Thread handler = new Thread(new Runnable() {
-                        public void run() {
-                            String path = selectedImage.getPath();
-                            if (path == null) return;
-                            if (path.length() == 0) return;
-                            try {
-                                //ServerRequest request = Server.sendProfilePicture(UserSession.getActiveSession(), path);
-                                //while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
-                                //    try {
-                                //        wait(32);
-                                //    } catch (Exception e) {
-                                //        ErrorLogger.error("Something went wrong with the wait.");
-                                //    }
-                                //}
-                                //profileImage.setImageBitmap(ResourceManager.loadProfileImage(getApplicationContext(), (String) request.response));
-                            } catch (Exception e) {
-                                ErrorLogger.error("Something went wrong with the profile picture uploading.");
-                            }
-                        }
-                    });
-                    handler.start();
-                }
-            });
+        // Set profile image.
+        profileImage.setImageBitmap(ActiveUser.getActiveUserInfo().profileImage);
 
         // Status message changes need to be sent to the server.
-        this.status.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                //Server.sendStatus(UserSession.getActiveSession(), s.toString());
-                UserSession.getActiveSession().getUserInfo().status = s.toString();
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+        status.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { new AsyncStatusUpdate().execute(); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
         // Mode switch handling.
-        this.modeGroup.setOnCheckedChangeListener(
-            new RadioGroup.OnCheckedChangeListener() {
-                public void onCheckedChanged(RadioGroup group, int id) {
-                    if (id == passenger.getId()) {
-                        //Server.sendModeSwitch(UserSession.getActiveSession(), UserMode.PassengerMode);
-                        UserSession.getActiveSession().getUserInfo().mode = UserMode.PassengerMode;
-                    } else if (id == driver.getId()) {
-                        //Server.sendModeSwitch(UserSession.getActiveSession(), UserMode.DriverMode);
-                        UserSession.getActiveSession().getUserInfo().mode = UserMode.DriverMode;
-                    }
-                }
-            });
+        modeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int id) {
+                new AsyncModeChange(id).execute();
+            }
+        });
     }
 
     //click to select image
@@ -124,34 +159,8 @@ public class ProfileSettings extends AppCompatActivity {
         startActivityForResult(galleryIntent, 1);
     }
 
-    private String imgDecodableString;
-    private Uri selectedImage;
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
-            selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-            // Get the cursor
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-            // Move to first row
-            try {
-                cursor.moveToFirst();
-            } catch (NullPointerException npe) {
-                ErrorLogger.error("Null pointer exception was produced in the cursor move to first call.");
-            }
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            imgDecodableString = cursor.getString(columnIndex);
-            cursor.close();
-            ImageView imgView = (ImageView) findViewById(R.id.profile_image_view);
-
-            // Set the Image in ImageView after decoding the String
-            imgView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-        }
+        new AsyncUploadProfilePicture(data.getData()).execute();
     }
 }
