@@ -1,5 +1,6 @@
 package aub.hopin;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,32 @@ public class ContactInfoSettings extends AppCompatActivity {
     private EditText phoneNumberBox;
     private Button okayButton;
 
+    private class AsyncContactInfoUpdate extends AsyncTask<Void, Void, Void> {
+        private String phoneNumber;
+        private boolean success;
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            phoneNumber = phoneNumberBox.getText().toString();
+            success = false;
+        }
+
+        protected Void doInBackground(Void... params) {
+            String email = ActiveUser.getEmail();
+            if (Server.sendPhoneNumber(email, phoneNumber).equals("OK")) {
+                ActiveUser.getActiveUserInfo().phoneNumber = phoneNumber;
+                success = true;
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success)
+                phoneNumberBox.setText(phoneNumber);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,19 +46,15 @@ public class ContactInfoSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.phoneNumberBox = (EditText)findViewById(R.id.contact_info_phone_number);
-        this.okayButton = (Button)findViewById(R.id.contact_info_okay);
+        phoneNumberBox = (EditText)findViewById(R.id.contact_info_phone_number);
+        okayButton = (Button)findViewById(R.id.contact_info_okay);
 
-        this.phoneNumberBox.setText(UserSession.getActiveSession().getUserInfo().phoneNumber);
+        phoneNumberBox.setText(ActiveUser.getActiveUserInfo().phoneNumber);
 
-        this.okayButton.setOnClickListener(
-            new View.OnClickListener() {
-                public void onClick(View v) {
-                    String number = ContactInfoSettings.this.phoneNumberBox.getText().toString();
-                    //Server.sendPhoneNumber(UserSession.getActiveSession(), number);
-                    UserSession.getActiveSession().getUserInfo().phoneNumber = number;
-                }
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncContactInfoUpdate().execute();
             }
-        );
+        });
     }
 }

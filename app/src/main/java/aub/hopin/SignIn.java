@@ -1,9 +1,11 @@
 package aub.hopin;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
@@ -16,44 +18,58 @@ public class SignIn extends AppCompatActivity {
     private Button signIn;
     private TextView errorText;
 
-    @Override
+    private class AsyncSignIn extends AsyncTask<Void, Void, Void> {
+        private String emailText;
+        private String passwordText;
+        private String errorMessage;
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            emailText = email.getText().toString();
+            passwordText = password.getText().toString();
+            errorMessage = "";
+        }
+
+        protected Void doInBackground(Void... params) {
+            String response = Server.signIn(emailText, passwordText);
+            if (response.equals("OK")) {
+                Log.i("", "Signed in successfully.");
+                ActiveUser.setActiveUserInfo(new UserInfo(emailText, true));
+            } else {
+                errorMessage = response;
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (errorMessage.length() > 0) {
+                errorText.setText(errorMessage);
+            } else {
+                startActivity(new Intent(SignIn.this, MapsActivity.class));
+                finish();
+            }
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.email = (EditText)findViewById(R.id.sign_in_email);
-        this.password = (EditText)findViewById(R.id.sign_in_password);
-        this.forgotPassword = (TextView)findViewById(R.id.sign_in_forgot_password);
-        this.signIn = (Button)findViewById(R.id.sign_in_button);
-        this.errorText = (TextView)findViewById(R.id.sign_in_error_text);
+        email = (EditText)findViewById(R.id.sign_in_email);
+        password = (EditText)findViewById(R.id.sign_in_password);
+        forgotPassword = (TextView)findViewById(R.id.sign_in_forgot_password);
+        signIn = (Button)findViewById(R.id.sign_in_button);
+        errorText = (TextView)findViewById(R.id.sign_in_error_text);
 
-        this.errorText.setText("");
+        errorText.setText("");
 
-        this.signIn.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Thread handler = new Thread(new Runnable() {
-                        public void run() {
-                            //ServerRequest request = Server.signIn(email.getText().toString(), password.getText().toString());
-                            //while (request.status.get() == ServerRequestStatus.Pending.ordinal()) {
-                            //    try { wait(32); } catch (Exception e) {}
-                            //}
-                            //UserSession session = (UserSession)(request.response);
-                            UserSession session = new UserSession(new UserInfo(), 90, 91);
-                            if (session == null) {
-                                errorText.setText("Invalid credentials!");
-                            } else {
-                                UserSession.setActiveSession(session);
-                                startActivity(new Intent(SignIn.this, SlideMenu.class));
-                                finish();
-                            }
-                        }
-                    });
-                    handler.start();
-                }
-            });
+        signIn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncSignIn().execute();
+            }
+        });
     }
 }

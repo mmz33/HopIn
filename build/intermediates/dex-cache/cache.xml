@@ -1,2 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_b79a522b5e8102ff0ffbc8cf340e1b2005198d1c.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_3c338791e35ace40d5c87e8b7d30d06969f3228f.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-mediarouter-v7-23.0.0_0fefc96c04f3358d20eff0db5a0e88b67f1886a7.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.4.0_7e5dd4ca084069b5d7c3ecff4fcc8373510f90c0.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-cast-8.4.0_f0f718155b2216c17de24ac08e00cfefec6725fe.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wallet-8.4.0_fcdb388a5c22cf56cbff472878f9a03c17ca9ca7.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_257c7743d4d3ceb841afd56d03f867139ff5e225.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_23a30a58a33d4447e3e54c34f1a509f4edf74ca3.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.2.1_43a96755cf7b6f13358fda7dca3566c3090f621a.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/internal_impl-23.2.1_fc8be35ccdfa01c3596f4330f0a74dc63f0b5f3d.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.4.0_07b7bb30e5ed4305410cc8df0afda53beccfa927.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.4.0_62aaac7cc93f8d3679de0880d3bc62a0fa35f6c6.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-fitness-8.4.0_9e399bd07413b9b9427fd837a955c2b4eb282e75.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.1_299551cdde061520758354b3abfbb2a3c087597e.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.4.0_0939e3728a44bc9a029ca52fbde294d6c54acc10.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-8.4.0_5811a460673a386943dca0e35bf896c52bb996db.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_09a3d1dc310702c8d00dbaf3229701a50af67e2a.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-safetynet-8.4.0_583dcc3e6a28e339aea4d2914fa194d7ffeb55e6.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.2.1_333cd7d9f17ab4d987e64753a2f23711cfd64bb7.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.4.0_975d3e2a007b3bab7bb38a99205f6c5091406fa2.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.4.0_d8ab51a6a8567716e630f93aa2fc2cd6c1a750fe.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.1_6c07021f720dd0e042e9ad3fc724567d3b408921.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wearable-8.4.0_99cf6d685ccc641ed7f5e2cbe5ba8a602121427a.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.1_5c470113eb09eb80ff238226ace366f3e6226cf3.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.4.0_e2e2a42333ce5ea6f6e66af4f9c0be35e2949099.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.2.1_63e7d72bea3eca993d8a43fd8ff4f705c96dfc6e.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_28c1be624955c829f5f315e98a08a585a22b4c99.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.4.0_207406b4c684f2d2beab119c074dbe15d9e369e2.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appinvite-8.4.0_8d8e7b12704e52959018ea859e98f6e5e129e1d6.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-panorama-8.4.0_103a8078490c62c50078f2863de6a3ee6626aef4.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.1_fa9ab7c135ffa687f4ce15e54e3aed5235f96415.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-8.4.0_04be31a14c032fe2bcbc68fe0edd9c208096871a.jar" />
+    </item>
+    <item
+        jar="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-location-8.4.0_6e24de5b766271449960401942bf030e186bc7b9.jar" />
+    </item>
+
+</items>

@@ -24,32 +24,30 @@ public class NavigationSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.tiltMapBox = (CheckBox)findViewById(R.id.navigation_settings_tilt_map);
-        this.seekBar = (SeekBar)findViewById(R.id.navigation_settings_seek_bar);
+        tiltMapBox = (CheckBox)findViewById(R.id.navigation_settings_tilt_map);
+        seekBar = (SeekBar)findViewById(R.id.navigation_settings_seek_bar);
 
-        this.tiltMapBox.setOnCheckedChangeListener(
-            new CheckBox.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton button, boolean b) {
-                    if (b) {
-                        LocalUserPreferences.setBackgroundNavigationOn();
-                    } else {
-                        LocalUserPreferences.setBackgroundNavigationOff();
-                    }
+        tiltMapBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton button, boolean b) {
+                if (b) {
+                    LocalUserPreferences.setBackgroundNavigationOn();
+                } else {
+                    LocalUserPreferences.setBackgroundNavigationOff();
                 }
-            });
+            }
+        });
+
 
         seekBar.setMax(10);
-        this.seekBar.setOnSeekBarChangeListener(
-            new SeekBar.OnSeekBarChangeListener() {
-                int progress = 0;
-                public void onProgressChanged(SeekBar bar, int value, boolean fromUser) {
-                    progress = value;
-                    final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, progress);
-                }
-                public void onStartTrackingTouch(SeekBar bar) { /* nop. */ }
-                public void onStopTrackingTouch(SeekBar bar) { /* nop. */ }
+        this.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            private int progress = 0;
+            public void onProgressChanged(SeekBar bar, int value, boolean fromUser) {
+                progress = value;
+                final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, progress);
             }
-        );
+            public void onStartTrackingTouch(SeekBar bar) { /* nop. */ }
+            public void onStopTrackingTouch(SeekBar bar) { /* nop. */ }
+        });
     }
 }

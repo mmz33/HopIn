@@ -68,16 +68,13 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         if (id == R.id.nav_settings) {
             startActivity(new Intent(SlideMenu.this, Settings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
-        }
-        else if(id == R.id.nav_profile) {
+        } else if (id == R.id.nav_profile) {
             startActivity(new Intent(SlideMenu.this, ProfileSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
-        }
-        else if(id == R.id.nav_schedule) {
+        } else if (id == R.id.nav_schedule) {
             startActivity(new Intent(SlideMenu.this, ScheduleSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
-        }
-        else if(id == R.id.nav_feedback) {
+        } else if (id == R.id.nav_feedback) {
             startActivity(new Intent(SlideMenu.this, FeedbackSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         }

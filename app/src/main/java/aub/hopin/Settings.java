@@ -39,19 +39,13 @@ public class Settings extends AppCompatActivity{
         adapter = new ArrayAdapter<String>(this, R.layout.list_row, settings);
         list.setAdapter(adapter);
 
-        list.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if(position == 0)
-                            startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
-                        else if(position == 1)
-                            startActivity(new Intent(Settings.this, NotificationSettings.class));
-                        else if(position == 2)
-                            startActivity(new Intent(Settings.this, NavigationSettings.class));
-                    }
-                }
-        );
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
+                else if (position == 1) startActivity(new Intent(Settings.this, NotificationSettings.class));
+                else if (position == 2) startActivity(new Intent(Settings.this, NavigationSettings.class));
+            }
+        });
     }
 
     @Override

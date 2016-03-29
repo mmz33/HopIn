@@ -1,8 +1,7 @@
 package aub.hopin;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,9 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 public class SignUp extends AppCompatActivity {
 
@@ -33,7 +29,54 @@ public class SignUp extends AppCompatActivity {
     private Button signUp;
     private TextView errorText;
 
-    @Override
+    private class AsyncSignUp extends AsyncTask<Void, Void, Void> {
+        private String firstName;
+        private String lastName;
+        private String email;
+        private int age;
+        private UserGender gender;
+        private UserMode mode;
+        private boolean success;
+        private String errorMessage;
+
+        public AsyncSignUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.age = age;
+            this.gender = gender;
+            this.mode = mode;
+            this.success = false;
+            this.errorMessage = "";
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Void doInBackground(Void... params) {
+            String response = Server.signUp(firstName, lastName, email, age, mode, gender);
+            if (response.equals("OK")) {
+                success = true;
+            } else {
+                errorMessage = response;
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success) {
+                Intent intent = new Intent(SignUp.this, SignUpConfirm.class);
+                intent.putExtra("email", email);
+                startActivity(intent);
+                finish();
+            } else {
+                errorText.setText(errorMessage);
+            }
+        }
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -91,20 +134,7 @@ public class SignUp extends AppCompatActivity {
                     else if (Integer.parseInt(age)  < 16 )
                         SignUp.this.errorText.setText("You must be 16 or older.");
                     else {
-                        // The input passed the filters, so send the
-                        // user sign up data over to the server.
-                        UserInfo info = new UserInfo();
-
-                        info.firstName = firstName;
-                        info.lastName = lastName;
-                        info.email = email;
-                        info.age = Integer.parseInt(age);
-                        info.gender = gender;
-                        info.mode = mode;
-
-                        //ServerRequest request = Server.signUp(info);
-                        startActivity(new Intent(SignUp.this, SignUpConfirm.class));
-                        finish();
+                        new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender).execute();
                     }
                 }
             });
