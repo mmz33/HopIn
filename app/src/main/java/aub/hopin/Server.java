@@ -207,7 +207,7 @@ public class Server {
         args.put("age", "" + age);
         args.put("mode", mode.toString());
         args.put("gender", gender.toString());
-        return getResponse(buildRequest("signup", args ));
+        return getResponse(buildRequest("signup", args));
     }
 
     public static String signIn(String email, String password) {
