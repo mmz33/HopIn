@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_action_sett"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile"
+            android:icon="@drawable/ic_action_profile"/>
+
+        <item
+            android:id="@+id/contact_information"
+            android:title="Contact Information"
+            android:icon="@drawable/ic_action_contact_information" />
+
+        <item
+            android:id="@+id/nav_schedule"
+            android:title="Schedule"
+            android:icon="@drawable/ic_action_schedule"/>
+
+        <item
+            android:id="@+id/nav_vehicle_type"
+            android:title="Vehicle Type"
+            android:icon="@drawable/ic_action_vehicle_type"/>
+
+        <item
+            android:id="@+id/nav_about"
+            android:title="About"
+            android:icon="@drawable/ic_action_about" />
+
+        <item
+            android:id="@+id/nav_feedback"
+            android:title="Feedback"
+            android:icon="@drawable/ic_action_feedback" />
+
+        <item
+            android:id="@+id/nav_terms_conditions"
+            android:title="Terms and Conditions"
+            android:icon="@drawable/ic_action_terms_and_conditions" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:title="Help"
+            android:icon="@drawable/ic_action_help"
+            />
+    </group>
+
+</menu>

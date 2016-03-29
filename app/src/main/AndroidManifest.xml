@@ -124,25 +124,12 @@
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
-        <activity
-            android:name=".SwipeLeft"
-            android:label="SwipeLeft"
-            android:theme="@style/AppTheme.NoActionBar" />
-
         <intent-filter>
             <action android:name="aub.hopin.SwipeLeft" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
-        <activity
-            android:name=".LeftSettings"
-            android:label="@string/title_activity_left_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".RightSettings"
-            android:label="@string/title_activity_right_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -152,6 +139,22 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
+
+        <activity
+            android:name=".Settings"
+            android:label="Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <intent-filter>
+            <action android:name="aub.hopin.Settings" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        <activity
+            android:name=".SlideMenu"
+            android:label="Dashboard"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

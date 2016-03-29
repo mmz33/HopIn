@@ -37,10 +37,18 @@ public class NavigationSettings extends AppCompatActivity {
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onProgressChanged(SeekBar bar, int value, boolean fromUser) {
-                final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, 0);
+
+        seekBar.setMax(10);
+        this.seekBar.setOnSeekBarChangeListener(
+            new SeekBar.OnSeekBarChangeListener() {
+                private int progress = 0;
+                public void onProgressChanged(SeekBar bar, int value, boolean fromUser) {
+                    progress = value;
+                    final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, progress);
+                }
+                public void onStartTrackingTouch(SeekBar bar) { /* nop. */ }
+                public void onStopTrackingTouch(SeekBar bar) { /* nop. */ }
             }
             public void onStartTrackingTouch(SeekBar bar) { /* nop. */ }
             public void onStopTrackingTouch(SeekBar bar) { /* nop. */ }
