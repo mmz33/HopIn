@@ -18,6 +18,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class Settings extends AppCompatActivity{
 
@@ -44,6 +45,7 @@ public class Settings extends AppCompatActivity{
                 if (position == 0) startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
                 else if (position == 1) startActivity(new Intent(Settings.this, NotificationSettings.class));
                 else if (position == 2) startActivity(new Intent(Settings.this, NavigationSettings.class));
+                else if (position == 3) startActivity(new Intent(Settings.this, ShowScaleOnMap.class));
             }
         });
     }

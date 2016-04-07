@@ -1,9 +1,17 @@
 package aub.hopin;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +37,7 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton driver;
     private RadioGroup modeGroup;
     private Uri selectedImage;
+    private Bitmap bm;
 
     private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
         private boolean success;
@@ -134,8 +143,13 @@ public class ProfileSettings extends AppCompatActivity {
         status = (EditText)findViewById(R.id.profile_status_message);
         driver = (RadioButton)findViewById(R.id.profile_driver_radio_button);
 
+        //convert to round image
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.missing_profile);
+        Bitmap new_img = getRoundedBitmap(bm);
+        profileImage.setImageBitmap(new_img);
+
         // Set profile image.
-        profileImage.setImageBitmap(ActiveUser.getActiveUserInfo().profileImage);
+        //profileImage.setImageBitmap(ActiveUser.getActiveUserInfo().profileImage);
 
         // Status message changes need to be sent to the server.
         status.addTextChangedListener(new TextWatcher() {
@@ -162,5 +176,27 @@ public class ProfileSettings extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         new AsyncUploadProfilePicture(data.getData()).execute();
+    }
+
+    //This method return a rounded image bitmap
+    public static Bitmap getRoundedBitmap(Bitmap bitmap) {
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final int color = Color.RED;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        bitmap.recycle();
+
+        return output;
     }
 }

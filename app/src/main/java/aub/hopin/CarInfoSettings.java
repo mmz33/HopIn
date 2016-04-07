@@ -5,16 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CarInfoSettings extends AppCompatActivity {
 
-    private EditText vehicleType;
     private EditText carCapacity;
     private Button okayButton;
     private TextView errorText;
+    private Spinner vehicleSpinner;
+    private Spinner colorsSpinner;
 
     private class AsyncUpdateCarInfo extends AsyncTask<Void, Void, Void> {
         private String typeText;
@@ -23,7 +27,6 @@ public class CarInfoSettings extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            typeText = vehicleType.getText().toString();
             countText = carCapacity.getText().toString();
             if (countText.length() == 0)
                 countText = "0";
@@ -59,7 +62,8 @@ public class CarInfoSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        vehicleType = (EditText)findViewById(R.id.car_info_vehicle_type);
+        vehicleSpinner = (Spinner)findViewById(R.id.car_info_vehicle_type_spinner);
+        colorsSpinner = (Spinner)findViewById(R.id.car_info_colors_spinner);
         carCapacity = (EditText)findViewById(R.id.car_info_passengers);
         okayButton  = (Button)findViewById(R.id.car_info_okay);
         errorText   = (TextView)findViewById(R.id.car_info_error_text);
@@ -73,6 +77,7 @@ public class CarInfoSettings extends AppCompatActivity {
         //this.vehicleType.setText(info.vehicleType);
         //this.carCapacity.setText("" + info.maximumPassengerCount);
         errorText.setText("");
+
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

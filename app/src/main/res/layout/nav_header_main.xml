@@ -12,13 +12,14 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
+
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:layout_gravity="center"
         android:src="@drawable/missing_profile"
-        android:id="@+id/imageView" />
+        android:id="@+id/nav_header_main_image_view" />
 
     <TextView
         android:layout_width="match_parent"

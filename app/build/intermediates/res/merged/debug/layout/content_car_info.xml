@@ -12,26 +12,32 @@
     tools:context=".CarSettings"
     tools:showIn="@layout/activity_car_info">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/car_info_vehicle_type"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_marginTop="39dp"
-        android:hint="Vehicle Type"
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/car_info_vehicle_type_spinner"
+        android:entries="@array/Vehicle_Type"
         android:layout_below="@+id/car_title"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/car_info_colors_spinner"
+        android:entries="@array/Colors"
+        android:layout_below="@+id/car_info_vehicle_type_spinner"
+        android:layout_alignStart="@+id/car_info_vehicle_type_spinner" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/car_info_passengers"
         android:hint="Passengers"
-        android:layout_below="@+id/car_info_vehicle_type"
-        android:layout_alignStart="@+id/car_info_vehicle_type" />
+        android:layout_below="@+id/car_info_colors_spinner"
+        android:layout_alignStart="@+id/car_info_colors_spinner" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,7 +54,8 @@
         android:layout_height="wrap_content"
         android:text="Okay"
         android:id="@+id/car_info_okay"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/car_info_passengers"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -60,5 +67,25 @@
         android:layout_marginTop="19dp"
         android:layout_below="@+id/car_info_okay"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Type"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:id="@+id/car_info_vehicle_type_text_view"
+        android:layout_alignTop="@+id/car_info_vehicle_type_spinner"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Color"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:id="@+id/car_info_vehicle_color_text_view"
+        android:layout_below="@+id/car_info_vehicle_type_spinner"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

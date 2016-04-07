@@ -56,4 +56,31 @@
     <string name="title_activity_slide_menu">SlideMenu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string-array name="Vehicle_Type">
+        <item>Ford</item>
+        <item>BMW</item>
+        <item>Chevrolet</item>
+        <item>GMC</item>
+        <item>Hyundai</item>
+        <item>Infiniti</item>
+        <item>Honda</item>
+        <item>Kia</item>
+        <item>Mercedes-Benz</item>
+        <item>Mazda</item>
+    </string-array>
+
+    <string-array name="Colors">
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Silver</item>
+        <item>Gold</item>
+    </string-array>
+    <string name="title_activity_help">Help</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_terms_and_conditions">TermsAndConditions</string>
+
 </resources>
+    
+    

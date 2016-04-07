@@ -166,6 +166,22 @@
             android:name="aub.hopin.SlideMenu"
             android:label="Dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="aub.hopin.ShowScaleOnMap"
+            android:label="Show scale on Map"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="aub.hopin.Help"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="aub.hopin.About"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="aub.hopin.TermsAndConditions"
+            android:label="@string/title_activity_terms_and_conditions"
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

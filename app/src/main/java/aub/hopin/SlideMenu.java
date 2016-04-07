@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,6 +77,21 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_feedback) {
             startActivity(new Intent(SlideMenu.this, FeedbackSettings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_vehicle_type) {
+            startActivity(new Intent(SlideMenu.this, CarInfoSettings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_help) {
+            startActivity(new Intent(SlideMenu.this, Help.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_about) {
+            startActivity(new Intent(SlideMenu.this, About.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_terms_conditions) {
+            startActivity(new Intent(SlideMenu.this, TermsAndConditions.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_contact_info) {
+            startActivity(new Intent(SlideMenu.this, ContactInfoSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         }
 

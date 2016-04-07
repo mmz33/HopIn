@@ -123,7 +123,6 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-
         <intent-filter>
             <action android:name="aub.hopin.SwipeLeft" />
 
@@ -154,6 +153,22 @@
         <activity
             android:name=".SlideMenu"
             android:label="Dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShowScaleOnMap"
+            android:label="Show scale on Map"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Help"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".About"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TermsAndConditions"
+            android:label="@string/title_activity_terms_and_conditions"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -7,10 +7,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.RadioGroup;
 
 public class ContactInfoSettings extends AppCompatActivity {
 
     private EditText phoneNumberBox;
+    private EditText addressBox;
+    private EditText postOfficeBox;
+    private RadioGroup radioGroup;
     private Button okayButton;
 
     private class AsyncContactInfoUpdate extends AsyncTask<Void, Void, Void> {
@@ -47,6 +51,11 @@ public class ContactInfoSettings extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         phoneNumberBox = (EditText)findViewById(R.id.contact_info_phone_number);
+        addressBox = (EditText)findViewById(R.id.contact_info_address);
+        postOfficeBox = (EditText)findViewById(R.id.contact_info_post_office);
+        radioGroup = (RadioGroup)findViewById(R.id.contact_info_radio_group);
+
+
         okayButton = (Button)findViewById(R.id.contact_info_okay);
 
         phoneNumberBox.setText(ActiveUser.getActiveUserInfo().phoneNumber);
