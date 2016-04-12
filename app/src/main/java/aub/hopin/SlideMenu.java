@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,9 +22,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
@@ -32,6 +43,129 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private NavigationView navigationView;
     private GoogleMap mMap;
     private android.support.v4.app.FragmentManager sFm;
+
+    private HashMap<String, UserInfo> userInfoMap;
+    private HashMap<String, GroundOverlay> userMarkers;
+
+    private LocationManager locationManager;
+    private String provider;
+
+    // Gets the last known location using
+    // the location services of the device.
+    private Location getCurrentLocation() {
+        try {
+            return locationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            Log.e("error", "faced security exception when querying location.");
+            return null;
+        }
+    }
+
+    // Asynchronous heart beat callback.
+    // This sends the server an "I'm alive" message.
+    private class AsyncHeartbeat extends AsyncTask<Void, Void, Void> {
+        private String email;
+        protected void onPreExecute() {
+            super.onPreExecute();
+            email = ActiveUser.getEmail();
+        }
+        protected Void doInBackground(Void... params) {
+            if (Server.sendHeartBeat(email).equals("OK")) {
+                Log.i("error", "sent beat.");
+            } else {
+                Log.e("error", "failed to send beat.");
+            }
+            return null;
+        }
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    // Asynchronous position sending.
+    // This sends the server the latest GPS position
+    // of the device.
+    private class AsyncSendPosition extends AsyncTask<Void, Void, Void> {
+        private String email;
+        private Location location;
+        public AsyncSendPosition(Location location) {
+            this.email = ActiveUser.getEmail();
+            this.location = location;
+        }
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        protected Void doInBackground(Void... params) {
+            if (Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
+                Log.i("error", "positioning info successfully sent.");
+            } else {
+                Log.e("error", "failed to send positioning info.");
+            }
+            return null;
+        }
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    private HashMap<String, GroundOverlayOptions> asyncToCreate = new HashMap<>();
+    private HashMap<String, GroundOverlayOptions> asyncToUpdate = new HashMap<>();
+
+    // Asynchronous marker setup. This will update the
+    // markers on the map according to the locations
+    // of the active users as specified by the server.
+    private class AsyncSetupMarkers extends AsyncTask<Void, Void, Void> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        protected Void doInBackground(Void... params) {
+            HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
+            if (activeUserPositions != null) {
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                Log.i("error", "successfully queried active users.");
+
+                asyncToCreate.clear();
+                asyncToUpdate.clear();
+
+                for (String email : activeUserPositions.keySet()) {
+                    if (!userInfoMap.containsKey(email))
+                        userInfoMap.put(email, new UserInfo(email, false));
+                    UserInfo uInfo = userInfoMap.get(email);
+                    String coords[] = activeUserPositions.get(email).split(" ");
+                    LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
+                    if (userMarkers.containsKey(email)) {
+                        GroundOverlayOptions options = new GroundOverlayOptions()
+                                .position(target, 100f, 100f);
+                        asyncToUpdate.put(email, options);
+                    } else {
+                        GroundOverlayOptions options = new GroundOverlayOptions()
+                                .image(BitmapDescriptorFactory.fromBitmap(uInfo.profileImage))
+                                .position(target, 100f, 100f);
+                        asyncToCreate.put(email, options);
+                    }
+                }
+                Runnable markerUpdater = new Runnable() {
+                    public void run() {
+                        for (String email : asyncToCreate.keySet()) {
+                            userMarkers.put(email, mMap.addGroundOverlay(asyncToCreate.get(email)));
+                        }
+                        for (String email : asyncToUpdate.keySet()) {
+                            GroundOverlayOptions options = asyncToUpdate.get(email);
+                            userMarkers.get(email).setPosition(options.getLocation());
+                        }
+                    }
+                };
+                handler.post(markerUpdater);
+            } else {
+                Log.e("error", "failed to query active users.");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +187,53 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setItemIconTintList(null);
         sFm = getSupportFragmentManager();
 
-        //Show the map
+        // Show the map
         if (!supportMapFragment.isAdded())
             sFm.beginTransaction().add(R.id.content_frame, supportMapFragment).commit();
-
         sFm.beginTransaction().show(supportMapFragment).commit();
+
+        // Get location services.
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), true);
+
+        //try {
+        //    locationManager.requestLocationUpdates(100, 1, new Criteria(), null);
+        //} catch (SecurityException e) {}
+
+        userMarkers = new HashMap<>();
+        userInfoMap = new HashMap<>();
+
+        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getActiveUserInfo());
+
+        Timer t = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                Location location = getCurrentLocation();
+
+                new AsyncHeartbeat().execute();
+
+                if (location != null)
+                    new AsyncSendPosition(location).execute();
+                else
+                    Log.e("error", "failed to get current location in periodic task.");
+
+                new AsyncSetupMarkers().execute();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Location location = getCurrentLocation();
+                        if (location != null) {
+                            LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+                            CameraPosition.Builder builder = new CameraPosition.Builder();
+                            builder.zoom(15);
+                            builder.target(target);
+                            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+                        }
+                    }
+                });
+            }
+        };
+        t.scheduleAtFixedRate(task, 2000, 100);
     }
 
     @Override
@@ -108,31 +284,28 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         } else {
             super.onBackPressed();
         }
-}
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        try {mMap.setMyLocationEnabled(true);} catch (SecurityException e) {}
-        if(mMap != null) setUpMap();
-        else             Log.e("map error", "Map is not initialized!");
+        try {
+            //mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {}
+        if (mMap != null) setUpMap();
+        else             Log.e("error", "Map is not initialized!");
     }
 
     //make the current location as default
     public void setUpMap() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        Location location = null;
-        try {location = locationManager.getLastKnownLocation(provider);} catch (SecurityException e) {}
-        if (location != null) {
-            LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraPosition.Builder builder = new CameraPosition.Builder();
-            builder.zoom(15);
-            builder.target(target);
-            this.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-            mMap.addMarker(new MarkerOptions().position(target).title("You are here!").snippet("Consider yourself located"));
-        }
+        //Location location = getCurrentLocation();
+        //if (location != null) {
+        //    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+        //    CameraPosition.Builder builder = new CameraPosition.Builder();
+        //    builder.zoom(15);
+        //    builder.target(target);
+        //    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+        //}
     }
 
     @Override

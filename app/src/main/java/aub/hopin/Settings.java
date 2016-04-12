@@ -1,24 +1,18 @@
 package aub.hopin;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public class Settings extends AppCompatActivity{
 
@@ -44,7 +38,7 @@ public class Settings extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
                 else if (position == 1) startActivity(new Intent(Settings.this, NotificationSettings.class));
-                else if (position == 2) startActivity(new Intent(Settings.this, NavigationSettings.class));
+                else if (position == 2) startActivity(new Intent(Settings.this, MapDisplaySettings.class));
                 else if (position == 3) startActivity(new Intent(Settings.this, ShowScaleOnMap.class));
             }
         });

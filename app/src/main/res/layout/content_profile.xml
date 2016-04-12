@@ -21,14 +21,6 @@
         android:layout_below="@+id/profile_title"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Update Picture"
-        android:id="@+id/profile_upload_button"
-        android:layout_below="@+id/profile_image_view"
-        android:layout_centerHorizontal="true" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,42 +28,82 @@
         android:inputType="text"
         android:editable="true"
         android:text="Hello, I&apos;m using HopIn!"
-        android:layout_below="@+id/profile_upload_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/profile_image_view" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/profile_switch_user_type_radio_group"
         android:layout_below="@+id/profile_switch_user_mode"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/passenger"
             android:id="@+id/profile_passenger_radio_button"
-            android:checked="false"
-            android:layout_below="@+id/profile_switch_user_mode"
-            android:layout_alignParentStart="true" />
+            android:checked="false"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/driver"
             android:id="@+id/profile_driver_radio_button"
-            android:checked="false" />
+            android:checked="false"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_driver_state_group"
+        android:layout_below="@+id/profile_switch_user_state"
+        android:orientation="vertical"
+        android:layout_alignStart="@+id/profile_switch_user_state">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passive"
+            android:id="@+id/profile_state_group_passive"
+            android:checked="false"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offering Rides"
+            android:id="@+id/profile_state_group_offering"
+            android:checked="false"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Want Ride"
+            android:id="@+id/profile_state_group_want"
+            android:checked="false"/>
     </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch Mode"
+        android:text="Mode"
         android:id="@+id/profile_switch_user_mode"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/profile_status_message"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="State"
+        android:id="@+id/profile_switch_user_state"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/profile_status_message"
+        android:layout_toRightOf="@+id/profile_switch_user_type_radio_group"
+        android:layout_marginLeft="32dp"/>
 
     <TextView
         android:layout_width="wrap_content"

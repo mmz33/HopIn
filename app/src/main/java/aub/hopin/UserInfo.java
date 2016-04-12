@@ -12,10 +12,17 @@ public class UserInfo {
     public String email;
     public int age;
     public UserGender gender;
+
     public UserMode mode;
+    public UserState state;
 
     public String phoneNumber;
+    public String address;
+    public String poBox;
     public String status;
+
+    public boolean showingAddress;
+    public boolean showingPhone;
 
     public Bitmap profileImage;
     public Bitmap scheduleImage;
@@ -28,10 +35,15 @@ public class UserInfo {
         age = 0;
         gender = UserGender.Unspecified;
         mode = UserMode.Unspecified;
+        state = UserState.Passive;
         phoneNumber = "";
+        address = "";
+        poBox = "";
         status = "";
         profileImage = null;
         scheduleImage = null;
+        showingAddress = false;
+        showingPhone = false;
     }
 
     public UserInfo(String email, boolean blocking) {
@@ -50,7 +62,7 @@ public class UserInfo {
         }
         public void run() {
             if (info.email.equals("")) {
-                Log.e("", "Started loader with no email.");
+                Log.e("error", "Started loader with no email.");
                 return;
             } else {
                 HashMap<String, String> response = Server.queryUserInfo(info.email);
@@ -60,6 +72,7 @@ public class UserInfo {
                 info.age = Integer.parseInt(response.get("age"));
                 String gender = response.get("gender");
                 String mode = response.get("mode");
+                String state = response.get("state");
                 switch (gender) {
                     case "F": info.gender = UserGender.Female; break;
                     case "M": info.gender = UserGender.Male; break;
@@ -71,13 +84,27 @@ public class UserInfo {
                     case "P": info.mode = UserMode.PassengerMode; break;
                     default:  info.mode = UserMode.Unspecified; break;
                 }
+                switch (state) {
+                    case "P": info.state = UserState.Passive; break;
+                    case "O": info.state = UserState.Offering; break;
+                    case "W": info.state = UserState.Wanting; break;
+                    default:  info.state = UserState.Passive; break;
+                }
                 info.phoneNumber = response.get("phone");
                 info.status = response.get("status");
-                info.profileImage = ResourceManager.getProfileImage(info.email);
+                info.address = response.get("address");
+                info.poBox = response.get("pobox");
+                info.showingAddress = response.get("showaddress").equals("1");
+                info.showingPhone = response.get("showphone").equals("1");
                 info.scheduleImage = ResourceManager.getScheduleImage(info.email);
+                info.setProfileImage(ResourceManager.getProfileImage(info.email));
                 info.infoValid = true;
             }
         }
+    }
+
+    public void setProfileImage(Bitmap bitmap) {
+        profileImage = ImageUtils.makeRounded(bitmap);
     }
 
     public void load(String email, boolean blocking) {

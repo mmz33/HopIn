@@ -78,7 +78,6 @@ public class CarInfoSettings extends AppCompatActivity {
         //this.carCapacity.setText("" + info.maximumPassengerCount);
         errorText.setText("");
 
-
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AsyncUpdateCarInfo().execute();

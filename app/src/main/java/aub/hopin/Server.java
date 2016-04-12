@@ -123,10 +123,12 @@ public class Server {
     // Downloads an image from the server.
     public static Bitmap downloadBitmap(String url) {
         try {
+            Log.i("error", "About to download bitmap: " + url);
             URL myURL = new URL(url);
             URLConnection connection = myURL.openConnection();
             InputStream is = connection.getInputStream();
             Bitmap image = BitmapFactory.decodeStream(new BufferedInputStream(is));
+            Log.i("error", "Successfully downloaded bitmap.");
             is.close();
             return image;
         } catch (FileNotFoundException e) {
@@ -239,6 +241,15 @@ public class Server {
         return "?";
     }
 
+    public static String getStateString(UserState state) {
+        switch (state) {
+            case Passive: return "P";
+            case Offering: return "O";
+            case Wanting: return "W";
+        }
+        return "?";
+    }
+
     public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) {
         HashMap<String, String> args = new HashMap<>();
         args.put("firstname", firstName);
@@ -268,6 +279,20 @@ public class Server {
         return getResponse(buildRequest("upphone", args));
     }
 
+    public static String sendAddress(String email, String address) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("address", address);
+        return getResponse(buildRequest("upaddress", args));
+    }
+
+    public static String sendPOBox(String email, String poBox) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("pobox", poBox);
+        return getResponse(buildRequest("uppobox", args));
+    }
+
     public static String sendProfilePicture(String email, String filename) {
         return getResponseUpload("upprofile", email, filename);
     }
@@ -284,6 +309,13 @@ public class Server {
         args.put("email", email);
         args.put("mode", getModeString(mode));
         return getResponse(buildRequest("switchmode", args));
+    }
+
+    public static String sendStateSwitch(String email, UserState state) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("state", getStateString(state));
+        return getResponse(buildRequest("switchstate", args));
     }
 
     public static String sendUserRating(String email, float stars) {
@@ -307,6 +339,39 @@ public class Server {
         return getResponse(buildRequest("feedback", args));
     }
 
+    public static String showPhone(String email, boolean b) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("show", b? "1" : "0");
+        return getResponse(buildRequest("showphone", args));
+    }
+
+    public static String showAddress(String email, boolean b) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("show", b ? "1" : "0");
+        return getResponse(buildRequest("showaddress", args));
+    }
+
+    public static String sendGlobalPosition(String email, double longitude, double latitude) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("lat", String.format("%.12f", latitude));
+        args.put("lon", String.format("%.12f", longitude));
+        return getResponse(buildRequest("sendpos", args));
+    }
+
+    public static HashMap<String, String> queryActiveUsersAndPositions() {
+        HashMap<String, String> args = new HashMap<>();
+        return getResponseMap(buildRequest("queryactive", args));
+    }
+
+    public static String sendHeartBeat(String email) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        return getResponse(buildRequest("heartbeat", args));
+    }
+
     public static HashMap<String, String> queryUserInfo(String email) {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
@@ -318,5 +383,18 @@ public class Server {
         args.put("email", email);
         args.put("code", code);
         return getResponse(buildRequest("confirm", args));
+    }
+
+    public static String sendUserInfoBundle(String email, HashMap<String, String> data) {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("count", "" + data.size());
+        int i = 0;
+        for (String key : data.keySet()) {
+            args.put("key" + i, key);
+            args.put("value" + i, data.get(key));
+            i++;
+        }
+        return getResponse(buildRequest("sendbundle", args));
     }
 }

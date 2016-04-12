@@ -33,6 +33,8 @@ public class SignPage extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        LocalUserPreferences.init(this.getApplicationContext());
+
         // Create buttons.
         this.signIn = (Button)findViewById(R.id.sign_page_sign_in);
         this.signUp = (Button)findViewById(R.id.sign_page_sign_up);

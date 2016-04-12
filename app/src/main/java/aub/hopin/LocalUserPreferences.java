@@ -1,34 +1,65 @@
 package aub.hopin;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class LocalUserPreferences {
-    private static MeasurementUnits unit = MeasurementUnits.Metric;
-    private static boolean backgroundNavigation = false;
-    private static boolean tiltMap = false;
+    private static SharedPreferences prefs = null;
 
-    public static void setUnit(MeasurementUnits newUnit) {
-        unit = newUnit;
-    }
-    public static MeasurementUnits getUnit() {
-        return unit;
+    public static void init(Context ctx) {
+        if (prefs == null) {
+            prefs = ctx.getSharedPreferences("prefs", 0);
+        }
     }
 
-    public static void setBackgroundNavigationOn() {
-        backgroundNavigation = true;
-    }
-    public static void setBackgroundNavigationOff() {
-        backgroundNavigation = false;
-    }
-    public static boolean getBackgroudNavigation() {
-        return backgroundNavigation;
+    public static MeasurementUnits getUnits(Context ctx) {
+        MeasurementUnitsSetting setting = getUnitsSetting();
+
+        switch (setting) {
+            case Metric:
+                return MeasurementUnits.Metric;
+            case Imperial:
+                return MeasurementUnits.Imperial;
+            case Automatic:
+                String locale = ctx.getResources().getConfiguration().locale.getCountry();
+                if (locale.equals("US")) {
+                    return MeasurementUnits.Imperial;
+                } else {
+                    return MeasurementUnits.Metric;
+                }
+            default:
+                return MeasurementUnits.Metric;
+        }
     }
 
-    public static void setTiltMapOn() {
-        tiltMap = true;
+    public static MeasurementUnitsSetting getUnitsSetting() {
+        int ordinal = prefs.getInt("unitsetting", MeasurementUnitsSetting.Automatic.ordinal());
+        return MeasurementUnitsSetting.values()[ordinal];
     }
-    public static void setTiltMapOff() {
-        tiltMap = false;
+
+    public static void setUnitsSetting(MeasurementUnitsSetting setting) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putInt("unitsetting", setting.ordinal());
+        edit.commit();
     }
+
+    public static void setBackgroundNavigation(boolean b) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("backnav", b);
+        edit.commit();
+    }
+
+    public static boolean getBackgroundNavigation() {
+        return prefs.getBoolean("backnav", false);
+    }
+
+    public static void setTiltMap(boolean b) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("tilt", b);
+        edit.commit();
+    }
+
     public static boolean getTiltMap() {
-        return tiltMap;
+        return prefs.getBoolean("tilt", false);
     }
 }

@@ -31,19 +31,26 @@ public class DistanceUnitsSettings extends AppCompatActivity {
         imperial = (RadioButton)findViewById(R.id.distance_units_imperial);
         metric = (RadioButton)findViewById(R.id.distance_units_metric);
 
+        switch (LocalUserPreferences.getUnitsSetting()) {
+            case Metric:
+                metric.setChecked(true);
+                break;
+            case Imperial:
+                imperial.setChecked(true);
+                break;
+            case Automatic:
+                automatic.setChecked(true);
+                break;
+        }
+
         unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int id) {
                 if (automatic.getId() == id) {
-                    String locale = getApplicationContext().getResources().getConfiguration().locale.getCountry();
-                    if (locale.equals("US")) {
-                        LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
-                    } else {
-                        LocalUserPreferences.setUnit(MeasurementUnits.Metric);
-                    }
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Automatic);
                 } else if (metric.getId() == id) {
-                    LocalUserPreferences.setUnit(MeasurementUnits.Metric);
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Metric);
                 } else if (imperial.getId() == id) {
-                    LocalUserPreferences.setUnit(MeasurementUnits.Imperial);
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Imperial);
                 }
             }
         });

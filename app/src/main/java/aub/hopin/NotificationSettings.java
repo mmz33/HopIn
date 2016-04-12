@@ -20,14 +20,11 @@ public class NotificationSettings extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         backgroundNavigationBox = (CheckBox)findViewById(R.id.notifications_navigation);
+        backgroundNavigationBox.setChecked(LocalUserPreferences.getBackgroundNavigation());
 
         backgroundNavigationBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton button, boolean b) {
-                if (b) {
-                    LocalUserPreferences.setBackgroundNavigationOn();
-                } else {
-                    LocalUserPreferences.setBackgroundNavigationOff();
-                }
+                LocalUserPreferences.setBackgroundNavigation(b);
             }
         });
     }

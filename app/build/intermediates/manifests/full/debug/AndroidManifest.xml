@@ -114,7 +114,7 @@
             android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="aub.hopin.NavigationSettings"
+            android:name="aub.hopin.MapDisplaySettings"
             android:label="@string/title_activity_navigation_settigns"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
