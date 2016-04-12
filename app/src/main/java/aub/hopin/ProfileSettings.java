@@ -1,5 +1,7 @@
 package aub.hopin;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -15,6 +17,7 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -246,7 +249,34 @@ public class ProfileSettings extends AppCompatActivity {
     public void loadProfileImage(View v) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, 1);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, 0);
+    }
+
+    //This method return the path of the image.
+    public static String getRealPathFromURI(Context context, Uri uri){
+        String filePath = "";
+        String wholeID = DocumentsContract.getDocumentId(uri);
+
+        // Split at colon, use second item in the array
+        String id = wholeID.split(":")[1];
+
+        String[] column = { MediaStore.Images.Media.DATA };
+
+        // where id is equal to
+        String sel = MediaStore.Images.Media._ID + "=?";
+
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                column, sel, new String[]{ id }, null);
+
+        int columnIndex = cursor.getColumnIndex(column[0]);
+
+        if (cursor.moveToFirst()) {
+            filePath = cursor.getString(columnIndex);
+        }
+
+        cursor.close();
+        return filePath;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -265,5 +295,10 @@ public class ProfileSettings extends AppCompatActivity {
             Log.i("error", "Uri OK");
 
         new AsyncUploadProfilePicture(data.getData()).execute();
+
+        //if(resultCode == Activity.RESULT_OK && data != null) {
+           // String realPath = getRealPathFromURI(this, data.getData());
+            //new AsyncUploadProfilePicture(realPath).execute();
+        //}
     }
 }

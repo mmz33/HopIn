@@ -75,7 +75,11 @@
         android:textSize="15dp"
         android:textColor="#000"
         android:id="@+id/car_info_vehicle_type_text_view"
+        android:layout_alignBottom="@+id/car_info_vehicle_type_spinner"
         android:layout_alignTop="@+id/car_info_vehicle_type_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -85,6 +89,11 @@
         android:textSize="15dp"
         android:textColor="#000"
         android:id="@+id/car_info_vehicle_color_text_view"
+        android:layout_alignBottom="@+id/car_info_colors_spinner"
+        android:layout_alignTop="@+id/car_info_colors_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/car_info_vehicle_type_spinner"
         android:layout_alignParentStart="true" />
 
