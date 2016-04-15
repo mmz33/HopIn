@@ -25,10 +25,15 @@ public class ReportProblem extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendProblem(email, message).equals("OK")) {
-                Log.i("", "Successfully sent problem message to server.");
-            } else {
-                Log.e("", "Failed to send problem message to server.");
+            try {
+                if (Server.sendProblem(email, message).equals("OK")) {
+                    Log.i("", "Successfully sent problem message to server.");
+                } else {
+                    Log.e("", "Failed to send problem message to server.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }

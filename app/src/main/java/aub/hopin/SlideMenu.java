@@ -61,27 +61,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
-    // Asynchronous heart beat callback.
-    // This sends the server an "I'm alive" message.
-    private class AsyncHeartbeat extends AsyncTask<Void, Void, Void> {
-        private String email;
-        protected void onPreExecute() {
-            super.onPreExecute();
-            email = ActiveUser.getEmail();
-        }
-        protected Void doInBackground(Void... params) {
-            if (Server.sendHeartBeat(email).equals("OK")) {
-                Log.i("error", "sent beat.");
-            } else {
-                Log.e("error", "failed to send beat.");
-            }
-            return null;
-        }
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
-    }
-
     // Asynchronous position sending.
     // This sends the server the latest GPS position
     // of the device.
@@ -96,10 +75,15 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             super.onPreExecute();
         }
         protected Void doInBackground(Void... params) {
-            if (Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
-                Log.i("error", "positioning info successfully sent.");
-            } else {
-                Log.e("error", "failed to send positioning info.");
+            try {
+                if (Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
+                    Log.i("error", "positioning info successfully sent.");
+                } else {
+                    Log.e("error", "failed to send positioning info.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // handle this exception somehow?
             }
             return null;
         }
@@ -119,45 +103,50 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             super.onPreExecute();
         }
         protected Void doInBackground(Void... params) {
-            HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
-            if (activeUserPositions != null) {
-                Handler handler = new Handler(getApplicationContext().getMainLooper());
-                Log.i("error", "successfully queried active users.");
+            try {
+                HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
+                if (activeUserPositions != null) {
+                    Handler handler = new Handler(getApplicationContext().getMainLooper());
+                    Log.i("error", "successfully queried active users.");
 
-                asyncToCreate.clear();
-                asyncToUpdate.clear();
+                    asyncToCreate.clear();
+                    asyncToUpdate.clear();
 
-                for (String email : activeUserPositions.keySet()) {
-                    if (!userInfoMap.containsKey(email))
-                        userInfoMap.put(email, new UserInfo(email, false));
-                    UserInfo uInfo = userInfoMap.get(email);
-                    String coords[] = activeUserPositions.get(email).split(" ");
-                    LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
-                    if (userMarkers.containsKey(email)) {
-                        GroundOverlayOptions options = new GroundOverlayOptions()
-                                .position(target, 100f, 100f);
-                        asyncToUpdate.put(email, options);
-                    } else {
-                        GroundOverlayOptions options = new GroundOverlayOptions()
-                                .image(BitmapDescriptorFactory.fromBitmap(uInfo.profileImage))
-                                .position(target, 100f, 100f);
-                        asyncToCreate.put(email, options);
+                    for (String email : activeUserPositions.keySet()) {
+                        if (!userInfoMap.containsKey(email))
+                            userInfoMap.put(email, new UserInfo(email, false));
+                        UserInfo uInfo = userInfoMap.get(email);
+                        String coords[] = activeUserPositions.get(email).split(" ");
+                        LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
+                        if (userMarkers.containsKey(email)) {
+                            GroundOverlayOptions options = new GroundOverlayOptions()
+                                    .position(target, 100f, 100f);
+                            asyncToUpdate.put(email, options);
+                        } else {
+                            GroundOverlayOptions options = new GroundOverlayOptions()
+                                    .image(BitmapDescriptorFactory.fromBitmap(uInfo.profileImage))
+                                    .position(target, 100f, 100f);
+                            asyncToCreate.put(email, options);
+                        }
                     }
+                    Runnable markerUpdater = new Runnable() {
+                        public void run() {
+                            for (String email : asyncToCreate.keySet()) {
+                                userMarkers.put(email, mMap.addGroundOverlay(asyncToCreate.get(email)));
+                            }
+                            for (String email : asyncToUpdate.keySet()) {
+                                GroundOverlayOptions options = asyncToUpdate.get(email);
+                                userMarkers.get(email).setPosition(options.getLocation());
+                            }
+                        }
+                    };
+                    handler.post(markerUpdater);
+                } else {
+                    Log.e("error", "failed to query active users.");
                 }
-                Runnable markerUpdater = new Runnable() {
-                    public void run() {
-                        for (String email : asyncToCreate.keySet()) {
-                            userMarkers.put(email, mMap.addGroundOverlay(asyncToCreate.get(email)));
-                        }
-                        for (String email : asyncToUpdate.keySet()) {
-                            GroundOverlayOptions options = asyncToUpdate.get(email);
-                            userMarkers.get(email).setPosition(options.getLocation());
-                        }
-                    }
-                };
-                handler.post(markerUpdater);
-            } else {
-                Log.e("error", "failed to query active users.");
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // handle this exception somehow?
             }
             return null;
         }
@@ -210,8 +199,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             public void run() {
                 Location location = getCurrentLocation();
 
-                new AsyncHeartbeat().execute();
-
                 if (location != null)
                     new AsyncSendPosition(location).execute();
                 else
@@ -233,7 +220,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                 });
             }
         };
-        t.scheduleAtFixedRate(task, 2000, 100);
+        t.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     @Override

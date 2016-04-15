@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.Connection;
+
 public class SignIn extends AppCompatActivity {
     private EditText email;
     private EditText password;
@@ -31,12 +33,16 @@ public class SignIn extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            String response = Server.signIn(emailText, passwordText);
-            if (response.equals("OK")) {
-                Log.i("", "Signed in successfully.");
-                ActiveUser.setActiveUserInfo(new UserInfo(emailText, true));
-            } else {
-                errorMessage = response;
+            try {
+                String response = Server.signIn(emailText, passwordText);
+                if (response.equals("OK")) {
+                    Log.i("", "Signed in successfully.");
+                    ActiveUser.setActiveUserInfo(new UserInfo(emailText, true));
+                } else {
+                    errorMessage = response;
+                }
+            } catch (ConnectionFailureException e) {
+                errorMessage = "Failed to connect to server. Try again.";
             }
             return null;
         }

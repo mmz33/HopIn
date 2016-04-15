@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.sql.Connection;
+
 public class ScheduleSettings extends AppCompatActivity {
 
     private ImageView scheduleImage;
@@ -39,13 +41,18 @@ public class ScheduleSettings extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendSchedule(user.email, selectedImage.getPath()).equals("OK")) {
-                ResourceManager.setScheduleImageDirty(user.email);
-                user.scheduleImage = ResourceManager.getScheduleImage(user.email); // updates image from server.
-                success = true;
-                Log.i("", "Successfully uploaded schedule picture!");
-            } else {
-                Log.e("", "Something went wrong with the schedule picture update.");
+            try {
+                if (Server.sendSchedule(user.email, selectedImage.getPath()).equals("OK")) {
+                    ResourceManager.setScheduleImageDirty(user.email);
+                    user.scheduleImage = ResourceManager.getScheduleImage(user.email); // updates image from server.
+                    success = true;
+                    Log.i("", "Successfully uploaded schedule picture!");
+                } else {
+                    Log.e("", "Something went wrong with the schedule picture update.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display message
             }
             return null;
         }

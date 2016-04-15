@@ -65,40 +65,67 @@ public class UserInfo {
                 Log.e("error", "Started loader with no email.");
                 return;
             } else {
-                HashMap<String, String> response = Server.queryUserInfo(info.email);
-                info.firstName = response.get("firstname");
-                info.lastName = response.get("lastname");
-                info.email = response.get("email");
-                info.age = Integer.parseInt(response.get("age"));
-                String gender = response.get("gender");
-                String mode = response.get("mode");
-                String state = response.get("state");
-                switch (gender) {
-                    case "F": info.gender = UserGender.Female; break;
-                    case "M": info.gender = UserGender.Male; break;
-                    case "O": info.gender = UserGender.Other; break;
-                    default:  info.gender = UserGender.Unspecified; break;
+                try {
+                    HashMap<String, String> response = Server.queryUserInfo(info.email);
+                    info.firstName = response.get("firstname");
+                    info.lastName = response.get("lastname");
+                    info.email = response.get("email");
+                    info.age = Integer.parseInt(response.get("age"));
+                    String gender = response.get("gender");
+                    String mode = response.get("mode");
+                    String state = response.get("state");
+                    switch (gender) {
+                        case "F":
+                            info.gender = UserGender.Female;
+                            break;
+                        case "M":
+                            info.gender = UserGender.Male;
+                            break;
+                        case "O":
+                            info.gender = UserGender.Other;
+                            break;
+                        default:
+                            info.gender = UserGender.Unspecified;
+                            break;
+                    }
+                    switch (mode) {
+                        case "D":
+                            info.mode = UserMode.DriverMode;
+                            break;
+                        case "P":
+                            info.mode = UserMode.PassengerMode;
+                            break;
+                        default:
+                            info.mode = UserMode.Unspecified;
+                            break;
+                    }
+                    switch (state) {
+                        case "P":
+                            info.state = UserState.Passive;
+                            break;
+                        case "O":
+                            info.state = UserState.Offering;
+                            break;
+                        case "W":
+                            info.state = UserState.Wanting;
+                            break;
+                        default:
+                            info.state = UserState.Passive;
+                            break;
+                    }
+                    info.phoneNumber = response.get("phone");
+                    info.status = response.get("status");
+                    info.address = response.get("address");
+                    info.poBox = response.get("pobox");
+                    info.showingAddress = response.get("showaddress").equals("1");
+                    info.showingPhone = response.get("showphone").equals("1");
+                    info.scheduleImage = ResourceManager.getScheduleImage(info.email);
+                    info.setProfileImage(ResourceManager.getProfileImage(info.email));
+                    info.infoValid = true;
+                } catch (ConnectionFailureException e) {
+                    // TODO
+                    // Handle this exception somehow?
                 }
-                switch (mode) {
-                    case "D": info.mode = UserMode.DriverMode; break;
-                    case "P": info.mode = UserMode.PassengerMode; break;
-                    default:  info.mode = UserMode.Unspecified; break;
-                }
-                switch (state) {
-                    case "P": info.state = UserState.Passive; break;
-                    case "O": info.state = UserState.Offering; break;
-                    case "W": info.state = UserState.Wanting; break;
-                    default:  info.state = UserState.Passive; break;
-                }
-                info.phoneNumber = response.get("phone");
-                info.status = response.get("status");
-                info.address = response.get("address");
-                info.poBox = response.get("pobox");
-                info.showingAddress = response.get("showaddress").equals("1");
-                info.showingPhone = response.get("showphone").equals("1");
-                info.scheduleImage = ResourceManager.getScheduleImage(info.email);
-                info.setProfileImage(ResourceManager.getProfileImage(info.email));
-                info.infoValid = true;
             }
         }
     }

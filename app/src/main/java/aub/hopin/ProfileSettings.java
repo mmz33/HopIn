@@ -40,7 +40,6 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton driverButton;
     private RadioGroup modeGroup;
     private RadioGroup stateGroup;
-    private Uri selectedImage;
 
     private RadioButton passiveButton;
     private RadioButton offeringButton;
@@ -49,12 +48,12 @@ public class ProfileSettings extends AppCompatActivity {
     private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
         private boolean success;
         private UserInfo user;
-        private Uri uri;
+        private String path;
 
-        public AsyncUploadProfilePicture(Uri link) {
-            uri = link;
-            user = ActiveUser.getActiveUserInfo();
-            success = false;
+        public AsyncUploadProfilePicture(String path) {
+            this.path = path;
+            this.user = ActiveUser.getActiveUserInfo();
+            this.success = false;
         }
 
         protected void onPreExecute() {
@@ -62,13 +61,18 @@ public class ProfileSettings extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendProfilePicture(user.email, selectedImage.getPath()).equals("OK")) {
-                ResourceManager.setProfileImageDirty(user.email);
-                user.setProfileImage(ResourceManager.getProfileImage(user.email)); // updates image from server.
-                success = true;
-                Log.i("error", "Successfully uploaded profile picture!");
-            } else {
-                Log.e("error", "Something went wrong with the profile picture update.");
+            try {
+                if (Server.sendProfilePicture(user.email, path).equals("OK")) {
+                    ResourceManager.setProfileImageDirty(user.email);
+                    user.setProfileImage(ResourceManager.getProfileImage(user.email)); // updates image from server.
+                    success = true;
+                    Log.i("error", "Successfully uploaded profile picture!");
+                } else {
+                    Log.e("error", "Something went wrong with the profile picture update.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }
@@ -91,10 +95,15 @@ public class ProfileSettings extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendStatus(email, statusMessage).equals("OK")) {
-                Log.i("error", "Status update successfully sent to server.");
-            } else {
-                Log.e("error", "Something went wrong with the status update.");
+            try {
+                if (Server.sendStatus(email, statusMessage).equals("OK")) {
+                    Log.i("error", "Status update successfully sent to server.");
+                } else {
+                    Log.e("error", "Something went wrong with the status update.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }
@@ -124,10 +133,15 @@ public class ProfileSettings extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendModeSwitch(email, mode).equals("OK")) {
-                Log.i("error", "Successfully sent mode switch.");
-            } else {
-                Log.e("error", "Something went wrong with the mode switch.");
+            try {
+                if (Server.sendModeSwitch(email, mode).equals("OK")) {
+                    Log.i("error", "Successfully sent mode switch.");
+                } else {
+                    Log.e("error", "Something went wrong with the mode switch.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }
@@ -155,10 +169,15 @@ public class ProfileSettings extends AppCompatActivity {
         protected void onPreExecute() { super.onPreExecute(); }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendStateSwitch(email, state).equals("OK")) {
-                Log.i("error", "Successfully sent state switch.");
-            } else {
-                Log.e("error", "Something went wrong with the state switch.");
+            try {
+                if (Server.sendStateSwitch(email, state).equals("OK")) {
+                    Log.i("error", "Successfully sent state switch.");
+                } else {
+                    Log.e("error", "Something went wrong with the state switch.");
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }
@@ -255,50 +274,26 @@ public class ProfileSettings extends AppCompatActivity {
 
     //This method return the path of the image.
     public static String getRealPathFromURI(Context context, Uri uri){
-        String filePath = "";
-        String wholeID = DocumentsContract.getDocumentId(uri);
-
-        // Split at colon, use second item in the array
-        String id = wholeID.split(":")[1];
-
-        String[] column = { MediaStore.Images.Media.DATA };
-
-        // where id is equal to
-        String sel = MediaStore.Images.Media._ID + "=?";
-
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                column, sel, new String[]{ id }, null);
-
-        int columnIndex = cursor.getColumnIndex(column[0]);
-
-        if (cursor.moveToFirst()) {
-            filePath = cursor.getString(columnIndex);
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(uri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-
-        cursor.close();
-        return filePath;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("error", "Activity result given.");
-        if (data == null)
-            Log.e("error", "Intent data is null.");
-        else
-            Log.i("error", "Intent data OK");
 
-        Uri uri = data.getData();
-
-        if (uri == null)
-            Log.e("error", "Oops: uri is null");
-        else
-            Log.i("error", "Uri OK");
-
-        new AsyncUploadProfilePicture(data.getData()).execute();
-
-        //if(resultCode == Activity.RESULT_OK && data != null) {
-           // String realPath = getRealPathFromURI(this, data.getData());
-            //new AsyncUploadProfilePicture(realPath).execute();
-        //}
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            String realPath = getRealPathFromURI(this, data.getData());
+            new AsyncUploadProfilePicture(realPath).execute();
+        }
     }
 }

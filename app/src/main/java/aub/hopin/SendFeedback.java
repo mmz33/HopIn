@@ -12,34 +12,47 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class SendFeedback extends AppCompatActivity {
 
     private EditText feedbackBox;
+    private TextView errorText;
     private Button sendButton;
 
     private class AsyncSendFeedback extends AsyncTask<Void, Void, Void> {
         private String email;
         private String message;
+        private String errorMessage;
+        private boolean success;
 
         protected void onPreExecute() {
             super.onPreExecute();
             email = ActiveUser.getEmail();
             message = feedbackBox.getText().toString();
+            success = false;
         }
 
         protected Void doInBackground(Void... params) {
-            if (Server.sendFeedback(email, message).equals("OK")) {
-                Log.i("", "Successfully sent feedback message to server.");
-            } else {
-                Log.e("", "Failed to send feedback message to server.");
+            try {
+                if (Server.sendFeedback(email, message).equals("OK")) {
+                    Log.i("", "Successfully sent feedback message to server.");
+                    success = true;
+                } else {
+                    Log.e("", "Failed to send feedback message to server.");
+                }
+            } catch (ConnectionFailureException e) {
+                errorMessage = "Failed to connect to server. Try again.";
             }
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            finish();
+            if (success)
+                finish();
+            else
+                errorText.setText(errorMessage);
         }
     }
 
@@ -51,6 +64,7 @@ public class SendFeedback extends AppCompatActivity {
 
         feedbackBox = (EditText)findViewById(R.id.send_feedback_textbox);
         sendButton = (Button)findViewById(R.id.send_feedback_send);
+        errorText = (TextView)findViewById(R.id.send_feedback_error_text);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

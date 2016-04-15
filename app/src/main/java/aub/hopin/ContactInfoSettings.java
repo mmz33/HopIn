@@ -40,21 +40,26 @@ public class ContactInfoSettings extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            String email = ActiveUser.getEmail();
-            HashMap<String, String> data = new HashMap<String, String>();
-            data.put("phone", phoneNumber);
-            data.put("address", address);
-            data.put("pobox", poBox);
-            data.put("showphone", showPhone? "1" : "0");
-            data.put("showaddress", showAddress ? "1" : "0");
-            if (Server.sendUserInfoBundle(email, data).equals("OK")) {
-                UserInfo info = ActiveUser.getActiveUserInfo();
-                info.phoneNumber = phoneNumber;
-                info.address = address;
-                info.poBox = poBox;
-                info.showingPhone = showPhone;
-                info.showingAddress = showAddress;
-                success = true;
+            try {
+                String email = ActiveUser.getEmail();
+                HashMap<String, String> data = new HashMap<String, String>();
+                data.put("phone", phoneNumber);
+                data.put("address", address);
+                data.put("pobox", poBox);
+                data.put("showphone", showPhone ? "1" : "0");
+                data.put("showaddress", showAddress ? "1" : "0");
+                if (Server.sendUserInfoBundle(email, data).equals("OK")) {
+                    UserInfo info = ActiveUser.getActiveUserInfo();
+                    info.phoneNumber = phoneNumber;
+                    info.address = address;
+                    info.poBox = poBox;
+                    info.showingPhone = showPhone;
+                    info.showingAddress = showAddress;
+                    success = true;
+                }
+            } catch (ConnectionFailureException e) {
+                // TODO
+                // display error message
             }
             return null;
         }

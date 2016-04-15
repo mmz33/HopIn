@@ -37,7 +37,7 @@ public class ResourceManager {
                 }
             }
         } catch (Throwable t) {
-            Log.e("", "Failed to get profile image from resource manager.");
+            Log.e("error", "Failed to get profile image from resource manager.");
             return null;
         }
     }
@@ -57,7 +57,7 @@ public class ResourceManager {
                 }
             }
         } catch (Throwable t) {
-            Log.e("", "Failed to get schedule image from resource manager.");
+            Log.e("error", "Failed to get schedule image from resource manager.");
             return null;
         }
     }

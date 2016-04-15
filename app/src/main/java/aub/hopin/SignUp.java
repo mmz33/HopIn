@@ -55,11 +55,15 @@ public class SignUp extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            String response = Server.signUp(firstName, lastName, email, age, mode, gender);
-            if (response.equals("OK")) {
-                success = true;
-            } else {
-                errorMessage = response;
+            try {
+                String response = Server.signUp(firstName, lastName, email, age, mode, gender);
+                if (response.equals("OK")) {
+                    success = true;
+                } else {
+                    errorMessage = response;
+                }
+            } catch (ConnectionFailureException e) {
+                errorMessage = "Failed to connect to server. Try again.";
             }
             return null;
         }

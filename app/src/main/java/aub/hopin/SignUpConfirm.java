@@ -29,12 +29,16 @@ public class SignUpConfirm extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            String response = Server.confirmCode(email, code);
-            if (response.equals("OK")) {
-                Log.i("", "Successfully confirmed account.");
-                ActiveUser.setActiveUserInfo(new UserInfo(email, true));
-            } else {
-                errorMessage = response;
+            try {
+                String response = Server.confirmCode(email, code);
+                if (response.equals("OK")) {
+                    Log.i("", "Successfully confirmed account.");
+                    ActiveUser.setActiveUserInfo(new UserInfo(email, true));
+                } else {
+                    errorMessage = response;
+                }
+            } catch (ConnectionFailureException e) {
+                errorMessage = "Failed to connect to server. Try again.";
             }
             return null;
         }
