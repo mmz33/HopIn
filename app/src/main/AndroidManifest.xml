@@ -95,18 +95,6 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DistanceUnitsSettings"
-            android:label="@string/title_activity_distance_units"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".NotificationSettings"
-            android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MapDisplaySettings"
-            android:label="@string/title_activity_navigation_settigns"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".FeedbackSettings"
             android:label="@string/title_activity_feedback"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -130,21 +118,11 @@
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-
         <intent-filter>
             <action android:name="aub.hopin.MapsActivity" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-
-        <activity
-            android:name=".Settings"
-            android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-
         <intent-filter>
             <action android:name="aub.hopin.Settings" />
 
@@ -154,10 +132,6 @@
         <activity
             android:name=".SlideMenu"
             android:label="Dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ShowScaleOnMap"
-            android:label="Show scale on Map"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Help"
@@ -170,6 +144,10 @@
         <activity
             android:name=".TermsAndConditions"
             android:label="@string/title_activity_terms_and_conditions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

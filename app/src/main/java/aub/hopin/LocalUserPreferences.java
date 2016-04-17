@@ -53,6 +53,16 @@ public class LocalUserPreferences {
         return prefs.getBoolean("backnav", false);
     }
 
+    public static void setShowScaleOnMap(boolean b) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("showscale", b);
+        editor.commit();
+    }
+
+    public static boolean getShowScaleOnMap() {
+        return prefs.getBoolean("showscaleonmap", false);
+    }
+
     public static void setTiltMap(boolean b) {
         SharedPreferences.Editor edit = prefs.edit();
         edit.putBoolean("tilt", b);

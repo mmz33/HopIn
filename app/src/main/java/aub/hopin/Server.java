@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,6 +31,21 @@ public class Server {
     // Server url string.
     private static String urlString() {
         return "http://" + URL_ADDRESS;
+    }
+
+    // Constructs a request url.
+    private static String buildRequest(String name, HashMap<String, String> args) {
+        try {
+            String link = "";
+            for (String key : args.keySet()) {
+                if (!link.equals("")) link += '&';
+                link += key + "=" + URLEncoder.encode(args.get(key), "UTF-8");
+            }
+            return urlString() + "/" + name + "?" + link;
+        } catch (UnsupportedEncodingException e) {
+            Log.e("error", "Unsupported encoding used in url builder.");
+            return null;
+        }
     }
 
     // Reads all the contents of an InputStream into a String.
@@ -148,13 +165,15 @@ public class Server {
     }
 
     public static Bitmap downloadProfileImage(String email) {
-        String uname = email.replace('@', '_').replace('.', '_');
-        return downloadBitmap(urlString() + "/" + uname + "/pp");
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        return downloadBitmap(buildRequest("getprofileimg", args));
     }
 
     public static Bitmap downloadScheduleImage(String email) {
-        String uname = email.replace('@', '_').replace('.', '_');
-        return downloadBitmap(urlString() + "/" + uname + "/ss");
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        return downloadBitmap(buildRequest("getscheduleimg", args));
     }
 
     // Retrieves a response from the server after an upload.
@@ -162,12 +181,13 @@ public class Server {
         final String lineEnd = "\r\n";
         final String twoHyphens = "--";
         final String boundary =  "*****";
-        final int maxBufferSize = 1024 * 1024;
+        final int bufferSize = 64 * 1024;
 
         try {
             FileInputStream fileInputStream = new FileInputStream(new File(filename));
-
             URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
+
+
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -181,53 +201,48 @@ public class Server {
             outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + filename +"\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
 
-            int bytesAvailable = fileInputStream.available();
-            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
             byte[] buffer = new byte[bufferSize];
 
-            int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            while (bytesRead > 0) {
-                outputStream.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            //int total = 0;
+
+            int bytesRead;
+            while ((bytesRead = fileInputStream.read(buffer, 0, bufferSize)) > 0) {
+                outputStream.write(buffer, 0, bytesRead);
+                //bytesAvailable = fileInputStream.available();
+                //bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                //bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                //total += bytesRead;
             }
+
+            //Log.i("error", "Wrote " + total + " bytes to output stream!");
 
             outputStream.writeBytes(lineEnd);
             outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            outputStream.flush();
 
             int responseCode = connection.getResponseCode();
+            String serverResponseMessage = connection.getResponseMessage();
+
+            Log.i("uploadFile", "HTTP Response is : "
+                    + serverResponseMessage + ": " + responseCode);
+
             String message = "";
+
             if (responseCode == 200) {
                 message = readContents(connection.getInputStream());
             }
 
             fileInputStream.close();
-            outputStream.flush();
             outputStream.close();
 
             return message;
+
         } catch (MalformedURLException ex) {
             Log.e("error", "Bad server url");
             return null;
         } catch (IOException ioe) {
             Log.e("error", "Could not open url connection.");
             throw new ConnectionFailureException();
-        }
-    }
-
-    // Constructs a request url.
-    private static String buildRequest(String name, HashMap<String, String> args) {
-        try {
-            String link = "";
-            for (String key : args.keySet()) {
-                if (!link.equals("")) link += '&';
-                link += key + "=" + URLEncoder.encode(args.get(key), "UTF-8");
-            }
-            return urlString() + "/" + name + "?" + link;
-        } catch (UnsupportedEncodingException e) {
-            Log.e("error", "Unsupported encoding used in url builder.");
-            return null;
         }
     }
 
@@ -303,8 +318,12 @@ public class Server {
         return getResponse(buildRequest("uppobox", args));
     }
 
-    public static String sendProfilePicture(String email, String filename) throws ConnectionFailureException {
-        return getResponseUpload("upprofile", email, filename);
+    public static String sendProfilePicture(String email, String fileName) throws ConnectionFailureException {
+        return getResponseUpload("upprofile", email, fileName);
+    }
+
+    public static String sendProfilePicture(String email, Bitmap bitmap) throws ConnectionFailureException {
+        return null;
     }
 
     public static String sendStatus(String email, String status) throws ConnectionFailureException {
