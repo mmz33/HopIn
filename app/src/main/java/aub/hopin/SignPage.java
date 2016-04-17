@@ -34,6 +34,7 @@ public class SignPage extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         LocalUserPreferences.init(this.getApplicationContext());
+        ResourceManager.init(this.getApplicationContext());
 
         // Create buttons.
         this.signIn = (Button)findViewById(R.id.sign_page_sign_in);

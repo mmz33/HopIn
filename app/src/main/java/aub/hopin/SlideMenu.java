@@ -77,7 +77,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         protected Void doInBackground(Void... params) {
             try {
                 if (Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
-                    Log.i("error", "positioning info successfully sent.");
+                    //Log.i("error", "positioning info successfully sent.");
                 } else {
                     Log.e("error", "failed to send positioning info.");
                 }
@@ -107,7 +107,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                 HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
                 if (activeUserPositions != null) {
                     Handler handler = new Handler(getApplicationContext().getMainLooper());
-                    Log.i("error", "successfully queried active users.");
+                    //Log.i("error", "successfully queried active users.");
 
                     asyncToCreate.clear();
                     asyncToUpdate.clear();
