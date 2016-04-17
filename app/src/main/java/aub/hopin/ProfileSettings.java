@@ -27,13 +27,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.RadioGroup;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class ProfileSettings extends AppCompatActivity {
 
@@ -48,10 +51,12 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton offeringButton;
     private RadioButton wantingButton;
 
-    private final int GALLERY_ACTIVITY_CODE=200;
-    private final int RESULT_CROP = 400;
+    private ProgressBar loading;
 
-    private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
+    private static final int PICK_FROM_GALLERY = 1;
+    private static final int CROP_IMAGE = 2;
+
+    /*private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
         private boolean success;
         private UserInfo user;
         private String path;
@@ -88,7 +93,7 @@ public class ProfileSettings extends AppCompatActivity {
             if (success)
                 profileImage.setImageBitmap(user.profileImage);
         }
-    }
+    }*/
 
     public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
 
@@ -102,7 +107,10 @@ public class ProfileSettings extends AppCompatActivity {
             this.success = false;
         }
 
-        protected void onPreExecute() {super.onPreExecute();}
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -121,6 +129,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPreExecute();
+            loading.setVisibility(View.GONE);
             if(success)
                 profileImage.setImageBitmap(user.profileImage);
         }
@@ -252,6 +261,9 @@ public class ProfileSettings extends AppCompatActivity {
         offeringButton = (RadioButton)findViewById(R.id.profile_state_group_offering);
         wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
 
+        loading = (ProgressBar)findViewById(R.id.profile_loading);
+        loading.setVisibility(View.GONE);
+
         UserInfo info = ActiveUser.getActiveUserInfo();
 
         // Set profile image.
@@ -310,10 +322,11 @@ public class ProfileSettings extends AppCompatActivity {
 
     //click to select image
     public void loadProfileImage(View v) {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, 0);
+        try {
+            startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+        } catch (ActivityNotFoundException e) {}
     }
 
     //This method return the path of the image.
@@ -332,42 +345,44 @@ public class ProfileSettings extends AppCompatActivity {
         }
     }
 
-    public static void performCrop(String imageUri) {
+    private void performCrop(Uri uri) {
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            File file = new File(imageUri);
-            Uri contentUri = Uri.fromFile(file);
 
-            cropIntent.setDataAndType(contentUri, "image/*");
+            cropIntent.setDataAndType(uri, "image/*");
 
             cropIntent.putExtra("crop", true);
             cropIntent.putExtra("aspectX", true);
             cropIntent.putExtra("aspectY", true);
-            cropIntent.putExtra("outputX", 280);
-            cropIntent.putExtra("outputY", 280);
+            cropIntent.putExtra("outputX", 100);
+            cropIntent.putExtra("outputY", 100);
             cropIntent.putExtra("return-data", true);
 
-
+            startActivityForResult(cropIntent, CROP_IMAGE);
         }
+
+
         catch (ActivityNotFoundException e) {}
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK) return;
 
-        if(requestCode == GALLERY_ACTIVITY_CODE) {
-            if(resultCode == Activity.RESULT_OK) {
-                String imagePath = data.getStringExtra("imagePath");
-                performCrop(imagePath);
-            }
-        }
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            //String realPath = getRealPathFromURI(this, data.getData());
-            Bundle extras = data.getExtras();
-            Bitmap selectedBitmap = extras.getParcelable("data");
-            new AsyncUploadProfilePictureBitmap(selectedBitmap).execute();
+        switch (requestCode) {
+            case PICK_FROM_GALLERY:
+                Uri uri = data.getData();
+                performCrop(uri);
+                break;
+            case CROP_IMAGE:
+                Bundle extras = data.getExtras();
+                if(extras != null) {
+                    Bitmap photo = extras.getParcelable("data");
+                    new AsyncUploadProfilePictureBitmap(photo).execute();
+                }
+                break;
+            default:
+                break;
         }
     }
 }

@@ -1,119 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ProfileSettings"
     tools:showIn="@layout/activity_profile">
 
-    <ImageView
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:id="@+id/profile_image_view"
-        android:src="@drawable/missing_profile"
-        android:onClick="loadProfileImage"
-        android:scaleType="fitXY"
-        android:layout_below="@+id/profile_title"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_status_message"
-        android:inputType="text"
-        android:editable="true"
-        android:text="Hello, I&apos;m using HopIn!"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/profile_image_view" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_switch_user_type_radio_group"
-        android:layout_below="@+id/profile_switch_user_mode"
-        android:layout_alignParentStart="true"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RadioButton
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/passenger"
-            android:id="@+id/profile_passenger_radio_button"
-            android:checked="false"/>
+            android:text="Profile"
+            android:id="@+id/profile_title"
+            android:textSize="35dp"
+            android:textColor="#000000"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-        <RadioButton
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:id="@+id/profile_image_view"
+            android:src="@drawable/missing_profile"
+            android:onClick="loadProfileImage"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:layout_below="@+id/profile_title"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/driver"
-            android:id="@+id/profile_driver_radio_button"
-            android:checked="false"/>
-    </RadioGroup>
+            android:id="@+id/profile_status_message"
+            android:inputType="text"
+            android:editable="true"
+            android:layout_gravity="center"
+            android:text="Hello, I&apos;m using HopIn!"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/profile_image_view" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_driver_state_group"
-        android:layout_below="@+id/profile_switch_user_state"
-        android:orientation="vertical"
-        android:layout_alignStart="@+id/profile_switch_user_state">
 
-        <RadioButton
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Passive"
-            android:id="@+id/profile_state_group_passive"
-            android:checked="false"/>
+            android:text="Mode"
+            android:id="@+id/profile_switch_user_mode"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/profile_status_message"
+            android:layout_alignParentStart="true" />
 
-        <RadioButton
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Offering Rides"
-            android:id="@+id/profile_state_group_offering"
-            android:checked="false"/>
+            android:id="@+id/profile_switch_user_type_radio_group"
+            android:layout_below="@+id/profile_switch_user_mode"
+            android:layout_gravity="center"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
 
-        <RadioButton
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/passenger"
+                android:id="@+id/profile_passenger_radio_button"
+                android:checked="false"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/driver"
+                android:id="@+id/profile_driver_radio_button"
+                android:checked="false"/>
+        </RadioGroup>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Want Ride"
-            android:id="@+id/profile_state_group_want"
-            android:checked="false"/>
-    </RadioGroup>
+            android:text="State"
+            android:id="@+id/profile_switch_user_state"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/profile_status_message" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mode"
-        android:id="@+id/profile_switch_user_mode"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/profile_status_message"
-        android:layout_alignParentStart="true" />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_driver_state_group"
+            android:layout_below="@+id/profile_switch_user_state"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_alignStart="@+id/profile_switch_user_state">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="State"
-        android:id="@+id/profile_switch_user_state"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/profile_status_message"
-        android:layout_toRightOf="@+id/profile_switch_user_type_radio_group"
-        android:layout_marginLeft="32dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passive"
+                android:id="@+id/profile_state_group_passive"
+                android:checked="false"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:id="@+id/profile_title"
-        android:textSize="35dp"
-        android:textColor="#000000"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offering Rides"
+                android:id="@+id/profile_state_group_offering"
+                android:checked="false"/>
 
-</RelativeLayout>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Want Ride"
+                android:id="@+id/profile_state_group_want"
+                android:checked="false"/>
+        </RadioGroup>
+
+        <ProgressBar
+            style="@style/GenericProgressIndicator"
+            android:id="@+id/profile_loading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/profile_switch_user_state" />
+
+    </LinearLayout>
+
+</ScrollView>

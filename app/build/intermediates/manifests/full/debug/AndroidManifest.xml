@@ -105,14 +105,6 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="aub.hopin.NotificationSettings"
-            android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="aub.hopin.MapDisplaySettings"
-            android:label="@string/title_activity_navigation_settigns"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="aub.hopin.FeedbackSettings"
             android:label="@string/title_activity_feedback"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -135,11 +127,6 @@
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-
-        <activity
-            android:name="aub.hopin.MapsActivity"
-            android:label="@string/title_activity_maps" />
-
         <intent-filter>
             <action android:name="aub.hopin.MapsActivity" />
 
@@ -154,10 +141,6 @@
         <activity
             android:name="aub.hopin.SlideMenu"
             android:label="Dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="aub.hopin.ShowScaleOnMap"
-            android:label="Show scale on Map"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.Help"

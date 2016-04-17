@@ -75,4 +75,13 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/sign_in_button"/>
 
+    <ProgressBar
+        style="@style/GenericProgressIndicator"
+        android:id="@+id/sign_in_loading"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/sign_in_button" />
+
 </RelativeLayout>

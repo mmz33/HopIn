@@ -303,10 +303,6 @@ public class Server {
         return getResponseUpload("upprofile", email, fileName);
     }
 
-    public static String sendProfilePicture(String email, Bitmap bitmap) throws ConnectionFailureException {
-        return null;
-    }
-
     public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {
         return getResponseUpload("upprofile", email, bmp);
     }

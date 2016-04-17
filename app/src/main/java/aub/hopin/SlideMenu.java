@@ -253,6 +253,11 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         UserInfo info = ActiveUser.getActiveUserInfo();
 
+        userMarkers = new HashMap<>();
+        userInfoMap = new HashMap<>();
+
+        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getActiveUserInfo());
+
         /*if (info.mode == UserMode.PassengerMode) requestButton.setText("Give me a ride");
         else if (info.mode == UserMode.DriverMode) requestButton.setText("I am offering a ride");
 
@@ -345,11 +350,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         //    locationManager.requestLocationUpdates(100, 1, new Criteria(), null);
         //} catch (SecurityException e) {}
 
-        userMarkers = new HashMap<>();
-        userInfoMap = new HashMap<>();
-
-        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getActiveUserInfo());
-
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
@@ -433,7 +433,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         try {
-            mMap.setMyLocationEnabled(true);
+            //mMap.setMyLocationEnabled(true);
         } catch (SecurityException e) {}
         if (mMap != null) setUpMap();
         else             Log.e("error", "Map is not initialized!");
