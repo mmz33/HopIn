@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -176,11 +177,18 @@ public class Server {
 
     // Retrieves a response from the server after an upload.
     private static String getResponseUpload(String service, String email, String filename) throws ConnectionFailureException {
-        final int bufferSize = 64 * 1024;
-
         try {
             FileInputStream is = new FileInputStream(new File(filename));
             Bitmap bmp = BitmapFactory.decodeStream(is);
+            return getResponseUpload(service, email, bmp);
+        } catch (FileNotFoundException e) {
+            Log.e("error", "getResponseUpload: File not found!");
+            return null;
+        }
+    }
+
+    private static String getResponseUpload(String service, String email, Bitmap bmp) throws ConnectionFailureException {
+        try {
             String encodedString = ImageUtils.encodeBase64(bmp);
 
             URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
@@ -292,6 +300,10 @@ public class Server {
 
     public static String sendProfilePicture(String email, String filename) throws ConnectionFailureException {
         return getResponseUpload("upprofile", email, filename);
+    }
+
+    public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {
+        return getResponseUpload("upprofile", email, bmp);
     }
 
     public static String sendStatus(String email, String status) throws ConnectionFailureException {
