@@ -1,5 +1,6 @@
 package aub.hopin;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,7 +11,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Base64;
-
 import java.io.ByteArrayOutputStream;
 
 public class ImageUtils {

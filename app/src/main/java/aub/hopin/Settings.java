@@ -1,52 +1,100 @@
 package aub.hopin;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public class Settings extends AppCompatActivity {
 
-public class Settings extends AppCompatActivity{
+    private RadioGroup unitsRadioGroup;
+    private RadioButton automatic;
+    private RadioButton imperial;
+    private RadioButton metric;
 
-    private ArrayAdapter<String> adapter;
-    private List<String> settings;
-    private ListView list;
+    private CheckBox backgroundNavigationBox;
+
+    private RadioGroup scaleRadioGroup;
+    private RadioButton  zooming;
+    private RadioButton always;
+
+    private CheckBox tiltMapBox;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list);
+        setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String items[] = {"Distance units", "Notification", "Navigation", "Show scale on Map"};
+        unitsRadioGroup = (RadioGroup)findViewById(R.id.distance_units_radio_group);
+        automatic = (RadioButton)findViewById(R.id.distance_units_automatic);
+        imperial = (RadioButton)findViewById(R.id.distance_units_imperial);
+        metric = (RadioButton)findViewById(R.id.distance_units_metric);
 
-        settings = new ArrayList<String>(Arrays.asList(items));
-        list = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, R.layout.list_row, settings);
-        list.setAdapter(adapter);
+        switch (LocalUserPreferences.getUnitsSetting()) {
+            case Metric:
+                metric.setChecked(true);
+                break;
+            case Imperial:
+                imperial.setChecked(true);
+                break;
+            case Automatic:
+                automatic.setChecked(true);
+                break;
+        }
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) startActivity(new Intent(Settings.this, DistanceUnitsSettings.class));
-                else if (position == 1) startActivity(new Intent(Settings.this, NotificationSettings.class));
-                else if (position == 2) startActivity(new Intent(Settings.this, MapDisplaySettings.class));
-                else if (position == 3) startActivity(new Intent(Settings.this, ShowScaleOnMap.class));
+        unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int id) {
+                if (automatic.getId() == id) {
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Automatic);
+                } else if (metric.getId() == id) {
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Metric);
+                } else if (imperial.getId() == id) {
+                    LocalUserPreferences.setUnitsSetting(MeasurementUnitsSetting.Imperial);
+                }
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_sign_page, menu);
-        return true;
+        backgroundNavigationBox = (CheckBox)findViewById(R.id.notifications_navigation);
+        backgroundNavigationBox.setChecked(LocalUserPreferences.getBackgroundNavigation());
+
+        backgroundNavigationBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton button, boolean b) {
+                LocalUserPreferences.setBackgroundNavigation(b);
+            }
+        });
+
+        scaleRadioGroup = (RadioGroup)findViewById(R.id.show_scale_on_map_radio_group);
+        zooming = (RadioButton)findViewById(R.id.show_scale_when_zooming);
+        always = (RadioButton)findViewById(R.id.show_scale_always);
+
+        scaleRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(zooming.getId() == checkedId) {
+
+                }
+                else if(always.getId() == checkedId) {
+
+                }
+            }
+        });
+
+        tiltMapBox = (CheckBox)findViewById(R.id.map_display_settings_tilt_map);
+        tiltMapBox.setChecked(LocalUserPreferences.getTiltMap());
+
+        tiltMapBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton button, boolean b) {
+                LocalUserPreferences.setTiltMap(b);
+            }
+        });
     }
 }

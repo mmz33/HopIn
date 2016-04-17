@@ -1,6 +1,7 @@
 package aub.hopin;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -32,6 +33,8 @@ import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.RadioGroup;
 
+import java.io.File;
+
 public class ProfileSettings extends AppCompatActivity {
 
     private ImageView profileImage;
@@ -44,6 +47,9 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton passiveButton;
     private RadioButton offeringButton;
     private RadioButton wantingButton;
+
+    private final int GALLERY_ACTIVITY_CODE=200;
+    private final int RESULT_CROP = 400;
 
     private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
         private boolean success;
@@ -84,6 +90,42 @@ public class ProfileSettings extends AppCompatActivity {
         }
     }
 
+    public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
+
+        private boolean success;
+        private UserInfo user;
+        private Bitmap bitmap;
+
+        public AsyncUploadProfilePictureBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
+            this.user = ActiveUser.getActiveUserInfo();
+            this.success = false;
+        }
+
+        protected void onPreExecute() {super.onPreExecute();}
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                if(Server.sendProfilePicture(user.email, bitmap).equals("OK")) {
+                    ResourceManager.setProfileImageDirty(user.email);
+                    user.setProfileImage(ResourceManager.getProfileImage(user.email));
+                    success = true;
+                    Log.i("error", "Successfully uploaded profile picture!");
+                } else {
+                    Log.e("error", "Something went wrong with the profile picture update.");
+                }
+            } catch (ConnectionFailureException e) {}
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPreExecute();
+            if(success)
+                profileImage.setImageBitmap(user.profileImage);
+        }
+    }
+
     private class AsyncStatusUpdate extends AsyncTask<Void, Void, Void> {
         private String email;
         private String statusMessage;
@@ -114,11 +156,11 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
-        private String email;
+        private UserInfo info;
         private UserMode mode;
 
         public AsyncModeChange(int id) {
-            email = ActiveUser.getEmail();
+            info = ActiveUser.getActiveUserInfo();
             if (id == passengerButton.getId()) {
                 mode = UserMode.PassengerMode;
             } else if (id == driverButton.getId()) {
@@ -134,7 +176,9 @@ public class ProfileSettings extends AppCompatActivity {
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendModeSwitch(email, mode).equals("OK")) {
+                if (Server.sendModeSwitch(info.email, mode).equals("OK")) {
+                    info.mode = mode;
+                    ModeSwitchEvent.fire(info.email);
                     Log.i("error", "Successfully sent mode switch.");
                 } else {
                     Log.e("error", "Something went wrong with the mode switch.");
@@ -288,12 +332,42 @@ public class ProfileSettings extends AppCompatActivity {
         }
     }
 
+    public static void performCrop(String imageUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            File file = new File(imageUri);
+            Uri contentUri = Uri.fromFile(file);
+
+            cropIntent.setDataAndType(contentUri, "image/*");
+
+            cropIntent.putExtra("crop", true);
+            cropIntent.putExtra("aspectX", true);
+            cropIntent.putExtra("aspectY", true);
+            cropIntent.putExtra("outputX", 280);
+            cropIntent.putExtra("outputY", 280);
+            cropIntent.putExtra("return-data", true);
+
+
+        }
+        catch (ActivityNotFoundException e) {}
+    }
+
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == GALLERY_ACTIVITY_CODE) {
+            if(resultCode == Activity.RESULT_OK) {
+                String imagePath = data.getStringExtra("imagePath");
+                performCrop(imagePath);
+            }
+        }
+
         if (resultCode == Activity.RESULT_OK && data != null) {
-            String realPath = getRealPathFromURI(this, data.getData());
-            new AsyncUploadProfilePicture(realPath).execute();
+            //String realPath = getRealPathFromURI(this, data.getData());
+            Bundle extras = data.getExtras();
+            Bitmap selectedBitmap = extras.getParcelable("data");
+            new AsyncUploadProfilePictureBitmap(selectedBitmap).execute();
         }
     }
 }

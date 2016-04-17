@@ -192,6 +192,7 @@ public class Server {
             String encodedString = ImageUtils.encodeBase64(bmp);
 
             URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
+
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -298,8 +299,12 @@ public class Server {
         return getResponse(buildRequest("uppobox", args));
     }
 
-    public static String sendProfilePicture(String email, String filename) throws ConnectionFailureException {
-        return getResponseUpload("upprofile", email, filename);
+    public static String sendProfilePicture(String email, String fileName) throws ConnectionFailureException {
+        return getResponseUpload("upprofile", email, fileName);
+    }
+
+    public static String sendProfilePicture(String email, Bitmap bitmap) throws ConnectionFailureException {
+        return null;
     }
 
     public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {

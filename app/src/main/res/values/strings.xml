@@ -80,6 +80,7 @@
     <string name="title_activity_help">Help</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_terms_and_conditions">TermsAndConditions</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>
     

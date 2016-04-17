@@ -1,10 +1,14 @@
 package aub.hopin;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +22,12 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +45,7 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
+public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, Animation.AnimationListener, View.OnClickListener{
 
     private SupportMapFragment supportMapFragment;
     private DrawerLayout drawerLayout;
@@ -43,6 +53,18 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private NavigationView navigationView;
     private GoogleMap mMap;
     private android.support.v4.app.FragmentManager sFm;
+
+    private Button requestButton;
+
+    private Animation animation1;
+    private Animation animation2;
+    private Animation animation3;
+    private boolean isP = false;
+    private boolean isO = false;
+    private boolean isW = false;
+
+    private ImageView img;
+
 
     private HashMap<String, UserInfo> userInfoMap;
     private HashMap<String, GroundOverlay> userMarkers;
@@ -59,6 +81,36 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             Log.e("error", "faced security exception when querying location.");
             return null;
         }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if(animation == animation1) {
+            if(isP) {
+                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.p_button);
+            } else if(isO) {
+                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.o_button);
+            } else if(isW) {
+                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.w_button);
+            }
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     // Asynchronous position sending.
@@ -156,12 +208,116 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
+    private class AsyncSendNotification extends AsyncTask<Void, Void, Void> {
+        private UserInfo info;
+        private UserState state;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            info = ActiveUser.getActiveUserInfo();
+            if (info.mode == UserMode.PassengerMode) {
+                state = UserState.Wanting;
+            } else {
+                state = UserState.Offering;
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                if (Server.sendStateSwitch(info.email, state).equals("OK")) {
+                    info.state = state;
+                    Log.i("error", "Successfully sent notify message!");
+                } else {
+                    Log.e("error", "Something went wrong with sending notify message");
+                }
+            } catch (ConnectionFailureException e) {}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //requestButton = (Button) findViewById(R.id.slide_menu_button);
+
+        UserInfo info = ActiveUser.getActiveUserInfo();
+
+        /*if (info.mode == UserMode.PassengerMode) requestButton.setText("Give me a ride");
+        else if (info.mode == UserMode.DriverMode) requestButton.setText("I am offering a ride");
+
+        ModeSwitchEvent.register(new ModeSwitchListener() {
+            @Override
+            public void onSwitch(String email) {
+                UserInfo userInfo = ActiveUser.getActiveUserInfo();
+                if (email.equals(userInfo.email)) {
+                    if (userInfo.mode == UserMode.PassengerMode)
+                        requestButton.setText("Give me a ride");
+                    else if (userInfo.mode == UserMode.DriverMode)
+                        requestButton.setText("I am offering a ride");
+                }
+            }
+        });
+
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AsyncSendNotification().execute();
+            }
+        });
+
+        switch (info.state) {
+            case Passive:
+                isP = true;
+                isO = false;
+                isW = false;
+                break;
+            case Offering:
+                isP = false;
+                isO = true;
+                isW = false;
+                break;
+            case Wanting:
+                isP = false;
+                isO = false;
+                isW = true;
+                break;
+            default:
+                isP = false;
+                isO = false;
+                isW = false;
+                break;
+        }*/
+
+        img = (ImageView) findViewById(R.id.slide_menu_notify_image);
+        if (isP) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.p_button);
+            bitmap = ImageUtils.makeRounded(bitmap);
+            img.setImageBitmap(bitmap);
+        } else if (isW) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.w_button);
+             bitmap = ImageUtils.makeRounded(bitmap);
+            img.setImageBitmap(bitmap);
+        } else{
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.o_button);
+            bitmap = ImageUtils.makeRounded(bitmap);
+            img.setImageBitmap(bitmap);
+        }
+
+        animation1 = AnimationUtils.loadAnimation(this, R.anim.first);
+        animation1.setAnimationListener(this);
+        animation2 = AnimationUtils.loadAnimation(this, R.anim.second);
+        animation2.setAnimationListener(this);
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
@@ -206,18 +362,18 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
                 new AsyncSetupMarkers().execute();
 
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Location location = getCurrentLocation();
-                        if (location != null) {
-                            LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-                            CameraPosition.Builder builder = new CameraPosition.Builder();
-                            builder.zoom(15);
-                            builder.target(target);
-                            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-                        }
-                    }
-                });
+                //runOnUiThread(new Runnable() {
+                    //public void run() {
+                        //Location location = getCurrentLocation();
+                        //if (location != null) {
+                            //LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+                            //CameraPosition.Builder builder = new CameraPosition.Builder();
+                            //builder.zoom(15);
+                            //builder.target(target);
+                            //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+                        //}
+                    //}
+                //});
             }
         };
         t.scheduleAtFixedRate(task, 1000, 1000);
@@ -277,7 +433,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         try {
-            //mMap.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(true);
         } catch (SecurityException e) {}
         if (mMap != null) setUpMap();
         else             Log.e("error", "Map is not initialized!");
@@ -285,14 +441,14 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
     //make the current location as default
     public void setUpMap() {
-        //Location location = getCurrentLocation();
-        //if (location != null) {
-        //    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-        //    CameraPosition.Builder builder = new CameraPosition.Builder();
-        //    builder.zoom(15);
-        //    builder.target(target);
-        //    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-        //}
+        Location location = getCurrentLocation();
+        if (location != null) {
+            LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraPosition.Builder builder = new CameraPosition.Builder();
+            builder.zoom(15);
+            builder.target(target);
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+        }
     }
 
     @Override
