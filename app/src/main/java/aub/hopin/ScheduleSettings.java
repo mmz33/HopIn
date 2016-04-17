@@ -32,7 +32,7 @@ public class ScheduleSettings extends AppCompatActivity {
 
         public AsyncUploadScheduleImage(Uri link) {
             uri = link;
-            user = ActiveUser.getActiveUserInfo();
+            user = ActiveUser.getInfo();
             success = false;
         }
 
@@ -71,7 +71,7 @@ public class ScheduleSettings extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         this.scheduleImage = (ImageView)findViewById(R.id.schedule_image_view);
-        this.scheduleImage.setImageBitmap(ActiveUser.getActiveUserInfo().scheduleImage);
+        this.scheduleImage.setImageBitmap(ActiveUser.getInfo().scheduleImage);
     }
 
     public void loadScheduleImage(View v) {

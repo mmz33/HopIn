@@ -58,7 +58,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         public AsyncUploadProfilePicture(String path) {
             this.path = path;
-            this.user = ActiveUser.getActiveUserInfo();
+            this.user = ActiveUser.getInfo();
             this.success = false;
         }
 
@@ -98,7 +98,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         public AsyncUploadProfilePictureBitmap(Bitmap bitmap) {
             this.bitmap = bitmap;
-            this.user = ActiveUser.getActiveUserInfo();
+            this.user = ActiveUser.getInfo();
             this.success = false;
         }
 
@@ -160,7 +160,7 @@ public class ProfileSettings extends AppCompatActivity {
         private UserMode mode;
 
         public AsyncModeChange(int id) {
-            info = ActiveUser.getActiveUserInfo();
+            info = ActiveUser.getInfo();
             if (id == passengerButton.getId()) {
                 mode = UserMode.PassengerMode;
             } else if (id == driverButton.getId()) {
@@ -252,7 +252,7 @@ public class ProfileSettings extends AppCompatActivity {
         offeringButton = (RadioButton)findViewById(R.id.profile_state_group_offering);
         wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
 
-        UserInfo info = ActiveUser.getActiveUserInfo();
+        UserInfo info = ActiveUser.getInfo();
 
         // Set profile image.
         profileImage.setImageBitmap(info.profileImage);
