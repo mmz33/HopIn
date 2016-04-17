@@ -40,9 +40,10 @@ public class SignIn extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 String response = Server.signIn(emailText, passwordText);
-                if (response.equals("OK")) {
-                    Log.i("", "Signed in successfully.");
-                    ActiveUser.setActiveUserInfo(new UserInfo(emailText, true));
+                if (response.startsWith("OK")) {
+                    String ssid = response.substring(3);
+                    ActiveUser.setSessionId(ssid);
+                    ActiveUser.setInfo(new UserInfo(emailText, true));
                 } else {
                     errorMessage = response;
                 }

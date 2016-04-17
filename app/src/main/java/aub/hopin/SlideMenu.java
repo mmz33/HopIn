@@ -215,7 +215,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            info = ActiveUser.getActiveUserInfo();
+            info = ActiveUser.getInfo();
             if (info.mode == UserMode.PassengerMode) {
                 state = UserState.Wanting;
             } else {
@@ -251,7 +251,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         //requestButton = (Button) findViewById(R.id.slide_menu_button);
 
-        UserInfo info = ActiveUser.getActiveUserInfo();
+        UserInfo info = ActiveUser.getInfo();
 
         userMarkers = new HashMap<>();
         userInfoMap = new HashMap<>();

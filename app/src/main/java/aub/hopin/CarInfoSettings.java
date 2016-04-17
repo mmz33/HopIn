@@ -40,7 +40,7 @@ public class CarInfoSettings extends AppCompatActivity {
             } else if (count > 40) {
                 errorMessage = "Exceeded maximum passenger count";
             } else {
-                String email = ActiveUser.getActiveUserInfo().email;
+                String email = ActiveUser.getInfo().email;
                 // TODO
                 // Continue here
                 // Send the vehicle data to the server.

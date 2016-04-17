@@ -49,7 +49,7 @@ public class ContactInfoSettings extends AppCompatActivity {
                 data.put("showphone", showPhone ? "1" : "0");
                 data.put("showaddress", showAddress ? "1" : "0");
                 if (Server.sendUserInfoBundle(email, data).equals("OK")) {
-                    UserInfo info = ActiveUser.getActiveUserInfo();
+                    UserInfo info = ActiveUser.getInfo();
                     info.phoneNumber = phoneNumber;
                     info.address = address;
                     info.poBox = poBox;
@@ -90,7 +90,7 @@ public class ContactInfoSettings extends AppCompatActivity {
         showAddressBox = (CheckBox)findViewById(R.id.contact_info_show_address);
         okayButton = (Button)findViewById(R.id.contact_info_okay);
 
-        UserInfo info = ActiveUser.getActiveUserInfo();
+        UserInfo info = ActiveUser.getInfo();
 
         phoneNumberBox.setText(info.phoneNumber);
         addressBox.setText(info.address);

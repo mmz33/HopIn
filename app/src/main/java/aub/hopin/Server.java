@@ -166,12 +166,14 @@ public class Server {
     public static Bitmap downloadProfileImage(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
+        args.put("ssid", ActiveUser.getSessionId());
         return downloadBitmap(buildRequest("getprofileimg", args));
     }
 
     public static Bitmap downloadScheduleImage(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
+        args.put("ssid", ActiveUser.getSessionId());
         return downloadBitmap(buildRequest("getscheduleimg", args));
     }
 
@@ -191,7 +193,12 @@ public class Server {
         try {
             String encodedString = ImageUtils.encodeBase64(bmp);
 
-            URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
+            HashMap<String, String> args = new HashMap<>();
+            args.put("email", email);
+            args.put("ssid", ActiveUser.getSessionId());
+            String link = buildRequest(service, args);
+            if (link == null) throw new ConnectionFailureException();
+            URL url = new URL(link);
 
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
@@ -256,6 +263,12 @@ public class Server {
         return "?";
     }
 
+    public static String checkSession(String sessionId) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("ssid", sessionId);
+        return getResponse(buildRequest("checksession", args));
+    }
+
     public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("firstname", firstName);
@@ -282,6 +295,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("phone", phoneNumber);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("upphone", args));
     }
 
@@ -289,6 +303,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("address", address);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("upaddress", args));
     }
 
@@ -296,6 +311,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("pobox", poBox);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("uppobox", args));
     }
 
@@ -311,6 +327,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("status", status);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("updatestatus", args));
     }
 
@@ -318,6 +335,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("mode", getModeString(mode));
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("switchmode", args));
     }
 
@@ -325,6 +343,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("state", getStateString(state));
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("switchstate", args));
     }
 
@@ -332,6 +351,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("rating", String.format("%.2f", stars));
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("rate", args));
     }
 
@@ -339,6 +359,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("message", problemMessage);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("problem", args));
     }
 
@@ -346,6 +367,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("message", feedbackMessage);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("feedback", args));
     }
 
@@ -353,6 +375,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("show", b? "1" : "0");
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("showphone", args));
     }
 
@@ -360,6 +383,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("show", b ? "1" : "0");
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("showaddress", args));
     }
 
@@ -368,17 +392,20 @@ public class Server {
         args.put("email", email);
         args.put("lat", String.format("%.12f", latitude));
         args.put("lon", String.format("%.12f", longitude));
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("sendpos", args));
     }
 
     public static HashMap<String, String> queryActiveUsersAndPositions() throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponseMap(buildRequest("queryactive", args));
     }
 
     public static HashMap<String, String> queryUserInfo(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
+        args.put("ssid", ActiveUser.getSessionId());
         return getResponseMap(buildRequest("queryuser", args));
     }
 
@@ -393,6 +420,7 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("count", "" + data.size());
+        args.put("ssid", ActiveUser.getSessionId());
         int i = 0;
         for (String key : data.keySet()) {
             args.put("key" + i, key);

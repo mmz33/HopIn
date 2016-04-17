@@ -31,9 +31,10 @@ public class SignUpConfirm extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 String response = Server.confirmCode(email, code);
-                if (response.equals("OK")) {
-                    Log.i("", "Successfully confirmed account.");
-                    ActiveUser.setActiveUserInfo(new UserInfo(email, true));
+                if (response.startsWith("OK")) {
+                    String ssid = response.substring(3);
+                    ActiveUser.setSessionId(ssid);
+                    ActiveUser.setInfo(new UserInfo(email, true));
                 } else {
                     errorMessage = response;
                 }

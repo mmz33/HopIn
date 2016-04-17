@@ -2984,7 +2984,11 @@ containing a value of this type.
         public static final int contact_info_show_address=0x7f0e00a4;
         public static final int contact_info_show_phone=0x7f0e00a3;
         public static final int contact_info_title=0x7f0e009f;
+<<<<<<< HEAD
         public static final int contact_information_title=0x7f0e00c2;
+=======
+        public static final int contact_information_title=0x7f0e00c1;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int contentPanel=0x7f0e0071;
         public static final int content_frame=0x7f0e00ef;
         public static final int custom=0x7f0e0077;
@@ -2999,11 +3003,19 @@ containing a value of this type.
         public static final int design_menu_item_text=0x7f0e00f8;
         public static final int design_navigation_view=0x7f0e00f7;
         public static final int disableHome=0x7f0e000f;
+<<<<<<< HEAD
         public static final int disconnect=0x7f0e0109;
         public static final int distance_units_automatic=0x7f0e00c4;
         public static final int distance_units_imperial=0x7f0e00c5;
         public static final int distance_units_metric=0x7f0e00c6;
         public static final int distance_units_radio_group=0x7f0e00c3;
+=======
+        public static final int disconnect=0x7f0e0107;
+        public static final int distance_units_automatic=0x7f0e00c3;
+        public static final int distance_units_imperial=0x7f0e00c4;
+        public static final int distance_units_metric=0x7f0e00c5;
+        public static final int distance_units_radio_group=0x7f0e00c2;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int donate_with=0x7f0e0054;
         public static final int donate_with_google=0x7f0e0055;
         public static final int drawer_layout=0x7f0e0092;
@@ -3050,7 +3062,11 @@ containing a value of this type.
         public static final int list_item=0x7f0e0068;
         public static final int logo_only=0x7f0e0056;
         public static final int map=0x7f0e0094;
+<<<<<<< HEAD
         public static final int map_display_settings_tilt_map=0x7f0e00ca;
+=======
+        public static final int map_display_settings_tilt_map=0x7f0e00c9;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int match_parent=0x7f0e004f;
         public static final int media_actions=0x7f0e0111;
         public static final int media_route_control_frame=0x7f0e0101;
@@ -3074,6 +3090,7 @@ containing a value of this type.
         public static final int nav_terms_conditions=0x7f0e012a;
         public static final int nav_vehicle_type=0x7f0e0127;
         public static final int nav_view=0x7f0e0093;
+<<<<<<< HEAD
         public static final int navigation_header_container=0x7f0e00f6;
         public static final int navigation_settings_title=0x7f0e00c9;
         public static final int never=0x7f0e003d;
@@ -3081,6 +3098,15 @@ containing a value of this type.
         public static final int normal=0x7f0e000d;
         public static final int notification_title=0x7f0e00c7;
         public static final int notifications_navigation=0x7f0e00c8;
+=======
+        public static final int navigation_header_container=0x7f0e00f4;
+        public static final int navigation_settings_title=0x7f0e00c8;
+        public static final int never=0x7f0e003d;
+        public static final int none=0x7f0e0011;
+        public static final int normal=0x7f0e000d;
+        public static final int notification_title=0x7f0e00c6;
+        public static final int notifications_navigation=0x7f0e00c7;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int parallax=0x7f0e001c;
         public static final int parentPanel=0x7f0e006d;
         public static final int pin=0x7f0e001d;
@@ -3096,9 +3122,14 @@ containing a value of this type.
         public static final int production=0x7f0e0049;
         public static final int profile_driver_radio_button=0x7f0e00b1;
         public static final int profile_driver_state_group=0x7f0e00b2;
+<<<<<<< HEAD
         public static final int profile_image=0x7f0e010b;
         public static final int profile_image_view=0x7f0e00ab;
         public static final int profile_loading=0x7f0e00b7;
+=======
+        public static final int profile_image=0x7f0e0109;
+        public static final int profile_image_view=0x7f0e00ab;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int profile_passenger_radio_button=0x7f0e00b0;
         public static final int profile_state_group_offering=0x7f0e00b5;
         public static final int profile_state_group_passive=0x7f0e00b4;
@@ -3111,19 +3142,33 @@ containing a value of this type.
         public static final int progress_circular=0x7f0e0007;
         public static final int progress_horizontal=0x7f0e0008;
         public static final int radio=0x7f0e007b;
+<<<<<<< HEAD
         public static final int radioGroup=0x7f0e00db;
         public static final int radioGroup2=0x7f0e00e3;
         public static final int report_problem_send=0x7f0e00ba;
         public static final int report_problem_textbox=0x7f0e00b9;
         public static final int report_problem_title=0x7f0e00b8;
+=======
+        public static final int radioGroup=0x7f0e00d9;
+        public static final int radioGroup2=0x7f0e00e1;
+        public static final int report_problem_send=0x7f0e00b9;
+        public static final int report_problem_textbox=0x7f0e00b8;
+        public static final int report_problem_title=0x7f0e00b7;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int right=0x7f0e0025;
         public static final int route_name=0x7f0e00ff;
         public static final int rowTextView=0x7f0e00fc;
         public static final int sandbox=0x7f0e004a;
         public static final int satellite=0x7f0e0038;
+<<<<<<< HEAD
         public static final int schedule_image_view=0x7f0e00bc;
         public static final int schedule_title=0x7f0e00bd;
         public static final int schedule_upload_button=0x7f0e00bb;
+=======
+        public static final int schedule_image_view=0x7f0e00bb;
+        public static final int schedule_title=0x7f0e00bc;
+        public static final int schedule_upload_button=0x7f0e00ba;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int screen=0x7f0e0029;
         public static final int scroll=0x7f0e0019;
         public static final int scrollIndicatorDown=0x7f0e0075;
@@ -3142,11 +3187,19 @@ containing a value of this type.
         public static final int search_voice_btn=0x7f0e008e;
         public static final int select_dialog_listview=0x7f0e008f;
         public static final int selectionDetails=0x7f0e004e;
+<<<<<<< HEAD
         public static final int send_feedback_error_text=0x7f0e00c1;
         public static final int send_feedback_send=0x7f0e00c0;
         public static final int send_feedback_textbox=0x7f0e00bf;
         public static final int send_feedback_title=0x7f0e00be;
         public static final int settings=0x7f0e0100;
+=======
+        public static final int send_feedback_error_text=0x7f0e00c0;
+        public static final int send_feedback_send=0x7f0e00bf;
+        public static final int send_feedback_textbox=0x7f0e00be;
+        public static final int send_feedback_title=0x7f0e00bd;
+        public static final int settings=0x7f0e00fe;
+>>>>>>> a90e4bcead362289b79796a8b0a5229d50887d4b
         public static final int shortcut=0x7f0e007a;
         public static final int showCustom=0x7f0e0012;
         public static final int showHome=0x7f0e0013;

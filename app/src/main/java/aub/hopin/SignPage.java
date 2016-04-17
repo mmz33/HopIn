@@ -2,6 +2,7 @@ package aub.hopin;
 
 import android.content.DialogInterface;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -14,10 +15,50 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SignPage extends AppCompatActivity {
     private Button signIn;
     private Button signUp;
+
+    private class AsyncAutologin extends AsyncTask<Void, Void, Void> {
+        private String sessionId;
+        private String email;
+        private boolean success;
+
+        public AsyncAutologin(String sessionId, String email) {
+            this.sessionId = sessionId;
+            this.email = email;
+            this.success = false;
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        public Void doInBackground(Void... params) {
+            try {
+                if (Server.checkSession(sessionId).equals("YES")) {
+                    ActiveUser.setSessionId(sessionId);
+                    ActiveUser.setInfo(new UserInfo(email, true));
+                    success = true;
+                } else {
+                    success = false;
+                }
+            } catch (ConnectionFailureException e) {
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success) {
+                Toast.makeText(getApplicationContext(), "Autologin Successful.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Autologin Failed.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +76,15 @@ public class SignPage extends AppCompatActivity {
 
         LocalUserPreferences.init(this.getApplicationContext());
         ResourceManager.init(this.getApplicationContext());
+        SessionLoader.init(this.getApplicationContext());
+
+        // Attempt to load an active session.
+        if (SessionLoader.existsSessionId()) {
+            String ssid = SessionLoader.loadId();
+            String email = SessionLoader.loadEmail();
+            new AsyncAutologin(ssid, email).execute();
+            Toast.makeText(getApplicationContext(), "Logging in automatically...", Toast.LENGTH_SHORT).show();
+        }
 
         // Create buttons.
         this.signIn = (Button)findViewById(R.id.sign_page_sign_in);
