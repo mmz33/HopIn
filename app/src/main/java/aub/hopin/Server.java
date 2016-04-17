@@ -2,23 +2,20 @@ package aub.hopin;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -77,8 +74,6 @@ public class Server {
     // Retrieves a response from the server.
     private static String getResponse(String link) throws ConnectionFailureException {
         try {
-            //Log.i("error", "Starting to get response.");
-            //Log.i("error", "Creating connection: " + link);
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
@@ -86,19 +81,17 @@ public class Server {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
 
-            //Log.i("error", "Connecting...");
             connection.connect();
 
             int responseCode = connection.getResponseCode();
-            //Log.i("error", "Response code: " + responseCode);
-            String str = responseCode == 200? readContents(connection.getInputStream()) : null;
-            //Log.i("error", "Data: " + str);
+            if (responseCode == 200)
+                return readContents(connection.getInputStream());
 
-            return str;
+            throw new ConnectionFailureException();
         } catch (MalformedURLException e) {
             Log.e("error", "Bad server url");
             return null;
-         } catch (IOException e) {
+        } catch (IOException e) {
             Log.e("error", "Could not open url connection.");
             throw new ConnectionFailureException();
         }
@@ -107,8 +100,6 @@ public class Server {
     // Retrieves a response from the server in the form of a map.
     private static HashMap<String, String> getResponseMap(String link) throws ConnectionFailureException {
         try {
-            //Log.i("error", "Starting to get response map.");
-            //Log.i("error", "Creating connection: " + link);
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setReadTimeout(READ_TIMEOUT);
@@ -116,19 +107,13 @@ public class Server {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
 
-            //Log.i("error", "Connecting...");
             connection.connect();
 
             int responseCode = connection.getResponseCode();
-            //Log.i("error", "Response code: " + responseCode);
-            HashMap<String, String> res = parseMap(connection.getInputStream());
-            //Log.i("error", "Read map:");
-            //Log.i("error", "-----");
-            //for (String key : res.keySet()) {
-            //    Log.i("error", key + " -> " + res.get(key));
-            //}
-            //Log.i("error", "-----");
-            return res;
+            if (responseCode == 200)
+                return parseMap(connection.getInputStream());
+
+            throw new ConnectionFailureException();
         } catch (MalformedURLException e) {
             Log.e("error", "Bad server url.");
             return null;
@@ -139,22 +124,35 @@ public class Server {
     }
 
     // Downloads an image from the server.
-    public static Bitmap downloadBitmap(String url) {
+    private static Bitmap downloadBitmap(String url) throws ConnectionFailureException {
         try {
-            //Log.i("images", "About to download bitmap: " + url);
             URL myURL = new URL(url);
-            URLConnection connection = myURL.openConnection();
-            InputStream is = connection.getInputStream();
-            Bitmap image = BitmapFactory.decodeStream(new BufferedInputStream(is));
-            //Log.i("images", "Successfully downloaded bitmap.");
-            is.close();
-            return image;
+            HttpURLConnection connection = (HttpURLConnection)myURL.openConnection();
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200) {
+                String contents = readContents(connection.getInputStream());
+                if (contents.equals("default"))
+                    return null;
+                return ImageUtils.decodeBase64(contents);
+            } else {
+                Log.e("error", "bad response code: " + responseCode);
+            }
+
+            throw new ConnectionFailureException();
         } catch (MalformedURLException e) {
             Log.e("images", "Error loading image: " + url);
             return null;
         } catch (IOException e) {
             Log.e("images", "Faced IO Exception: " + url);
-            return null;
+            throw new ConnectionFailureException();
         } catch (OutOfMemoryError th) {
             Log.e("images", "Out of Memory: " + url);
             return null;
@@ -164,13 +162,13 @@ public class Server {
         }
     }
 
-    public static Bitmap downloadProfileImage(String email) {
+    public static Bitmap downloadProfileImage(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         return downloadBitmap(buildRequest("getprofileimg", args));
     }
 
-    public static Bitmap downloadScheduleImage(String email) {
+    public static Bitmap downloadScheduleImage(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         return downloadBitmap(buildRequest("getscheduleimg", args));
@@ -178,65 +176,40 @@ public class Server {
 
     // Retrieves a response from the server after an upload.
     private static String getResponseUpload(String service, String email, String filename) throws ConnectionFailureException {
-        final String lineEnd = "\r\n";
-        final String twoHyphens = "--";
-        final String boundary =  "*****";
         final int bufferSize = 64 * 1024;
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File(filename));
+            FileInputStream is = new FileInputStream(new File(filename));
+            Bitmap bmp = BitmapFactory.decodeStream(is);
+            String encodedString = ImageUtils.encodeBase64(bmp);
+
             URL url = new URL(urlString() + "/" + service + "?email=" + URLEncoder.encode(email, "UTF-8"));
 
-
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(false);
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
 
-            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-            outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + filename +"\"" + lineEnd);
-            outputStream.writeBytes(lineEnd);
+            Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("base64", encodedString);
+            String query = builder.build().getEncodedQuery();
 
-            byte[] buffer = new byte[bufferSize];
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(query);
+            writer.flush();
+            writer.close();
+            os.close();
 
-            //int total = 0;
-
-            int bytesRead;
-            while ((bytesRead = fileInputStream.read(buffer, 0, bufferSize)) > 0) {
-                outputStream.write(buffer, 0, bytesRead);
-                //bytesAvailable = fileInputStream.available();
-                //bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                //bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                //total += bytesRead;
-            }
-
-            //Log.i("error", "Wrote " + total + " bytes to output stream!");
-
-            outputStream.writeBytes(lineEnd);
-            outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-            outputStream.flush();
+            connection.connect();
 
             int responseCode = connection.getResponseCode();
-            String serverResponseMessage = connection.getResponseMessage();
+            if (responseCode == 200)
+                return readContents(connection.getInputStream());
 
-            Log.i("uploadFile", "HTTP Response is : "
-                    + serverResponseMessage + ": " + responseCode);
-
-            String message = "";
-
-            if (responseCode == 200) {
-                message = readContents(connection.getInputStream());
-            }
-
-            fileInputStream.close();
-            outputStream.close();
-
-            return message;
-
+            throw new ConnectionFailureException();
         } catch (MalformedURLException ex) {
             Log.e("error", "Bad server url");
             return null;

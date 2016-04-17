@@ -32,7 +32,8 @@ public class ResourceManager {
                 if (cache.containsKey(name)) {
                     return cache.get(name);
                 } else {
-                    cache.put(name, Server.downloadProfileImage(email));
+                    Bitmap bmp = Server.downloadProfileImage(email);
+                    cache.put(name, bmp == null? defaultProfileImage : bmp);
                     return cache.get(name);
                 }
             }
@@ -52,7 +53,8 @@ public class ResourceManager {
                 if (cache.containsKey(name)) {
                     return cache.get(name);
                 } else {
-                    cache.put(name, Server.downloadScheduleImage(email));
+                    Bitmap bmp = Server.downloadScheduleImage(email);
+                    cache.put(name, bmp == null? defaultScheduleImage : bmp);
                     return cache.get(name);
                 }
             }
