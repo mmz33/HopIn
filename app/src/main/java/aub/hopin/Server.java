@@ -234,35 +234,6 @@ public class Server {
         }
     }
 
-    public static String getModeString(UserMode mode) {
-        switch (mode) {
-            case DriverMode: return "D";
-            case PassengerMode: return "P";
-            case Unspecified: return "U";
-        }
-        return "?";
-    }
-
-    public static String getGenderString(UserGender gender) {
-        switch (gender) {
-            case Female: return "F";
-            case Male: return "M";
-            case Other:
-                return "O";
-        }
-        return "?";
-    }
-
-    public static String getStateString(UserState state) {
-        switch (state) {
-            case Passive:
-                return "P";
-            case Offering: return "O";
-            case Wanting: return "W";
-        }
-        return "?";
-    }
-
     public static String checkSession(String sessionId) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", sessionId);
@@ -275,8 +246,8 @@ public class Server {
         args.put("lastname", lastName);
         args.put("email", email);
         args.put("age", "" + age);
-        args.put("mode", getModeString(mode));
-        args.put("gender", getGenderString(gender));
+        args.put("mode", UserMode.toSymbol(mode));
+        args.put("gender", UserGender.toSymbol(gender));
         return getResponse(buildRequest("signup", args));
     }
 
@@ -334,7 +305,7 @@ public class Server {
     public static String sendModeSwitch(String email, UserMode mode) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
-        args.put("mode", getModeString(mode));
+        args.put("mode", UserMode.toSymbol(mode));
         args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("switchmode", args));
     }
@@ -342,7 +313,7 @@ public class Server {
     public static String sendStateSwitch(String email, UserState state) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
-        args.put("state", getStateString(state));
+        args.put("state", UserState.toSymbol(state));
         args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("switchstate", args));
     }
