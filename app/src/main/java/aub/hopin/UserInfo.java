@@ -27,6 +27,8 @@ public class UserInfo {
     public Bitmap profileImage;
     public Bitmap scheduleImage;
 
+    public Runnable onLoadCallback;
+
     public UserInfo() {
         infoValid = false;
         firstName = "";
@@ -44,11 +46,17 @@ public class UserInfo {
         scheduleImage = null;
         showingAddress = false;
         showingPhone = false;
+        onLoadCallback = null;
+    }
+
+    public UserInfo(String email, boolean blocking, Runnable onLoad) {
+        this();
+        onLoadCallback = onLoad;
+        load(email, blocking);
     }
 
     public UserInfo(String email, boolean blocking) {
-        this();
-        load(email, blocking);
+        this(email, blocking, null);
     }
 
     public UserInfo(String email) {
@@ -71,48 +79,9 @@ public class UserInfo {
                     info.lastName = response.get("lastname");
                     info.email = response.get("email");
                     info.age = Integer.parseInt(response.get("age"));
-                    String gender = response.get("gender");
-                    String mode = response.get("mode");
-                    String state = response.get("state");
-                    switch (gender) {
-                        case "F":
-                            info.gender = UserGender.Female;
-                            break;
-                        case "M":
-                            info.gender = UserGender.Male;
-                            break;
-                        case "O":
-                            info.gender = UserGender.Other;
-                            break;
-                        default:
-                            info.gender = UserGender.Unspecified;
-                            break;
-                    }
-                    switch (mode) {
-                        case "D":
-                            info.mode = UserMode.DriverMode;
-                            break;
-                        case "P":
-                            info.mode = UserMode.PassengerMode;
-                            break;
-                        default:
-                            info.mode = UserMode.Unspecified;
-                            break;
-                    }
-                    switch (state) {
-                        case "P":
-                            info.state = UserState.Passive;
-                            break;
-                        case "O":
-                            info.state = UserState.Offering;
-                            break;
-                        case "W":
-                            info.state = UserState.Wanting;
-                            break;
-                        default:
-                            info.state = UserState.Passive;
-                            break;
-                    }
+                    info.gender = UserGender.fromSymbol(response.get("gender"));
+                    info.mode = UserMode.fromSymbol(response.get("mode"));
+                    info.state = UserState.fromSymbol(response.get("state"));
                     info.phoneNumber = response.get("phone");
                     info.status = response.get("status");
                     info.address = response.get("address");
@@ -122,6 +91,10 @@ public class UserInfo {
                     info.scheduleImage = ResourceManager.getScheduleImage(info.email);
                     info.setProfileImage(ResourceManager.getProfileImage(info.email));
                     info.infoValid = true;
+
+                    if (info.onLoadCallback != null) {
+                        info.onLoadCallback.run();
+                    }
                 } catch (ConnectionFailureException e) {
                     // TODO
                     // Handle this exception somehow?

@@ -256,7 +256,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         userMarkers = new HashMap<>();
         userInfoMap = new HashMap<>();
 
-        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getActiveUserInfo());
+        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getInfo());
 
         /*if (info.mode == UserMode.PassengerMode) requestButton.setText("Give me a ride");
         else if (info.mode == UserMode.DriverMode) requestButton.setText("I am offering a ride");

@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.text.TextWatcher;
 import android.text.Editable;
@@ -39,6 +40,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProfileSettings extends AppCompatActivity {
+    private static final int PICK_FROM_GALLERY = 1;
+    private static final int CROP_IMAGE = 2;
 
     private ImageView profileImage;
     private EditText statusBox;
@@ -52,58 +55,17 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton wantingButton;
 
     private ProgressBar loading;
-
-    private static final int PICK_FROM_GALLERY = 1;
-    private static final int CROP_IMAGE = 2;
-
-    /*private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
-        private boolean success;
-        private UserInfo user;
-        private String path;
-
-        public AsyncUploadProfilePicture(String path) {
-            this.path = path;
-            this.user = ActiveUser.getInfo();
-            this.success = false;
-        }
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected Void doInBackground(Void... params) {
-            try {
-                if (Server.sendProfilePicture(user.email, path).equals("OK")) {
-                    ResourceManager.setProfileImageDirty(user.email);
-                    user.setProfileImage(ResourceManager.getProfileImage(user.email)); // updates image from server.
-                    success = true;
-                    Log.i("error", "Successfully uploaded profile picture!");
-                } else {
-                    Log.e("error", "Something went wrong with the profile picture update.");
-                }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // display error message
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (success)
-                profileImage.setImageBitmap(user.profileImage);
-        }
-    }*/
+    private UserInfo profileInfo;
+    private TextWatcher textWatcher;
+    private RadioGroup.OnCheckedChangeListener listener0;
+    private RadioGroup.OnCheckedChangeListener listener1;
 
     public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
-
         private boolean success;
-        private UserInfo user;
         private Bitmap bitmap;
 
         public AsyncUploadProfilePictureBitmap(Bitmap bitmap) {
             this.bitmap = bitmap;
-            this.user = ActiveUser.getInfo();
             this.success = false;
         }
 
@@ -115,13 +77,10 @@ public class ProfileSettings extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                if(Server.sendProfilePicture(user.email, bitmap).equals("OK")) {
-                    ResourceManager.setProfileImageDirty(user.email);
-                    user.setProfileImage(ResourceManager.getProfileImage(user.email));
+                if(Server.sendProfilePicture(profileInfo.email, bitmap).equals("OK")) {
+                    ResourceManager.setProfileImageDirty(profileInfo.email);
+                    profileInfo.setProfileImage(ResourceManager.getProfileImage(profileInfo.email));
                     success = true;
-                    Log.i("error", "Successfully uploaded profile picture!");
-                } else {
-                    Log.e("error", "Something went wrong with the profile picture update.");
                 }
             } catch (ConnectionFailureException e) {}
             return null;
@@ -130,46 +89,51 @@ public class ProfileSettings extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPreExecute();
             loading.setVisibility(View.GONE);
-            if(success)
-                profileImage.setImageBitmap(user.profileImage);
+            if (success) {
+                profileImage.setImageBitmap(profileInfo.profileImage);
+            } else {
+                Toast.makeText(getApplicationContext(), "Failed to upload image.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     private class AsyncStatusUpdate extends AsyncTask<Void, Void, Void> {
-        private String email;
         private String statusMessage;
+        private boolean success;
+
+        public AsyncStatusUpdate(String message) {
+            this.statusMessage = message;
+            this.success = false;
+        }
 
         protected void onPreExecute() {
             super.onPreExecute();
-            email = ActiveUser.getEmail();
-            statusMessage = statusBox.getText().toString();
         }
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendStatus(email, statusMessage).equals("OK")) {
-                    Log.i("error", "Status update successfully sent to server.");
-                } else {
-                    Log.e("error", "Something went wrong with the status update.");
+                if (Server.sendStatus(profileInfo.email, statusMessage).equals("OK")) {
+                    profileInfo.status = statusMessage;
+                    success = true;
                 }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // display error message
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (!success) {
+                Toast.makeText(getApplicationContext(), "Failed to change status.", Toast.LENGTH_SHORT).show();
+                statusBox.setText(profileInfo.status);
+            }
         }
     }
 
     private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
-        private UserInfo info;
         private UserMode mode;
+        private boolean success;
 
         public AsyncModeChange(int id) {
-            info = ActiveUser.getInfo();
             if (id == passengerButton.getId()) {
                 mode = UserMode.PassengerMode;
             } else if (id == driverButton.getId()) {
@@ -177,6 +141,7 @@ public class ProfileSettings extends AppCompatActivity {
             } else {
                 mode = UserMode.Unspecified;
             }
+            success = false;
         }
 
         protected void onPreExecute() {
@@ -185,31 +150,42 @@ public class ProfileSettings extends AppCompatActivity {
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendModeSwitch(info.email, mode).equals("OK")) {
-                    info.mode = mode;
-                    ModeSwitchEvent.fire(info.email);
-                    Log.i("error", "Successfully sent mode switch.");
+                if (Server.sendModeSwitch(profileInfo.email, mode).equals("OK")) {
+                    success = true;
+                    profileInfo.mode = mode;
+                    ModeSwitchEvent.fire(profileInfo.email);
                 } else {
                     Log.e("error", "Something went wrong with the mode switch.");
                 }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // display error message
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (!success) {
+                Toast.makeText(getApplicationContext(), "Failed to switch mode.", Toast.LENGTH_SHORT).show();
+                passengerButton.setChecked(false);
+                driverButton.setChecked(false);
+                switch (profileInfo.mode) {
+                    case PassengerMode:
+                        passengerButton.setChecked(true);
+                        break;
+                    case DriverMode:
+                        driverButton.setChecked(true);
+                        break;
+                    case Unspecified:
+                        break;
+                }
+            }
         }
     }
 
     private class AsyncStateChange extends AsyncTask<Void, Void, Void> {
-        private String email;
         private UserState state;
+        private boolean success;
 
         public AsyncStateChange(int id) {
-            email = ActiveUser.getEmail();
             if (id == passiveButton.getId()) {
                 state = UserState.Passive;
             } else if (id == offeringButton.getId()) {
@@ -217,60 +193,53 @@ public class ProfileSettings extends AppCompatActivity {
             } else if (id == wantingButton.getId()) {
                 state = UserState.Wanting;
             }
+            success = false;
         }
 
         protected void onPreExecute() { super.onPreExecute(); }
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendStateSwitch(email, state).equals("OK")) {
-                    Log.i("error", "Successfully sent state switch.");
+                if (Server.sendStateSwitch(profileInfo.email, state).equals("OK")) {
+                    profileInfo.state = state;
+                    success = true;
                 } else {
                     Log.e("error", "Something went wrong with the state switch.");
                 }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // display error message
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (!success) {
+                Toast.makeText(getApplicationContext(), "Failed to switch state.", Toast.LENGTH_SHORT).show();
+                passiveButton.setChecked(false);
+                offeringButton.setChecked(false);
+                wantingButton.setChecked(false);
+                switch (profileInfo.state) {
+                    case Passive:
+                        passiveButton.setChecked(true);
+                        break;
+                    case Offering:
+                        offeringButton.setChecked(true);
+                        break;
+                    case Wanting:
+                        wantingButton.setChecked(true);
+                        break;
+                }
+            }
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public void displayContent() {
+        TextView title = (TextView)findViewById(R.id.profile_title);
+        if (title != null) title.setText(profileInfo.firstName + "'s Profile");
 
-        profileImage = (ImageView)findViewById(R.id.profile_image_view);
-        statusBox = (EditText)findViewById(R.id.profile_status_message);
+        profileImage.setImageBitmap(profileInfo.profileImage);
+        statusBox.setText(profileInfo.status);
 
-        modeGroup = (RadioGroup)findViewById(R.id.profile_switch_user_type_radio_group);
-
-        passengerButton = (RadioButton)findViewById(R.id.profile_passenger_radio_button);
-        driverButton = (RadioButton)findViewById(R.id.profile_driver_radio_button);
-
-        stateGroup = (RadioGroup)findViewById(R.id.profile_driver_state_group);
-
-        passiveButton = (RadioButton)findViewById(R.id.profile_state_group_passive);
-        offeringButton = (RadioButton)findViewById(R.id.profile_state_group_offering);
-        wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
-
-        loading = (ProgressBar)findViewById(R.id.profile_loading);
-        loading.setVisibility(View.GONE);
-        
-        UserInfo info = ActiveUser.getInfo();
-
-        // Set profile image.
-        profileImage.setImageBitmap(info.profileImage);
-        statusBox.setText(info.status);
-
-        switch (info.mode) {
+        switch (profileInfo.mode) {
             case PassengerMode:
                 passengerButton.setChecked(true);
                 break;
@@ -281,7 +250,7 @@ public class ProfileSettings extends AppCompatActivity {
                 break;
         }
 
-        switch (info.state) {
+        switch (profileInfo.state) {
             case Passive:
                 passiveButton.setChecked(true);
                 break;
@@ -295,30 +264,78 @@ public class ProfileSettings extends AppCompatActivity {
                 break;
         }
 
-        // Status message changes need to be sent to the server.
-        statusBox.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { new AsyncStatusUpdate().execute(); }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
+        if (textWatcher == null) {
+            textWatcher = new TextWatcher() {
+                public void afterTextChanged(Editable s) { new AsyncStatusUpdate(s.toString()).execute(); }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* nothing */ }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            };
+            statusBox.addTextChangedListener(textWatcher);
+        }
 
-        // Mode switch handling.
-        modeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int id) {
-                new AsyncModeChange(id).execute();
-            }
-        });
+        if (listener0 == null) {
+            listener0 = new RadioGroup.OnCheckedChangeListener() {
+                public void onCheckedChanged(RadioGroup group, int id) {
+                    new AsyncModeChange(id).execute();
+                }
+            };
+            modeGroup.setOnCheckedChangeListener(listener0);
+        }
 
-        stateGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int id) {
-                new AsyncStateChange(id).execute();
-            }
-        });
+        if (listener1 == null) {
+            listener1 = new RadioGroup.OnCheckedChangeListener() {
+                public void onCheckedChanged(RadioGroup group, int id) {
+                    new AsyncStateChange(id).execute();
+                }
+            };
+            stateGroup.setOnCheckedChangeListener(listener1);
+        }
     }
 
-    //TODO
-    // Fix profile pictures (galary)
-    // Fix location manager updates.
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        profileImage = (ImageView)findViewById(R.id.profile_image_view);
+        statusBox = (EditText)findViewById(R.id.profile_status_message);
+        modeGroup = (RadioGroup)findViewById(R.id.profile_switch_user_type_radio_group);
+        passengerButton = (RadioButton)findViewById(R.id.profile_passenger_radio_button);
+        driverButton = (RadioButton)findViewById(R.id.profile_driver_radio_button);
+        stateGroup = (RadioGroup)findViewById(R.id.profile_driver_state_group);
+        passiveButton = (RadioButton)findViewById(R.id.profile_state_group_passive);
+        offeringButton = (RadioButton)findViewById(R.id.profile_state_group_offering);
+        wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
+        loading = (ProgressBar)findViewById(R.id.profile_loading);
+
+        textWatcher = null;
+        listener0 = null;
+        listener1 = null;
+
+        if (loading != null) loading.setVisibility(View.GONE);
+
+        String email = getIntent().getExtras().getString("email");
+        if (email == null) email = ActiveUser.getEmail();
+
+        if (email.equals(ActiveUser.getEmail())) {
+            profileInfo = ActiveUser.getInfo();
+            displayContent();
+        } else {
+            profileInfo = new UserInfo(email, false,
+                    new Runnable() {
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    displayContent();
+                                }
+                            });
+                        }
+                    });
+        }
+    }
 
     //click to select image
     public void loadProfileImage(View v) {
@@ -359,10 +376,7 @@ public class ProfileSettings extends AppCompatActivity {
             cropIntent.putExtra("return-data", true);
 
             startActivityForResult(cropIntent, CROP_IMAGE);
-        }
-
-
-        catch (ActivityNotFoundException e) {}
+        } catch (ActivityNotFoundException e) {}
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
