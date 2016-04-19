@@ -1,8 +1,10 @@
 package aub.hopin;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -55,45 +58,6 @@ public class ProfileSettings extends AppCompatActivity {
 
     private static final int PICK_FROM_GALLERY = 1;
     private static final int CROP_IMAGE = 2;
-
-    /*private class AsyncUploadProfilePicture extends AsyncTask<Void, Void, Void> {
-        private boolean success;
-        private UserInfo user;
-        private String path;
-
-        public AsyncUploadProfilePicture(String path) {
-            this.path = path;
-            this.user = ActiveUser.getInfo();
-            this.success = false;
-        }
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected Void doInBackground(Void... params) {
-            try {
-                if (Server.sendProfilePicture(user.email, path).equals("OK")) {
-                    ResourceManager.setProfileImageDirty(user.email);
-                    user.setProfileImage(ResourceManager.getProfileImage(user.email)); // updates image from server.
-                    success = true;
-                    Log.i("error", "Successfully uploaded profile picture!");
-                } else {
-                    Log.e("error", "Something went wrong with the profile picture update.");
-                }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // display error message
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (success)
-                profileImage.setImageBitmap(user.profileImage);
-        }
-    }*/
 
     public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
 
@@ -295,11 +259,39 @@ public class ProfileSettings extends AppCompatActivity {
                 break;
         }
 
-        // Status message changes need to be sent to the server.
-        statusBox.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { new AsyncStatusUpdate().execute(); }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        statusBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettings.this);
+                        builder.setTitle("Status");
+                        builder.setMessage("Enter status");
+
+                        final EditText input = new EditText(ProfileSettings.this);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.MATCH_PARENT);
+                        input.setLayoutParams(lp);
+                        builder.setView(input);
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new AsyncStatusUpdate();
+                                statusBox.setText(input.getText().toString());
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+            }
         });
 
         // Mode switch handling.

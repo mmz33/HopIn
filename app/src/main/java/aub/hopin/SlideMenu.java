@@ -1,5 +1,6 @@
 package aub.hopin;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,7 +48,7 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, Animation.AnimationListener, View.OnClickListener{
+public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
     private SupportMapFragment supportMapFragment;
     private DrawerLayout drawerLayout;
@@ -53,18 +56,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private NavigationView navigationView;
     private GoogleMap mMap;
     private android.support.v4.app.FragmentManager sFm;
-
-    private Button requestButton;
-
-    private Animation animation1;
-    private Animation animation2;
-    private Animation animation3;
-    private boolean isP = false;
-    private boolean isO = false;
-    private boolean isW = false;
-
-    private ImageView img;
-
 
     private HashMap<String, UserInfo> userInfoMap;
     private HashMap<String, GroundOverlay> userMarkers;
@@ -81,36 +72,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             Log.e("error", "faced security exception when querying location.");
             return null;
         }
-    }
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        if(animation == animation1) {
-            if(isP) {
-                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.p_button);
-            } else if(isO) {
-                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.o_button);
-            } else if(isW) {
-                ((ImageView)findViewById(R.id.slide_menu_notify_image)).setImageResource(R.drawable.w_button);
-            }
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     // Asynchronous position sending.
@@ -176,7 +137,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                             asyncToUpdate.put(email, options);
                         } else {
                             GroundOverlayOptions options = new GroundOverlayOptions()
-                                    .image(BitmapDescriptorFactory.fromBitmap(uInfo.profileImage))
+                                    .image(BitmapDescriptorFactory.fromBitmap(ImageUtils.overlayRoundBorder(uInfo.profileImage, "#ff0033")))
                                     .position(target, 100f, 100f);
                             asyncToCreate.put(email, options);
                         }
@@ -245,84 +206,19 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.nav_header_main);
+
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //requestButton = (Button) findViewById(R.id.slide_menu_button);
 
         UserInfo info = ActiveUser.getInfo();
 
         userMarkers = new HashMap<>();
         userInfoMap = new HashMap<>();
 
-        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getActiveUserInfo());
+        userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getInfo());
 
-        /*if (info.mode == UserMode.PassengerMode) requestButton.setText("Give me a ride");
-        else if (info.mode == UserMode.DriverMode) requestButton.setText("I am offering a ride");
-
-        ModeSwitchEvent.register(new ModeSwitchListener() {
-            @Override
-            public void onSwitch(String email) {
-                UserInfo userInfo = ActiveUser.getActiveUserInfo();
-                if (email.equals(userInfo.email)) {
-                    if (userInfo.mode == UserMode.PassengerMode)
-                        requestButton.setText("Give me a ride");
-                    else if (userInfo.mode == UserMode.DriverMode)
-                        requestButton.setText("I am offering a ride");
-                }
-            }
-        });
-
-        requestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AsyncSendNotification().execute();
-            }
-        });
-
-        switch (info.state) {
-            case Passive:
-                isP = true;
-                isO = false;
-                isW = false;
-                break;
-            case Offering:
-                isP = false;
-                isO = true;
-                isW = false;
-                break;
-            case Wanting:
-                isP = false;
-                isO = false;
-                isW = true;
-                break;
-            default:
-                isP = false;
-                isO = false;
-                isW = false;
-                break;
-        }*/
-
-        img = (ImageView) findViewById(R.id.slide_menu_notify_image);
-        if (isP) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.p_button);
-            bitmap = ImageUtils.makeRounded(bitmap);
-            img.setImageBitmap(bitmap);
-        } else if (isW) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.w_button);
-             bitmap = ImageUtils.makeRounded(bitmap);
-            img.setImageBitmap(bitmap);
-        } else{
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.o_button);
-            bitmap = ImageUtils.makeRounded(bitmap);
-            img.setImageBitmap(bitmap);
-        }
-
-        animation1 = AnimationUtils.loadAnimation(this, R.anim.first);
-        animation1.setAnimationListener(this);
-        animation2 = AnimationUtils.loadAnimation(this, R.anim.second);
-        animation2.setAnimationListener(this);
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
@@ -348,7 +244,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         //try {
         //    locationManager.requestLocationUpdates(100, 1, new Criteria(), null);
-        //} catch (SecurityException e) {}
+        //} catch (SecurityException e) {}32
 
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -389,7 +285,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             startActivity(new Intent(SlideMenu.this, Settings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_profile) {
-            startActivity(new Intent(SlideMenu.this, ProfileSettings.class));
+            Intent intent = new Intent(SlideMenu.this, ProfileSettings.class);
+            intent.putExtra("email", ActiveUser.getEmail());
+            startActivity(intent);
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_schedule) {
             startActivity(new Intent(SlideMenu.this, ScheduleSettings.class));
@@ -412,8 +310,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         } else if(id == R.id.nav_contact_info) {
             startActivity(new Intent(SlideMenu.this, ContactInfoSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_logout) {
+            finish();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -424,8 +323,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 

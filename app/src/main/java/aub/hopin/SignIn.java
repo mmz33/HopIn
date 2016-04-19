@@ -31,10 +31,10 @@ public class SignIn extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+            loading.setVisibility(View.VISIBLE);
             emailText = email.getText().toString();
             passwordText = password.getText().toString();
             errorMessage = "";
-            loading.setVisibility(View.VISIBLE);
         }
 
         protected Void doInBackground(Void... params) {

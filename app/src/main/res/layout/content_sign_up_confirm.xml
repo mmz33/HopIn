@@ -62,4 +62,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
+    <ProgressBar
+        style="@style/GenericProgressIndicator"
+        android:id="@+id/sign_up_confirm_loading"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/sign_confirm_next" />
+
 </RelativeLayout>

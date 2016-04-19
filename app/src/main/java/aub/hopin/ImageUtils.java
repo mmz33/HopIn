@@ -3,17 +3,23 @@ package aub.hopin;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
+import java.text.BreakIterator;
 
 public class ImageUtils {
+
+    final static int borderWidth = 7;
 
     // Takes a BitMap and creates a rounded version of it.
     public static Bitmap makeRounded(Bitmap bitmap) {
@@ -25,14 +31,52 @@ public class ImageUtils {
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
 
-        paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
         canvas.drawOval(rectF, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    private static Bitmap makeRoundBorder(Bitmap bitmap, String colorHex) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth() + borderWidth, bitmap.getHeight() + borderWidth, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        paint.setColor(Color.parseColor(colorHex));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(borderWidth);
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+
+        RectF rectF = new RectF(borderWidth/2.0f, borderWidth/2.0f, canvas.getWidth() - borderWidth/2.0f, canvas.getHeight() - borderWidth/2.0f);
+        canvas.drawOval(rectF, paint);
+
+        return output;
+    }
+
+    public static Bitmap overlayRoundBorder(Bitmap bitmap, String colorHex) {
+        Bitmap border = makeRoundBorder(bitmap, colorHex);
+        Bitmap result = Bitmap.createBitmap(border.getWidth(), border.getHeight(), border.getConfig());
+
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        paint.setAntiAlias(true);
+        Canvas canvas = new Canvas(result);
+
+        float left = canvas.getWidth()/2.0f  - bitmap.getWidth()/2.0f;
+        float top  = canvas.getHeight()/2.0f - bitmap.getHeight()/2.0f;
+        canvas.drawBitmap(bitmap, left, top, paint);
+
+        canvas.drawBitmap(border, new Matrix(), paint);
+
+        border.recycle();
+        return result;
     }
 
     // Encodes an image to Base64

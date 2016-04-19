@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +27,6 @@
             android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
-
 
         <ImageView
             android:layout_width="170dp"
@@ -46,12 +44,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/profile_status_message"
             android:inputType="text"
-            android:editable="true"
+            android:clickable="true"
+            android:editable="false"
+            android:cursorVisible="false"
+            android:textStyle="italic"
             android:layout_gravity="center"
             android:text="Hello, I&apos;m using HopIn!"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/profile_image_view" />
-
 
         <TextView
             android:layout_width="wrap_content"

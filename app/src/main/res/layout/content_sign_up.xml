@@ -80,21 +80,23 @@
             android:layout_gravity="center"
             android:id="@+id/sign_up_gender"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/sign_up_first_name" />
 
         <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/sign_up_gender"
-            android:layout_alignStart="@+id/sign_up_gender"
             android:layout_gravity="center"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
             android:id="@+id/radioGroup">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
-                android:layout_gravity="center"
                 android:id="@+id/sign_up_male"
                 android:checked="false" />
 
@@ -102,7 +104,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
-                android:layout_gravity="center"
                 android:id="@+id/sign_up_female"
                 android:checked="false" />
 
@@ -110,7 +111,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Other"
-                android:layout_gravity="center"
                 android:id="@+id/sign_up_other"
                 android:checked="false" />
         </RadioGroup>
@@ -122,17 +122,18 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Mode"
             android:layout_gravity="center"
+            android:layout_marginTop="35dp"
             android:id="@+id/sign_up_mode" />
 
         <RadioGroup
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radioGroup2"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@id/sign_up_age"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="10dp">
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -158,7 +159,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/radioGroup2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -167,10 +168,19 @@
             android:id="@+id/sign_up_error_text"
             android:textColor="#d91d1d"
             android:layout_gravity="center"
-            android:text="???"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@+id/sign_up_okay"
             android:layout_centerHorizontal="true" />
+
+        <ProgressBar
+            style="@style/GenericProgressIndicator"
+            android:id="@+id/sign_up_loading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-18dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/sign_up_error_text" />
 
     </LinearLayout>
 </ScrollView>

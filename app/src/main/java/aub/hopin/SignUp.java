@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class SignUp extends AppCompatActivity {
 
     private Button signUp;
     private TextView errorText;
+
+    private ProgressBar loading;
 
     private class AsyncSignUp extends AsyncTask<Void, Void, Void> {
         private String firstName;
@@ -54,6 +57,7 @@ public class SignUp extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+            loading.setVisibility(View.VISIBLE);
         }
 
         protected Void doInBackground(Void... params) {
@@ -72,6 +76,7 @@ public class SignUp extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            loading.setVisibility(View.GONE);
             if (success) {
                 Intent intent = new Intent(SignUp.this, SignUpConfirm.class);
                 intent.putExtra("email", email);
@@ -101,6 +106,9 @@ public class SignUp extends AppCompatActivity {
         this.optionPassenger = (RadioButton)findViewById(R.id.sign_up_passenger);
         this.signUp = (Button)findViewById(R.id.sign_up_okay);
         this.errorText = (TextView)findViewById(R.id.sign_up_error_text);
+
+        loading = (ProgressBar)findViewById(R.id.sign_up_loading);
+        loading.setVisibility(View.GONE);
 
         this.signUp.setOnClickListener(
             new View.OnClickListener() {
@@ -187,7 +195,7 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                emailBox.setText("");
+                errorText.setText("");
             }
 
             @Override
