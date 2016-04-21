@@ -28,6 +28,7 @@ public class ContactInfoSettings extends AppCompatActivity {
         private boolean showPhone;
         private boolean showAddress;
         private boolean success;
+        private UserInfo info;
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -66,13 +67,12 @@ public class ContactInfoSettings extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (success) {
-                phoneNumberBox.setText(phoneNumber);
-                addressBox.setText(address);
-                postOfficeBox.setText(poBox);
-                showPhoneBox.setChecked(showPhone);
-                showAddressBox.setChecked(showAddress);
-            }
+
+            phoneNumberBox.setText(info.phoneNumber);
+            addressBox.setText(info.address);
+            postOfficeBox.setText(info.poBox);
+            showPhoneBox.setChecked(info.showingPhone);
+            showAddressBox.setChecked(info.showingAddress);
         }
     }
 

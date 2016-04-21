@@ -177,6 +177,7 @@ public class  ProfileSettings extends AppCompatActivity {
             super.onPostExecute(result);
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to switch mode.", Toast.LENGTH_SHORT).show();
+
                 passengerButton.setChecked(false);
                 driverButton.setChecked(false);
                 switch (profileInfo.mode) {
