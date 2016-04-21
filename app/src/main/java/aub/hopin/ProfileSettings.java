@@ -38,11 +38,13 @@ import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.RadioGroup;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class ProfileSettings extends AppCompatActivity {
+public class  ProfileSettings extends AppCompatActivity {
     private static final int PICK_FROM_GALLERY = 1;
     private static final int CROP_IMAGE = 2;
 
@@ -58,6 +60,12 @@ public class ProfileSettings extends AppCompatActivity {
     private RadioButton wantingButton;
 
     private ProgressBar loading;
+
+    private TextView profilePhone;
+    private TextView profileEmail;
+    private TextView profileVehicle;
+
+    private TextView profileRole;
 
     private UserInfo profileInfo;
     private View.OnClickListener clickListener;
@@ -276,14 +284,14 @@ public class ProfileSettings extends AppCompatActivity {
                         @Override
                         public void run() {
                             final AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettings.this);
-                            builder.setTitle("Status");
-                            builder.setMessage("Enter status");
+                            builder.setTitle("Edit Your Status");
 
                             final EditText input = new EditText(ProfileSettings.this);
                             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                     LinearLayout.LayoutParams.MATCH_PARENT);
                             input.setLayoutParams(lp);
+                            input.setText(profileInfo.status);
                             builder.setView(input);
 
                             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -345,6 +353,12 @@ public class ProfileSettings extends AppCompatActivity {
         wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
         loading = (ProgressBar)findViewById(R.id.profile_loading);
 
+        profilePhone = (TextView)findViewById(R.id.profile_user_phone);
+        profileEmail = (TextView)findViewById(R.id.profile_user_email);
+        profileVehicle = (TextView)findViewById(R.id.profile_vehicle_type);
+
+        profileRole = (TextView)findViewById(R.id.profile_role);
+
         clickListener = null;
         listener0 = null;
         listener1 = null;
@@ -369,6 +383,27 @@ public class ProfileSettings extends AppCompatActivity {
                         }
                     });
         }
+
+        if (profileInfo.showingPhone)
+            profilePhone.setText(profileInfo.phoneNumber);
+        else
+            profilePhone.setText("Hidden");
+
+        profileEmail.setText(profileInfo.email);
+
+        switch (profileInfo.role) {
+            case "S":
+                profileRole.setText("Student");
+                break;
+            case "P":
+                profileRole.setText("Professor");
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+
+        if(profileInfo.vehicle != null)
+            profileVehicle.setText(profileInfo.vehicle.getColor() + " " + profileInfo.vehicle.getMake() + " for " + profileInfo.vehicle.getCapacity() + " people.");
     }
 
     //click to select image
@@ -405,8 +440,8 @@ public class ProfileSettings extends AppCompatActivity {
             cropIntent.putExtra("crop", true);
             cropIntent.putExtra("aspectX", true);
             cropIntent.putExtra("aspectY", true);
-            cropIntent.putExtra("outputX", 100);
-            cropIntent.putExtra("outputY", 100);
+            cropIntent.putExtra("outputX", 200);
+            cropIntent.putExtra("outputY", 200);
             cropIntent.putExtra("return-data", true);
 
             startActivityForResult(cropIntent, CROP_IMAGE);

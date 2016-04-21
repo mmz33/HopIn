@@ -29,6 +29,9 @@ public class SignUp extends AppCompatActivity {
     private RadioButton optionDriver;
     private RadioButton optionPassenger;
 
+    private RadioButton optionStudent;
+    private RadioButton optionProfessor;
+
     private Button signUp;
     private TextView errorText;
 
@@ -41,16 +44,18 @@ public class SignUp extends AppCompatActivity {
         private int age;
         private UserGender gender;
         private UserMode mode;
+        private UserRole role;
         private boolean success;
         private String errorMessage;
 
-        public AsyncSignUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) {
+        public AsyncSignUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender, UserRole role) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.age = age;
             this.gender = gender;
             this.mode = mode;
+            this.role = role;
             this.success = false;
             this.errorMessage = "";
         }
@@ -62,7 +67,7 @@ public class SignUp extends AppCompatActivity {
 
         protected Void doInBackground(Void... params) {
             try {
-                String response = Server.signUp(firstName, lastName, email, age, mode, gender);
+                String response = Server.signUp(firstName, lastName, email, age, mode, gender, role);
                 if (response.equals("OK")) {
                     success = true;
                 } else {
@@ -107,6 +112,9 @@ public class SignUp extends AppCompatActivity {
         this.signUp = (Button)findViewById(R.id.sign_up_okay);
         this.errorText = (TextView)findViewById(R.id.sign_up_error_text);
 
+        optionStudent = (RadioButton)findViewById(R.id.sign_up_student);
+        optionProfessor = (RadioButton)findViewById(R.id.sign_up_professor);
+
         loading = (ProgressBar)findViewById(R.id.sign_up_loading);
         loading.setVisibility(View.GONE);
 
@@ -121,6 +129,8 @@ public class SignUp extends AppCompatActivity {
                     UserGender gender = UserGender.Unspecified;
                     UserMode mode     = UserMode.Unspecified;
 
+                    UserRole role = UserRole.Unspecified;
+
                     // Find the selected gender
                     if (SignUp.this.optionMale.isChecked())        gender = UserGender.Male;
                     else if (SignUp.this.optionFemale.isChecked()) gender = UserGender.Female;
@@ -129,6 +139,9 @@ public class SignUp extends AppCompatActivity {
                     // Find the selected mode.
                     if (SignUp.this.optionDriver.isChecked())         mode = UserMode.DriverMode;
                     else if (SignUp.this.optionPassenger.isChecked()) mode = UserMode.PassengerMode;
+
+                    if(SignUp.this.optionStudent.isChecked())        role = UserRole.Student;
+                    else if(SignUp.this.optionProfessor.isChecked()) role = UserRole.Professor;
 
                     // Find problems with the user input and report them.
                     if (firstName.length() == 0)
@@ -147,8 +160,10 @@ public class SignUp extends AppCompatActivity {
                         SignUp.this.errorText.setText("Please specify mode.");
                     else if (Integer.parseInt(age)  < 5 )
                         SignUp.this.errorText.setText("Age too low.");
+                    else if (role == UserRole.Unspecified)
+                        SignUp.this.errorText.setText("Please specify role.");
                     else {
-                        new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender).execute();
+                        new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
                     }
                 }
             });
@@ -205,91 +220,6 @@ public class SignUp extends AppCompatActivity {
         });
 
         ageBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        optionMale.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        optionFemale.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        optionOther.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        optionDriver.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        optionPassenger.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

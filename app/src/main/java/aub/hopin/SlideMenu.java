@@ -129,6 +129,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                         if (!userInfoMap.containsKey(email))
                             userInfoMap.put(email, new UserInfo(email, false));
                         UserInfo uInfo = userInfoMap.get(email);
+                        if(uInfo == null) continue;
+                        if(uInfo.profileImage == null) continue;
                         String coords[] = activeUserPositions.get(email).split(" ");
                         LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
                         if (userMarkers.containsKey(email)) {
@@ -136,8 +138,17 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                                     .position(target, 100f, 100f);
                             asyncToUpdate.put(email, options);
                         } else {
+                            String color = "";
+                            switch (uInfo.state) {
+                                case Passive: color = "#FFFFFF";
+                                    break;
+                                case Offering: color = "#00E500";
+                                    break;
+                                case Wanting: color = "#E50000";
+                                    break;
+                            }
                             GroundOverlayOptions options = new GroundOverlayOptions()
-                                    .image(BitmapDescriptorFactory.fromBitmap(ImageUtils.overlayRoundBorder(uInfo.profileImage, "#ff0033")))
+                                    .image(BitmapDescriptorFactory.fromBitmap(ImageUtils.overlayRoundBorder(uInfo.profileImage, color)))
                                     .position(target, 100f, 100f);
                             asyncToCreate.put(email, options);
                         }
@@ -218,7 +229,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         userInfoMap = new HashMap<>();
 
         userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getInfo());
-
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);

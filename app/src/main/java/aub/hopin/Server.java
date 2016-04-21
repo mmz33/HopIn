@@ -240,7 +240,7 @@ public class Server {
         return getResponse(buildRequest("checksession", args));
     }
 
-    public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender) throws ConnectionFailureException {
+    public static String signUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender, UserRole role) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("firstname", firstName);
         args.put("lastname", lastName);
@@ -248,6 +248,7 @@ public class Server {
         args.put("age", "" + age);
         args.put("mode", UserMode.toSymbol(mode));
         args.put("gender", UserGender.toSymbol(gender));
+        args.put("role", UserRole.toSymbol(role));
         return getResponse(buildRequest("signup", args));
     }
 

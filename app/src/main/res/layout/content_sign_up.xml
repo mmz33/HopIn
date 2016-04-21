@@ -61,6 +61,7 @@
             android:hint="AUB Email"
             android:inputType="textEmailAddress" />
 
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,12 +77,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Role"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_role_radio_group"
+            android:layout_gravity="center"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:layout_marginLeft="-7dp"
+                android:id="@+id/sign_up_student"
+                android:layout_gravity="center_horizontal"
+                android:checked="false"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Professor"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/sign_up_professor"
+                android:layout_gravity="center_horizontal"
+                android:checked="false"/>
+
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/gender"
             android:layout_gravity="center"
             android:id="@+id/sign_up_gender"
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/sign_up_first_name" />
+
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -91,7 +132,7 @@
             android:layout_alignParentStart="true"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
-            android:id="@+id/radioGroup">
+            android:id="@+id/sign_up_gender_radio_group">
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -115,7 +156,6 @@
                 android:checked="false" />
         </RadioGroup>
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -128,7 +168,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioGroup2"
+            android:id="@+id/sign_up_mode_radio_group"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@id/sign_up_age"
@@ -139,6 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Driver"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/sign_up_driver"
                 android:checked="false" />
 
@@ -146,6 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Passenger"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/sign_up_passenger"
                 android:checked="false" />
 

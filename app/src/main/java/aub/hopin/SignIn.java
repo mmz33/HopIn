@@ -35,6 +35,7 @@ public class SignIn extends AppCompatActivity {
             emailText = email.getText().toString();
             passwordText = password.getText().toString();
             errorMessage = "";
+            errorText.setText("");
         }
 
         protected Void doInBackground(Void... params) {

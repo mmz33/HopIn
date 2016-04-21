@@ -27,6 +27,9 @@ public class UserInfo {
     public Bitmap profileImage;
     public Bitmap scheduleImage;
 
+    public String role;
+    public Vehicle vehicle;
+
     public Runnable onLoadCallback;
 
     public UserInfo() {
@@ -44,6 +47,8 @@ public class UserInfo {
         status = "";
         profileImage = null;
         scheduleImage = null;
+        role = "";
+        vehicle = null;
         showingAddress = false;
         showingPhone = false;
         onLoadCallback = null;
@@ -90,6 +95,11 @@ public class UserInfo {
                     info.showingPhone = response.get("showphone").equals("1");
                     info.scheduleImage = ResourceManager.getScheduleImage(info.email);
                     info.setProfileImage(ResourceManager.getProfileImage(info.email));
+                    info.role = response.get("role");
+                    int capacity = Integer.parseInt(response.get("vehiclecapacity"));
+                    String make = response.get("vehiclemake");
+                    String color = response.get("vehiclecolor");
+                    info.vehicle = new Vehicle(capacity, make, color, info.email);
                     info.infoValid = true;
 
                     if (info.onLoadCallback != null) {
