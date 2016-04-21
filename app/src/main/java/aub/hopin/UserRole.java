@@ -12,6 +12,7 @@ public enum UserRole {
         switch (s) {
             case "S": return Student;
             case "P": return Professor;
+            case "U": return Unspecified;
             default: throw new IllegalArgumentException();
         }
     }
@@ -20,7 +21,8 @@ public enum UserRole {
         switch (s) {
             case Student: return "S";
             case Professor: return "P";
-            default: return "?";
+            case Unspecified: return "U";
+            default: throw new IllegalArgumentException();
         }
     }
 }

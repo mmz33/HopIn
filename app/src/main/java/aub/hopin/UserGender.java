@@ -12,7 +12,8 @@ public enum UserGender {
             case "F": return UserGender.Female;
             case "M": return UserGender.Male;
             case "O": return UserGender.Other;
-            default:  return UserGender.Unspecified;
+            case "U": return UserGender.Unspecified;
+            default: throw new IllegalArgumentException();
         }
     }
 
@@ -21,7 +22,8 @@ public enum UserGender {
             case Male: return "M";
             case Female: return "F";
             case Other: return "O";
-            default: return "?";
+            case Unspecified: return "U";
+            default: throw new IllegalArgumentException();
         }
     }
 }

@@ -12,16 +12,4 @@ public class Vehicle {
         this.color = color;
         this.ownerEmail = ownerEmail;
     }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-   public String getColor() {
-       return color;
-   }
 }

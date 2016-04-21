@@ -72,6 +72,9 @@ public class  ProfileSettings extends AppCompatActivity {
     private RadioGroup.OnCheckedChangeListener listener0;
     private RadioGroup.OnCheckedChangeListener listener1;
 
+    private boolean modeChangeEnabled;
+    private boolean stateChangeEnabled;
+
     public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
         private boolean success;
         private Bitmap bitmap;
@@ -177,19 +180,15 @@ public class  ProfileSettings extends AppCompatActivity {
             super.onPostExecute(result);
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to switch mode.", Toast.LENGTH_SHORT).show();
-
+                modeChangeEnabled = false;
                 passengerButton.setChecked(false);
                 driverButton.setChecked(false);
                 switch (profileInfo.mode) {
-                    case PassengerMode:
-                        passengerButton.setChecked(true);
-                        break;
-                    case DriverMode:
-                        driverButton.setChecked(true);
-                        break;
-                    case Unspecified:
-                        break;
+                    case PassengerMode: passengerButton.setChecked(true); break;
+                    case DriverMode:    driverButton.setChecked(true);    break;
+                    default:            throw new IllegalArgumentException();
                 }
+                modeChangeEnabled = true;
             }
         }
     }
@@ -227,24 +226,34 @@ public class  ProfileSettings extends AppCompatActivity {
             super.onPostExecute(result);
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to switch state.", Toast.LENGTH_SHORT).show();
+                stateChangeEnabled = false;
                 passiveButton.setChecked(false);
                 offeringButton.setChecked(false);
                 wantingButton.setChecked(false);
                 switch (profileInfo.state) {
-                    case Passive:
-                        passiveButton.setChecked(true);
-                        break;
-                    case Offering:
-                        offeringButton.setChecked(true);
-                        break;
-                    case Wanting:
-                        wantingButton.setChecked(true);
-                        break;
+                    case Passive:  passiveButton.setChecked(true);  break;
+                    case Offering: offeringButton.setChecked(true); break;
+                    case Wanting:  wantingButton.setChecked(true);  break;
+                    default:       throw new IllegalArgumentException();
                 }
+                stateChangeEnabled = true;
             }
         }
     }
 
+    // Important:
+    // ----------
+    //
+    // Any change to the user interface should be done inside this method only.
+    // This is because this method will be called any time the information
+    // needed to display the user interface is available.
+    //
+    // Changing the user interface to content related to profileInfo outside
+    // of this method may result in errors.
+    //
+    // It's okay to change the user interface to things unrelated to
+    // the profileInfo variable outside of this method.
+    //
     public void displayContent() {
         TextView title = (TextView)findViewById(R.id.profile_title);
         if (title != null) title.setText(profileInfo.firstName + "'s Profile");
@@ -252,29 +261,37 @@ public class  ProfileSettings extends AppCompatActivity {
         profileImage.setImageBitmap(profileInfo.profileImage);
         statusBox.setText(profileInfo.status);
 
+        profilePhone.setText(profileInfo.showingPhone ? profileInfo.phoneNumber : "Hidden");
+        profileEmail.setText(profileInfo.email);
+
         switch (profileInfo.mode) {
-            case PassengerMode:
-                passengerButton.setChecked(true);
-                break;
-            case DriverMode:
-                driverButton.setChecked(true);
-                break;
-            default:
-                break;
+            case PassengerMode: passengerButton.setChecked(true); break;
+            case DriverMode:    driverButton.setChecked(true);    break;
+            default:            throw new IllegalArgumentException();
         }
 
         switch (profileInfo.state) {
-            case Passive:
-                passiveButton.setChecked(true);
-                break;
-            case Offering:
-                offeringButton.setChecked(true);
-                break;
-            case Wanting:
-                wantingButton.setChecked(true);
-                break;
-            default:
-                break;
+            case Passive:  passiveButton.setChecked(true);  break;
+            case Offering: offeringButton.setChecked(true); break;
+            case Wanting:  wantingButton.setChecked(true);  break;
+            default:       throw new IllegalArgumentException();
+        }
+
+        switch (profileInfo.role) {
+            case Student:   profileRole.setText("Student");   break;
+            case Professor: profileRole.setText("Professor"); break;
+            default:        throw new IllegalArgumentException();
+        }
+
+        if (profileInfo.vehicle != null) {
+            String vehicleString = "";
+            vehicleString += profileInfo.vehicle.color;
+            vehicleString += " ";
+            vehicleString += profileInfo.vehicle.make;
+            vehicleString += " for ";
+            vehicleString += profileInfo.vehicle.capacity;
+            vehicleString += " people.";
+            profileVehicle.setText(vehicleString);
         }
 
         if (clickListener == null) {
@@ -320,7 +337,7 @@ public class  ProfileSettings extends AppCompatActivity {
         if (listener0 == null) {
             listener0 = new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int id) {
-                    new AsyncModeChange(id).execute();
+                    if (modeChangeEnabled) new AsyncModeChange(id).execute();
                 }
             };
             modeGroup.setOnCheckedChangeListener(listener0);
@@ -329,7 +346,7 @@ public class  ProfileSettings extends AppCompatActivity {
         if (listener1 == null) {
             listener1 = new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int id) {
-                    new AsyncStateChange(id).execute();
+                    if (stateChangeEnabled) new AsyncStateChange(id).execute();
                 }
             };
             stateGroup.setOnCheckedChangeListener(listener1);
@@ -364,6 +381,9 @@ public class  ProfileSettings extends AppCompatActivity {
         listener0 = null;
         listener1 = null;
 
+        modeChangeEnabled = true;
+        stateChangeEnabled = true;
+
         if (loading != null) loading.setVisibility(View.GONE);
 
         String email = getIntent().getExtras().getString("email");
@@ -384,27 +404,6 @@ public class  ProfileSettings extends AppCompatActivity {
                         }
                     });
         }
-
-        if (profileInfo.showingPhone)
-            profilePhone.setText(profileInfo.phoneNumber);
-        else
-            profilePhone.setText("Hidden");
-
-        profileEmail.setText(profileInfo.email);
-
-        switch (profileInfo.role) {
-            case "S":
-                profileRole.setText("Student");
-                break;
-            case "P":
-                profileRole.setText("Professor");
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-
-        if(profileInfo.vehicle != null)
-            profileVehicle.setText(profileInfo.vehicle.getColor() + " " + profileInfo.vehicle.getMake() + " for " + profileInfo.vehicle.getCapacity() + " people.");
     }
 
     //click to select image

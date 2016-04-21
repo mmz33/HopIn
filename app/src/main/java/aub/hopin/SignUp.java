@@ -111,129 +111,71 @@ public class SignUp extends AppCompatActivity {
         this.optionPassenger = (RadioButton)findViewById(R.id.sign_up_passenger);
         this.signUp = (Button)findViewById(R.id.sign_up_okay);
         this.errorText = (TextView)findViewById(R.id.sign_up_error_text);
-
-        optionStudent = (RadioButton)findViewById(R.id.sign_up_student);
-        optionProfessor = (RadioButton)findViewById(R.id.sign_up_professor);
+        this.optionStudent = (RadioButton)findViewById(R.id.sign_up_student);
+        this.optionProfessor = (RadioButton)findViewById(R.id.sign_up_professor);
 
         loading = (ProgressBar)findViewById(R.id.sign_up_loading);
         loading.setVisibility(View.GONE);
 
         this.signUp.setOnClickListener(
-            new View.OnClickListener() {
-                public void onClick(View v) {
-                    String firstName = SignUp.this.firstNameBox.getText().toString();
-                    String lastName  = SignUp.this.lastNameBox.getText().toString();
-                    String email     = SignUp.this.emailBox.getText().toString().toLowerCase();
-                    String age       = SignUp.this.ageBox.getText().toString();
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        String firstName = SignUp.this.firstNameBox.getText().toString();
+                        String lastName = SignUp.this.lastNameBox.getText().toString();
+                        String email = SignUp.this.emailBox.getText().toString().toLowerCase();
+                        String age = SignUp.this.ageBox.getText().toString();
 
-                    UserGender gender = UserGender.Unspecified;
-                    UserMode mode     = UserMode.Unspecified;
+                        UserGender gender = UserGender.Unspecified;
+                        UserMode mode = UserMode.Unspecified;
 
-                    UserRole role = UserRole.Unspecified;
+                        UserRole role = UserRole.Unspecified;
 
-                    // Find the selected gender
-                    if (SignUp.this.optionMale.isChecked())        gender = UserGender.Male;
-                    else if (SignUp.this.optionFemale.isChecked()) gender = UserGender.Female;
-                    else if (SignUp.this.optionOther.isChecked())  gender = UserGender.Other;
+                        // Find the selected gender
+                        if (SignUp.this.optionMale.isChecked()) gender = UserGender.Male;
+                        else if (SignUp.this.optionFemale.isChecked()) gender = UserGender.Female;
+                        else if (SignUp.this.optionOther.isChecked()) gender = UserGender.Other;
 
-                    // Find the selected mode.
-                    if (SignUp.this.optionDriver.isChecked())         mode = UserMode.DriverMode;
-                    else if (SignUp.this.optionPassenger.isChecked()) mode = UserMode.PassengerMode;
+                        // Find the selected mode.
+                        if (SignUp.this.optionDriver.isChecked()) mode = UserMode.DriverMode;
+                        else if (SignUp.this.optionPassenger.isChecked()) mode = UserMode.PassengerMode;
 
-                    if(SignUp.this.optionStudent.isChecked())        role = UserRole.Student;
-                    else if(SignUp.this.optionProfessor.isChecked()) role = UserRole.Professor;
+                        if (SignUp.this.optionStudent.isChecked()) role = UserRole.Student;
+                        else if (SignUp.this.optionProfessor.isChecked()) role = UserRole.Professor;
 
-                    // Find problems with the user input and report them.
-                    if (firstName.length() == 0)
-                        SignUp.this.errorText.setText("Please input first name.");
-                    else if (lastName.length() == 0)
-                        SignUp.this.errorText.setText("Please input last name.");
-                    else if (email.length() == 0)
-                        SignUp.this.errorText.setText("Please input email.");
-                    else if (!email.endsWith("@aub.edu.lb") && !email.endsWith("@mail.aub.edu") && !email.endsWith("@aub.edu"))
-                        SignUp.this.errorText.setText("Please use your university email.");
-                    else if (age.length() == 0)
-                        SignUp.this.errorText.setText("Please input age.");
-                    else if (gender == UserGender.Unspecified)
-                        SignUp.this.errorText.setText("Please specify gender.");
-                    else if (mode == UserMode.Unspecified)
-                        SignUp.this.errorText.setText("Please specify mode.");
-                    else if (Integer.parseInt(age)  < 5 )
-                        SignUp.this.errorText.setText("Age too low.");
-                    else if (role == UserRole.Unspecified)
-                        SignUp.this.errorText.setText("Please specify role.");
-                    else {
-                        new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
+                        // Find problems with the user input and report them.
+                        if (firstName.length() == 0)
+                            SignUp.this.errorText.setText("Please input first name.");
+                        else if (lastName.length() == 0)
+                            SignUp.this.errorText.setText("Please input last name.");
+                        else if (email.length() == 0)
+                            SignUp.this.errorText.setText("Please input email.");
+                        else if (!email.endsWith("@aub.edu.lb") && !email.endsWith("@mail.aub.edu") && !email.endsWith("@aub.edu"))
+                            SignUp.this.errorText.setText("Please use your university email.");
+                        else if (age.length() == 0)
+                            SignUp.this.errorText.setText("Please input age.");
+                        else if (gender == UserGender.Unspecified)
+                            SignUp.this.errorText.setText("Please specify gender.");
+                        else if (mode == UserMode.Unspecified)
+                            SignUp.this.errorText.setText("Please specify mode.");
+                        else if (Integer.parseInt(age) < 5)
+                            SignUp.this.errorText.setText("Age too low.");
+                        else if (role == UserRole.Unspecified)
+                            SignUp.this.errorText.setText("Please specify role.");
+                        else {
+                            new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
+                        }
                     }
-                }
-            });
+                });
 
-        firstNameBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        TextWatcher textClearer = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { errorText.setText(""); }
+            public void afterTextChanged(Editable s) {}
+        };
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        lastNameBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        emailBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        ageBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        firstNameBox.addTextChangedListener(textClearer);
+        lastNameBox.addTextChangedListener(textClearer);
+        emailBox.addTextChangedListener(textClearer);
+        ageBox.addTextChangedListener(textClearer);
     }
 }

@@ -11,10 +11,11 @@ public class UserInfo {
     public String lastName;
     public String email;
     public int age;
-    public UserGender gender;
 
+    public UserGender gender;
     public UserMode mode;
     public UserState state;
+    public UserRole role;
 
     public String phoneNumber;
     public String address;
@@ -25,11 +26,7 @@ public class UserInfo {
     public boolean showingPhone;
 
     public Bitmap profileImage;
-    public Bitmap scheduleImage;
-
-    public String role;
     public Vehicle vehicle;
-
     public Runnable onLoadCallback;
 
     public UserInfo() {
@@ -41,13 +38,12 @@ public class UserInfo {
         gender = UserGender.Unspecified;
         mode = UserMode.Unspecified;
         state = UserState.Passive;
+        role = UserRole.Unspecified;
         phoneNumber = "";
         address = "";
         poBox = "";
         status = "";
         profileImage = null;
-        scheduleImage = null;
-        role = "";
         vehicle = null;
         showingAddress = false;
         showingPhone = false;
@@ -87,19 +83,21 @@ public class UserInfo {
                     info.gender = UserGender.fromSymbol(response.get("gender"));
                     info.mode = UserMode.fromSymbol(response.get("mode"));
                     info.state = UserState.fromSymbol(response.get("state"));
+                    info.role = UserRole.fromSymbol(response.get("role"));
                     info.phoneNumber = response.get("phone");
                     info.status = response.get("status");
                     info.address = response.get("address");
                     info.poBox = response.get("pobox");
                     info.showingAddress = response.get("showaddress").equals("1");
                     info.showingPhone = response.get("showphone").equals("1");
-                    info.scheduleImage = ResourceManager.getScheduleImage(info.email);
                     info.setProfileImage(ResourceManager.getProfileImage(info.email));
-                    info.role = response.get("role");
+
+                    // Load vehicle data.
                     int capacity = Integer.parseInt(response.get("vehiclecapacity"));
                     String make = response.get("vehiclemake");
                     String color = response.get("vehiclecolor");
                     info.vehicle = new Vehicle(capacity, make, color, info.email);
+
                     info.infoValid = true;
 
                     if (info.onLoadCallback != null) {

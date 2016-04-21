@@ -60,6 +60,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
     private HashMap<String, UserInfo> userInfoMap;
     private HashMap<String, GroundOverlay> userMarkers;
+    private HashMap<String, GroundOverlayOptions> asyncToCreate;
+    private HashMap<String, GroundOverlayOptions> asyncToUpdate;
 
     private LocationManager locationManager;
     private Location lastKnownLocation;
@@ -68,13 +70,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     // Gets the last known location using
     // the location services of the device.
     private Location getCurrentLocation() {
-        //try {
-            return lastKnownLocation;
-            //return locationManager.getLastKnownLocation(provider);
-        //} catch (SecurityException e) {
-        //    Log.e("error", "faced security exception when querying location.");
-        //    return null;
-        //}
+        return lastKnownLocation;
     }
 
     // Asynchronous position sending.
@@ -92,24 +88,16 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
-                    //Log.i("error", "positioning info successfully sent.");
-                } else {
+                if (!Server.sendGlobalPosition(email, location.getLongitude(), location.getLatitude()).equals("OK")) {
                     Log.e("error", "failed to send positioning info.");
                 }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // handle this exception somehow?
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
         }
     }
-
-    private HashMap<String, GroundOverlayOptions> asyncToCreate = new HashMap<>();
-    private HashMap<String, GroundOverlayOptions> asyncToUpdate = new HashMap<>();
 
     // Asynchronous marker setup. This will update the
     // markers on the map according to the locations
@@ -123,7 +111,6 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                 HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
                 if (activeUserPositions != null) {
                     Handler handler = new Handler(getApplicationContext().getMainLooper());
-                    //Log.i("error", "successfully queried active users.");
 
                     asyncToCreate.clear();
                     asyncToUpdate.clear();
@@ -132,8 +119,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                         if (!userInfoMap.containsKey(email))
                             userInfoMap.put(email, new UserInfo(email, false));
                         UserInfo uInfo = userInfoMap.get(email);
-                        if(uInfo == null) continue;
-                        if(uInfo.profileImage == null) continue;
+                        if (uInfo == null) continue;
+                        if (uInfo.profileImage == null) continue;
                         String coords[] = activeUserPositions.get(email).split(" ");
                         LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
                         if (userMarkers.containsKey(email)) {
@@ -143,12 +130,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                         } else {
                             String color = "";
                             switch (uInfo.state) {
-                                case Passive: color = "#FFFFFF";
-                                    break;
-                                case Offering: color = "#00E500";
-                                    break;
-                                case Wanting: color = "#E50000";
-                                    break;
+                                case Passive:  color = "#FFFFFF"; break;
+                                case Offering: color = "#00E500"; break;
+                                case Wanting:  color = "#E50000"; break;
                             }
                             GroundOverlayOptions options = new GroundOverlayOptions()
                                     .image(BitmapDescriptorFactory.fromBitmap(ImageUtils.overlayRoundBorder(uInfo.profileImage, color)))
@@ -156,6 +140,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                             asyncToCreate.put(email, options);
                         }
                     }
+
                     Runnable markerUpdater = new Runnable() {
                         public void run() {
                             for (String email : asyncToCreate.keySet()) {
@@ -171,10 +156,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                 } else {
                     Log.e("error", "failed to query active users.");
                 }
-            } catch (ConnectionFailureException e) {
-                // TODO
-                // handle this exception somehow?
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
@@ -237,6 +219,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         userInfoMap = new HashMap<>();
         userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getInfo());
 
+        asyncToCreate = new HashMap<>();
+        asyncToUpdate = new HashMap<>();
+
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
 
@@ -265,15 +250,10 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             lastKnownLocation = null;
         }
 
-        //try {
-        //    locationManager.requestLocationUpdates(100, 1, new Criteria(), null);
-        //} catch (SecurityException e) {}
-
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 lastKnownLocation = location;
             }
-
             public void onStatusChanged(String provider, int status, Bundle extras) {}
             public void onProviderEnabled(String provider) {}
             public void onProviderDisabled(String provider) {}
@@ -281,18 +261,18 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         try {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        } catch (SecurityException e) {}
+        } catch (SecurityException e) {
+            Toast.makeText(getApplicationContext(), "Failed to request location updates.", Toast.LENGTH_SHORT).show();
+        }
 
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
                 Location location = getCurrentLocation();
-
                 if (location != null)
                     new AsyncSendPosition(location).execute();
                 else
                     Log.e("error", "failed to get current location in periodic task.");
-
                 new AsyncSetupMarkers().execute();
             }
         };

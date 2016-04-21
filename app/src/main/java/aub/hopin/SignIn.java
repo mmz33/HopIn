@@ -60,6 +60,7 @@ public class SignIn extends AppCompatActivity {
             if (errorMessage.length() > 0) {
                 errorText.setText(errorMessage);
             } else {
+                SessionLoader.saveData(ActiveUser.getSessionId(), ActiveUser.getEmail());
                 startActivity(new Intent(SignIn.this, SlideMenu.class));
                 finish();
             }

@@ -34,15 +34,10 @@ public class FeedbackSettings extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             if (fromUser) {
                 try {
-                    if (Server.sendUserRating(ActiveUser.getEmail(), rating).equals("OK")) {
-                        Log.i("", "Rating sent to server successfully.");
-                    } else {
+                    if (!Server.sendUserRating(ActiveUser.getEmail(), rating).equals("OK")) {
                         Log.e("", "There was a problem sending the user rating.");
                     }
-                } catch (ConnectionFailureException e) {
-                    // TODO
-                    // display error message
-                }
+                } catch (ConnectionFailureException e) {}
             }
             return null;
         }

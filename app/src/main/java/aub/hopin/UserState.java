@@ -20,7 +20,7 @@ public enum UserState {
             case Passive: return "P";
             case Offering: return "O";
             case Wanting: return "W";
-            default: return "?";
+            default: throw new IllegalArgumentException();
         }
     }
 }

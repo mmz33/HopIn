@@ -10,7 +10,8 @@ public enum UserMode {
         switch (s) {
             case "D": return UserMode.DriverMode;
             case "P": return UserMode.PassengerMode;
-            default:  return UserMode.Unspecified;
+            case "U": return UserMode.Unspecified;
+            default: throw new IllegalArgumentException();
         }
     }
 
@@ -18,7 +19,8 @@ public enum UserMode {
         switch (m) {
             case DriverMode: return "D";
             case PassengerMode: return "P";
-            default: return "?";
+            case Unspecified: return "U";
+            default: throw new IllegalArgumentException();
         }
     }
 }
