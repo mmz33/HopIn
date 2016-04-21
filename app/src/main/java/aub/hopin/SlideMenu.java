@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.AsyncTask;
@@ -61,17 +62,19 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private HashMap<String, GroundOverlay> userMarkers;
 
     private LocationManager locationManager;
+    private Location lastKnownLocation;
     private String provider;
 
     // Gets the last known location using
     // the location services of the device.
     private Location getCurrentLocation() {
-        try {
-            return locationManager.getLastKnownLocation(provider);
-        } catch (SecurityException e) {
-            Log.e("error", "faced security exception when querying location.");
-            return null;
-        }
+        //try {
+            return lastKnownLocation;
+            //return locationManager.getLastKnownLocation(provider);
+        //} catch (SecurityException e) {
+        //    Log.e("error", "faced security exception when querying location.");
+        //    return null;
+        //}
     }
 
     // Asynchronous position sending.
@@ -172,6 +175,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private class AsyncSendNotification extends AsyncTask<Void, Void, Void> {
         private UserInfo info;
         private UserState state;
+        private boolean success;
 
         @Override
         protected void onPreExecute() {
@@ -182,6 +186,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             } else {
                 state = UserState.Offering;
             }
+            success = false;
         }
 
         @Override
@@ -189,7 +194,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             try {
                 if (Server.sendStateSwitch(info.email, state).equals("OK")) {
                     info.state = state;
-                    Log.i("error", "Successfully sent notify message!");
+                    success = true;
                 } else {
                     Log.e("error", "Something went wrong with sending notify message");
                 }
@@ -200,6 +205,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if (!success) {
+                //...
+            }
         }
     }
 
@@ -216,9 +224,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         userMarkers = new HashMap<>();
         userInfoMap = new HashMap<>();
-
         userInfoMap.put(ActiveUser.getEmail(), ActiveUser.getInfo());
-
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
@@ -242,9 +248,29 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), true);
 
+        try {
+            lastKnownLocation = locationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            lastKnownLocation = null;
+        }
+
         //try {
         //    locationManager.requestLocationUpdates(100, 1, new Criteria(), null);
-        //} catch (SecurityException e) {}32
+        //} catch (SecurityException e) {}
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                lastKnownLocation = location;
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        } catch (SecurityException e) {}
 
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -257,22 +283,36 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                     Log.e("error", "failed to get current location in periodic task.");
 
                 new AsyncSetupMarkers().execute();
-
-                //runOnUiThread(new Runnable() {
-                    //public void run() {
-                        //Location location = getCurrentLocation();
-                        //if (location != null) {
-                            //LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-                            //CameraPosition.Builder builder = new CameraPosition.Builder();
-                            //builder.zoom(15);
-                            //builder.target(target);
-                            //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-                        //}
-                    //}
-                //});
             }
         };
         t.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    private class AsyncLogout extends AsyncTask<Void, Void, Void> {
+        private boolean success;
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            success = false;
+        }
+
+        protected Void doInBackground(Void... params) {
+            try {
+                if (Server.logout().equals("OK")) {
+                    success = true;
+                }
+            } catch (ConnectionFailureException e) {}
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (!success) {
+                Toast.makeText(getApplicationContext(), "Failed to logout.", Toast.LENGTH_SHORT);
+            } else {
+                finish();
+            }
+        }
     }
 
     @Override
@@ -311,7 +351,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             startActivity(new Intent(SlideMenu.this, ContactInfoSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_logout) {
-            finish();
+            new AsyncLogout().execute();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -169,6 +169,7 @@ public class ProfileSettings extends AppCompatActivity {
             super.onPostExecute(result);
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to switch mode.", Toast.LENGTH_SHORT).show();
+
                 passengerButton.setChecked(false);
                 driverButton.setChecked(false);
                 switch (profileInfo.mode) {
@@ -276,14 +277,14 @@ public class ProfileSettings extends AppCompatActivity {
                         @Override
                         public void run() {
                             final AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettings.this);
-                            builder.setTitle("Status");
-                            builder.setMessage("Enter status");
+                            builder.setTitle("Edit Your Status");
 
                             final EditText input = new EditText(ProfileSettings.this);
                             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                     LinearLayout.LayoutParams.MATCH_PARENT);
                             input.setLayoutParams(lp);
+                            input.setText(profileInfo.status);
                             builder.setView(input);
 
                             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

@@ -32,7 +32,7 @@ public class SignIn extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             loading.setVisibility(View.VISIBLE);
-            emailText = email.getText().toString();
+            emailText = email.getText().toString().toLowerCase();
             passwordText = password.getText().toString();
             errorMessage = "";
         }

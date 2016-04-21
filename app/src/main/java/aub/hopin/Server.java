@@ -400,4 +400,10 @@ public class Server {
         }
         return getResponse(buildRequest("sendbundle", args));
     }
+
+    public static String logout() throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("logout", args));
+    }
 }

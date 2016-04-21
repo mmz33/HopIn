@@ -115,7 +115,7 @@ public class SignUp extends AppCompatActivity {
                 public void onClick(View v) {
                     String firstName = SignUp.this.firstNameBox.getText().toString();
                     String lastName  = SignUp.this.lastNameBox.getText().toString();
-                    String email     = SignUp.this.emailBox.getText().toString();
+                    String email     = SignUp.this.emailBox.getText().toString().toLowerCase();
                     String age       = SignUp.this.ageBox.getText().toString();
 
                     UserGender gender = UserGender.Unspecified;
