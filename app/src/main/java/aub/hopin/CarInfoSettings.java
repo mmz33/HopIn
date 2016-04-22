@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -72,7 +74,7 @@ public class CarInfoSettings extends AppCompatActivity {
     }
 
     private class AsyncUpdateCarInfo extends AsyncTask<Void, Void, Void> {
-        private String email;
+        private UserInfo info;
         private String errorMessage;
         private String make;
         private String color;
@@ -84,7 +86,7 @@ public class CarInfoSettings extends AppCompatActivity {
             this.color = color;
             this.capacity = capacity;
             this.errorMessage = "";
-            this.email = ActiveUser.getEmail();
+            this.info = ActiveUser.getInfo();
             this.success = false;
         }
 
@@ -94,8 +96,16 @@ public class CarInfoSettings extends AppCompatActivity {
 
         protected Void doInBackground(Void... instances) {
             try {
-                String response = Server.sendVehicleInfo(email, make, color, capacity);
+                String response = Server.sendVehicleInfo(info.email, make, color, capacity);
                 if (response.equals("OK")) {
+                    if (info.vehicle == null)
+                        info.vehicle = new Vehicle(capacity, make, color, info.email);
+                    else {
+                        info.vehicle.capacity = capacity;
+                        info.vehicle.color = color;
+                        info.vehicle.make = make;
+                        info.vehicle.ownerEmail = info.email;
+                    }
                     success = true;
                 } else {
                     errorMessage = response;
@@ -111,6 +121,15 @@ public class CarInfoSettings extends AppCompatActivity {
             if (success) {
                 finish();
             } else {
+                if (info.vehicle != null) {
+                    vehicleType.setText(info.vehicle.make);
+                    vehicleColor.setText(info.vehicle.color);
+                    carCapacity.setText("" + info.vehicle.capacity);
+                } else {
+                    vehicleType.setText("");
+                    vehicleColor.setText("");
+                    carCapacity.setText("");
+                }
                 errorText.setText(errorMessage);
             }
         }
@@ -171,6 +190,23 @@ public class CarInfoSettings extends AppCompatActivity {
                         new AsyncUpdateCarInfo(make, color, capacity).execute();
                     }
                 }
+            }
+        });
+
+        carCapacity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                errorText.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

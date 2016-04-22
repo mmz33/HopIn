@@ -54,6 +54,7 @@ public class SignPage extends AppCompatActivity {
             super.onPostExecute(result);
             if (success) {
                 Toast.makeText(getApplicationContext(), "Autologin Successful.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignPage.this, SlideMenu.class));
             } else {
                 Toast.makeText(getApplicationContext(), "Autologin Failed.", Toast.LENGTH_SHORT).show();
             }

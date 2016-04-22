@@ -1,8 +1,14 @@
 package aub.hopin;
 
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UserInfo {
     private boolean infoValid;
@@ -28,6 +34,9 @@ public class UserInfo {
     public Bitmap profileImage;
     public Vehicle vehicle;
     public Runnable onLoadCallback;
+    public String profileHash;
+
+    public AtomicBoolean updating;
 
     public UserInfo() {
         infoValid = false;
@@ -44,10 +53,12 @@ public class UserInfo {
         poBox = "";
         status = "";
         profileImage = null;
+        profileHash = "";
         vehicle = null;
         showingAddress = false;
         showingPhone = false;
         onLoadCallback = null;
+        updating = new AtomicBoolean(false);
     }
 
     public UserInfo(String email, boolean blocking, Runnable onLoad) {
@@ -90,6 +101,7 @@ public class UserInfo {
                     info.poBox = response.get("pobox");
                     info.showingAddress = response.get("showaddress").equals("1");
                     info.showingPhone = response.get("showphone").equals("1");
+                    info.profileHash = response.get("profilehash");
                     info.setProfileImage(ResourceManager.getProfileImage(info.email));
 
                     // Load vehicle data.
@@ -105,13 +117,11 @@ public class UserInfo {
 
                     info.infoValid = true;
 
+                    info.updating.set(false);
                     if (info.onLoadCallback != null) {
                         info.onLoadCallback.run();
                     }
-                } catch (ConnectionFailureException e) {
-                    // TODO
-                    // Handle this exception somehow?
-                }
+                } catch (ConnectionFailureException e) {}
             }
         }
     }
@@ -122,6 +132,7 @@ public class UserInfo {
 
     public void load(String email, boolean blocking) {
         this.email = email;
+        this.updating.set(true);
         Runnable loader = new Loader(this);
         if (blocking) {
             loader.run();

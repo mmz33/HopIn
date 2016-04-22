@@ -374,7 +374,7 @@ public class Server {
         return getResponse(buildRequest("sendpos", args));
     }
 
-    public static HashMap<String, String> queryActiveUsersAndPositions() throws ConnectionFailureException {
+    public static HashMap<String, String> queryActiveUserPositionsAndImageHashes() throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", ActiveUser.getSessionId());
         return getResponseMap(buildRequest("queryactive", args));
@@ -406,6 +406,13 @@ public class Server {
             i++;
         }
         return getResponse(buildRequest("sendbundle", args));
+    }
+
+    public static String queryImageHash(String email) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("getimghash", args));
     }
 
     public static String logout() throws ConnectionFailureException {

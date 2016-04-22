@@ -44,10 +44,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
@@ -60,12 +62,17 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
     private HashMap<String, UserInfo> userInfoMap;
     private HashMap<String, GroundOverlay> userMarkers;
+
     private HashMap<String, GroundOverlayOptions> asyncToCreate;
     private HashMap<String, GroundOverlayOptions> asyncToUpdate;
+    private HashMap<String, UserInfo> asyncToDownload;
+    private ArrayList<String> pendingDownloads;
 
     private LocationManager locationManager;
     private Location lastKnownLocation;
     private String provider;
+
+    private Semaphore semaphore;
 
     // Gets the last known location using
     // the location services of the device.
@@ -99,6 +106,23 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
+    private class AsyncDownloadProfileImage extends AsyncTask<Void, Void, Void> {
+        private UserInfo info;
+        public AsyncDownloadProfileImage(UserInfo info) {
+            this.info = info;
+        }
+        protected void onPreExecute() { super.onPreExecute(); }
+        protected Void doInBackground(Void... params) {
+            ResourceManager.setProfileImageDirty(info.email);
+            info.setProfileImage(ResourceManager.getProfileImage(info.email));
+            return null;
+        }
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            info.updating.set(false);
+        }
+    }
+
     // Asynchronous marker setup. This will update the
     // markers on the map according to the locations
     // of the active users as specified by the server.
@@ -108,24 +132,58 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
         protected Void doInBackground(Void... params) {
             try {
-                HashMap<String, String> activeUserPositions = Server.queryActiveUsersAndPositions();
-                if (activeUserPositions != null) {
+                HashMap<String, String> activeUserData = Server.queryActiveUserPositionsAndImageHashes();
+                if (activeUserData != null) {
                     Handler handler = new Handler(getApplicationContext().getMainLooper());
+
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException e) {}
 
                     asyncToCreate.clear();
                     asyncToUpdate.clear();
+                    asyncToDownload.clear();
 
-                    for (String email : activeUserPositions.keySet()) {
+                    for (String email : activeUserData.keySet()) {
                         if (!userInfoMap.containsKey(email))
                             userInfoMap.put(email, new UserInfo(email, false));
+
                         UserInfo uInfo = userInfoMap.get(email);
                         if (uInfo == null) continue;
                         if (uInfo.profileImage == null) continue;
-                        String coords[] = activeUserPositions.get(email).split(" ");
-                        LatLng target = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
+                        if (uInfo.updating.get()) continue;
+
+                        String data[] = activeUserData.get(email).split(" ");
+                        String lat = data[0];
+                        String lon = data[1];
+                        String imHash = data[2];
+
+                        if (!uInfo.profileHash.equals(imHash)) {
+                            Log.e("error", "Hashes don't match.");
+                            uInfo.updating.set(true);
+                            asyncToDownload.put(email, uInfo);
+                            pendingDownloads.add(uInfo.email);
+                            uInfo.profileHash = imHash;
+                            continue;
+                        } else {
+                            Log.e("error", "Hashes match");
+                        }
+
+                        LatLng target = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
+
                         if (userMarkers.containsKey(email)) {
                             GroundOverlayOptions options = new GroundOverlayOptions()
                                     .position(target, 100f, 100f);
+                            if (!uInfo.updating.get() && pendingDownloads.contains(uInfo.email)) {
+                                String color = "";
+                                switch (uInfo.state) {
+                                    case Passive:  color = "#FFFFFF"; break;
+                                    case Offering: color = "#00E500"; break;
+                                    case Wanting:  color = "#E50000"; break;
+                                }
+                                options.image(BitmapDescriptorFactory.fromBitmap(ImageUtils.overlayRoundBorder(uInfo.profileImage, color)));
+                                pendingDownloads.remove(uInfo.email);
+                            }
                             asyncToUpdate.put(email, options);
                         } else {
                             String color = "";
@@ -141,8 +199,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                         }
                     }
 
-                    Runnable markerUpdater = new Runnable() {
+                    Runnable updater = new Runnable() {
                         public void run() {
+                            try { semaphore.acquire(); } catch (InterruptedException e) {}
                             for (String email : asyncToCreate.keySet()) {
                                 userMarkers.put(email, mMap.addGroundOverlay(asyncToCreate.get(email)));
                             }
@@ -150,9 +209,15 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                                 GroundOverlayOptions options = asyncToUpdate.get(email);
                                 userMarkers.get(email).setPosition(options.getLocation());
                             }
+                            for (String email : asyncToDownload.keySet()) {
+                                new AsyncDownloadProfileImage(asyncToDownload.get(email)).execute();
+                            }
+                            semaphore.release();
                         }
                     };
-                    handler.post(markerUpdater);
+
+                    semaphore.release();
+                    handler.post(updater);
                 } else {
                     Log.e("error", "failed to query active users.");
                 }
@@ -204,6 +269,85 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
+    /*
+    public void startRecording() {
+        gpsTimer.cancel();
+        gpsTimer = new Timer();
+        long checkInterval = getGPSCheckMilliSecsFromPrefs();
+        long minDistance = getMinDistanceFromPrefs();
+        // receive updates
+        LocationManager locationManager = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+        for (String s : locationManager.getAllProviders()) {
+            locationManager.requestLocationUpdates(s, checkInterval,
+                    minDistance, new LocationListener() {
+
+                        @Override
+                        public void onStatusChanged(String provider,
+                                                    int status, Bundle extras) {}
+
+                        @Override
+                        public void onProviderEnabled(String provider) {}
+
+                        @Override
+                        public void onProviderDisabled(String provider) {}
+
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            // if this is a gps location, we can use it
+                            if (location.getProvider().equals(
+                                    LocationManager.GPS_PROVIDER)) {
+                                doLocationUpdate(location, true);
+                            }
+                        }
+                    });
+            // //Toast.makeText(this, "GPS Service STARTED",
+            // Toast.LENGTH_LONG).show();
+            gps_recorder_running = true;
+        }
+        // start the gps receiver thread
+        gpsTimer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                Location location = getBestLocation();
+                doLocationUpdate(location, false);
+            }
+        }, 0, checkInterval);
+    }
+
+    public void doLocationUpdate(Location l, boolean force) {
+        long minDistance = getMinDistanceFromPrefs();
+        Log.d(TAG, "update received:" + l);
+        if (l == null) {
+            Log.d(TAG, "Empty location");
+            if (force)
+                Toast.makeText(this, "Current location not available",
+                        Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (lastLocation != null) {
+            float distance = l.distanceTo(lastLocation);
+            Log.d(TAG, "Distance to last: " + distance);
+            if (l.distanceTo(lastLocation) < minDistance && !force) {
+                Log.d(TAG, "Position didn't change");
+                return;
+            }
+            if (l.getAccuracy() >= lastLocation.getAccuracy()
+                    && l.distanceTo(lastLocation) < l.getAccuracy() && !force) {
+                Log.d(TAG,
+                        "Accuracy got worse and we are still "
+                                + "within the accuracy range.. Not updating");
+                return;
+            }
+            if (l.getTime() <= lastprovidertimestamp && !force) {
+                Log.d(TAG, "Timestamp not never than last");
+                return;
+            }
+        }
+        // upload/store your location here
+    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,6 +365,10 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
         asyncToCreate = new HashMap<>();
         asyncToUpdate = new HashMap<>();
+        asyncToDownload = new HashMap<>();
+        pendingDownloads = new ArrayList<>();
+
+        semaphore = new Semaphore(1);
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
@@ -301,6 +449,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to logout.", Toast.LENGTH_SHORT);
             } else {
+                SessionLoader.clean();
                 finish();
             }
         }

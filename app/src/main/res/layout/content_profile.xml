@@ -65,6 +65,7 @@
                 android:inputType="text"
                 android:clickable="true"
                 android:editable="false"
+                android:focusable="false"
                 android:cursorVisible="false"
                 android:textStyle="italic"
                 android:layout_gravity="center"
