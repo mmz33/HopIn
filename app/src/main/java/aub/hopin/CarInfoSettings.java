@@ -72,36 +72,47 @@ public class CarInfoSettings extends AppCompatActivity {
     }
 
     private class AsyncUpdateCarInfo extends AsyncTask<Void, Void, Void> {
-        private String typeText;
+        private String email;
         private String errorMessage;
-
-        private String makeText;
-        private String colorText;
+        private String make;
+        private String color;
         private int capacity;
+        private boolean success;
 
         public AsyncUpdateCarInfo(String make, String color, int capacity) {
-            makeText = make;
-            colorText = color;
+            this.make = make;
+            this.color = color;
             this.capacity = capacity;
+            this.errorMessage = "";
+            this.email = ActiveUser.getEmail();
+            this.success = false;
         }
 
         protected void onPreExecute() {
             super.onPreExecute();
-            errorMessage = "";
         }
 
         protected Void doInBackground(Void... instances) {
-            String email = ActiveUser.getInfo().email;
-            // TODO
-            // Continue here
-            // Send the vehicle data to the server.
+            try {
+                String response = Server.sendVehicleInfo(email, make, color, capacity);
+                if (response.equals("OK")) {
+                    success = true;
+                } else {
+                    errorMessage = response;
+                }
+            } catch (ConnectionFailureException e) {
+                errorMessage = "Failed to connect to server.";
+            }
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (errorMessage.length() > 0)
+            if (success) {
+                finish();
+            } else {
                 errorText.setText(errorMessage);
+            }
         }
     }
 
@@ -122,41 +133,43 @@ public class CarInfoSettings extends AppCompatActivity {
         AutoCompleteTextView cars = vehicleType;
         cars.setAdapter(vehicleAdapter);
 
-        // TODO
-        // Get the current vehicle color of the user.
-        // Get the current vehicle make of the user as well.
-
         final ArrayAdapter<String> carAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, COLORS);
         AutoCompleteTextView colors = vehicleColor;
         colors.setAdapter(carAdapter);
 
-        // TODO
-        // Set the boxes to their correct values.
-        //UserSession session = UserSession.getActiveSession();
-        //UserInfo info = session.getUserInfo();
+        UserInfo info = ActiveUser.getInfo();
 
-        //this.vehicleType.setText(info.vehicleType);
-        //this.carCapacity.setText("" + info.maximumPassengerCount);
+        if (info.vehicle != null) {
+            vehicleType.setText(info.vehicle.make);
+            vehicleColor.setText(info.vehicle.color);
+            carCapacity.setText("" + info.vehicle.capacity);
+        } else {
+            vehicleType.setText("");
+            vehicleColor.setText("");
+            carCapacity.setText("");
+        }
+
         errorText.setText("");
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String make = vehicleType.getEditableText().toString();
                 String color = vehicleColor.getEditableText().toString();
-                int capacity = Integer.parseInt(carCapacity.getEditableText().toString());
+                String capacityStr = carCapacity.getEditableText().toString();
 
-                if (validCarMake(make)) {
-                    if (validCarColor(color)) {
-                        if (validCarCapacity(capacity)) {
-                            new AsyncUpdateCarInfo(make, color, capacity).execute();
-                        } else {
-                            errorText.setText("Invalid car capacity.");
-                        }
-                    } else {
-                        errorText.setText("Invalid car color.");
-                    }
-                } else {
+                if (!validCarMake(make)) {
                     errorText.setText("Invalid car make.");
+                } else if (!validCarColor(color)) {
+                    errorText.setText("Invalid car color.");
+                } else if (capacityStr.length() == 0) {
+                    errorText.setText("Invalid capacity.");
+                } else {
+                    int capacity = Integer.parseInt(capacityStr);
+                    if (!validCarCapacity(capacity)) {
+                        errorText.setText("Capacity out of allowed range.");
+                    } else {
+                        new AsyncUpdateCarInfo(make, color, capacity).execute();
+                    }
                 }
             }
         });

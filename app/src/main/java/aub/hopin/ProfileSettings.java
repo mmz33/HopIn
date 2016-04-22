@@ -256,7 +256,7 @@ public class  ProfileSettings extends AppCompatActivity {
     //
     public void displayContent() {
         TextView title = (TextView)findViewById(R.id.profile_title);
-        if (title != null) title.setText(profileInfo.firstName + "'s Profile");
+        if (title != null) title.setText(profileInfo.firstName + " " + profileInfo.lastName);
 
         profileImage.setImageBitmap(profileInfo.profileImage);
         statusBox.setText(profileInfo.status);

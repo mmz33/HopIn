@@ -170,12 +170,12 @@ public class Server {
         return downloadBitmap(buildRequest("getprofileimg", args));
     }
 
-    public static Bitmap downloadScheduleImage(String email) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("ssid", ActiveUser.getSessionId());
-        return downloadBitmap(buildRequest("getscheduleimg", args));
-    }
+    //public static Bitmap downloadScheduleImage(String email) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return downloadBitmap(buildRequest("getscheduleimg", args));
+    //}
 
     // Retrieves a response from the server after an upload.
     private static String getResponseUpload(String service, String email, String filename) throws ConnectionFailureException {
@@ -259,10 +259,6 @@ public class Server {
         return getResponse(buildRequest("signin", args));
     }
 
-    public static String sendSchedule(String email, String filename) throws ConnectionFailureException {
-        return getResponseUpload("upschedule", email, filename);
-    }
-
     public static String sendPhoneNumber(String email, String phoneNumber) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
@@ -293,6 +289,16 @@ public class Server {
 
     public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {
         return getResponseUpload("upprofile", email, bmp);
+    }
+
+    public static String sendVehicleInfo(String email, String make, String color, int capacity) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("make", make);
+        args.put("color", color);
+        args.put("capacity", "" + capacity);
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("upvehicle", args));
     }
 
     public static String sendStatus(String email, String status) throws ConnectionFailureException {

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class FeedbackSettings extends AppCompatActivity {
 
@@ -18,13 +19,17 @@ public class FeedbackSettings extends AppCompatActivity {
     private Button sendFeedbackButton;
     private Button reportProblemButton;
 
+    private boolean ratingSendEnabled;
+
     private class AsyncSendRating extends AsyncTask<Void, Void, Void> {
         private float rating;
         private boolean fromUser;
+        private boolean success;
 
         public AsyncSendRating(float rating, boolean fromUser) {
             this.rating = rating;
             this.fromUser = fromUser;
+            this.success = false;
         }
 
         protected void onPreExecute() {
@@ -34,8 +39,8 @@ public class FeedbackSettings extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             if (fromUser) {
                 try {
-                    if (!Server.sendUserRating(ActiveUser.getEmail(), rating).equals("OK")) {
-                        Log.e("", "There was a problem sending the user rating.");
+                    if (Server.sendUserRating(ActiveUser.getEmail(), rating).equals("OK")) {
+                        success = true;
                     }
                 } catch (ConnectionFailureException e) {}
             }
@@ -44,6 +49,14 @@ public class FeedbackSettings extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (!success) {
+                Toast.makeText(getApplicationContext(), "Failed to send rating.", Toast.LENGTH_SHORT).show();
+                ratingSendEnabled = false;
+                ratingBar.setRating(0.0f);
+                ratingSendEnabled = true;
+            } else {
+                Toast.makeText(getApplicationContext(), "Thank you!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -58,9 +71,11 @@ public class FeedbackSettings extends AppCompatActivity {
         sendFeedbackButton = (Button)findViewById(R.id.feedback_send_feedback);
         reportProblemButton = (Button)findViewById(R.id.feedback_report_problem);
 
+        ratingSendEnabled = true;
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar bar, float rating, boolean fromUser) {
-                new AsyncSendRating(rating, fromUser).execute();
+                if (ratingSendEnabled) new AsyncSendRating(rating, fromUser).execute();
             }
         });
 

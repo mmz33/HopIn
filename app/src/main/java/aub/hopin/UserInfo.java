@@ -96,7 +96,12 @@ public class UserInfo {
                     int capacity = Integer.parseInt(response.get("vehiclecapacity"));
                     String make = response.get("vehiclemake");
                     String color = response.get("vehiclecolor");
-                    info.vehicle = new Vehicle(capacity, make, color, info.email);
+
+                    // All or none.
+                    if (make.equals("") || color.equals("") || capacity == 0)
+                        info.vehicle = null;
+                    else
+                        info.vehicle = new Vehicle(capacity, make, color, info.email);
 
                     info.infoValid = true;
 

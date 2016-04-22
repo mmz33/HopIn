@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SendFeedback extends AppCompatActivity {
 
@@ -36,10 +37,7 @@ public class SendFeedback extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 if (Server.sendFeedback(email, message).equals("OK")) {
-                    Log.i("", "Successfully sent feedback message to server.");
                     success = true;
-                } else {
-                    Log.e("", "Failed to send feedback message to server.");
                 }
             } catch (ConnectionFailureException e) {
                 errorMessage = "Failed to connect to server. Try again.";
@@ -49,10 +47,12 @@ public class SendFeedback extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (success)
+            if (success) {
+                Toast.makeText(getApplicationContext(), "Successfully sent feedback!", Toast.LENGTH_SHORT);
                 finish();
-            else
+            } else {
                 errorText.setText(errorMessage);
+            }
         }
     }
 

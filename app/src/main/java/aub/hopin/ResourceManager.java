@@ -11,11 +11,9 @@ import android.util.Log;
 public class ResourceManager {
     private static HashMap<String, Bitmap> cache = null;
     private static Bitmap defaultProfileImage = null;
-    private static Bitmap defaultScheduleImage = null;
 
     public static void init(Context context) {
         defaultProfileImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.missing_profile);
-        defaultScheduleImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.missing_profile);
     }
 
     private static void ensureCache() {
@@ -43,45 +41,12 @@ public class ResourceManager {
         }
     }
 
-    public static Bitmap getScheduleImage(String email) {
-        ensureCache();
-        try {
-            if (email == null || email.length() == 0) {
-                return defaultScheduleImage;
-            } else {
-                String name = "schedule_" + email;
-                if (cache.containsKey(name)) {
-                    return cache.get(name);
-                } else {
-                    Bitmap bmp = Server.downloadScheduleImage(email);
-                    cache.put(name, bmp == null? defaultScheduleImage : bmp);
-                    return cache.get(name);
-                }
-            }
-        } catch (Throwable t) {
-            Log.e("error", "Failed to get schedule image from resource manager.");
-            return null;
-        }
-    }
-
     public static void setProfileImageDirty(String email) {
         ensureCache();
         if (email == null || email.length() == 0) {
             return;
         } else {
             String name = "profile_" + email;
-            if (cache.containsKey(name)) {
-                cache.remove(name);
-            }
-        }
-    }
-
-    public static void setScheduleImageDirty(String email) {
-        ensureCache();
-        if (email == null || email.length() == 0) {
-            return;
-        } else {
-            String name = "schedule_" + email;
             if (cache.containsKey(name)) {
                 cache.remove(name);
             }
