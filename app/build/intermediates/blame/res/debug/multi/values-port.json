@@ -24,7 +24,11 @@
         ]
     },
     {
+<<<<<<< HEAD
         "outputFile": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/values-port/values-port.xml",
+=======
+        "outputFile": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/values-port/values-port.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
         "map": [
             {
                 "to": {
@@ -35,7 +39,11 @@
                     "endOffset": 106
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-port/values-port.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-port/values-port.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

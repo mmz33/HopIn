@@ -993,7 +993,11 @@
         ]
     },
     {
+<<<<<<< HEAD
         "outputFile": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/values-pt-rBR/values-pt-rBR.xml",
+=======
+        "outputFile": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
         "map": [
             {
                 "to": {
@@ -1004,7 +1008,11 @@
                     "endOffset": 220
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -1023,7 +1031,11 @@
                     "endOffset": 328
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -1042,7 +1054,11 @@
                     "endOffset": 451
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -1061,7 +1077,11 @@
                     "endOffset": 557
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -1080,7 +1100,11 @@
                     "endOffset": 664
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -1099,7 +1123,11 @@
                     "endOffset": 753
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -1118,7 +1146,11 @@
                     "endOffset": 854
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -1137,7 +1169,11 @@
                     "endOffset": 972
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -1156,7 +1192,11 @@
                     "endOffset": 1055
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -1175,7 +1215,11 @@
                     "endOffset": 1135
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -1194,7 +1238,11 @@
                     "endOffset": 1222
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -1213,7 +1261,11 @@
                     "endOffset": 1329
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -1232,7 +1284,11 @@
                     "endOffset": 1441
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -1251,7 +1307,11 @@
                     "endOffset": 1543
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -1270,7 +1330,11 @@
                     "endOffset": 1651
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -1289,7 +1353,11 @@
                     "endOffset": 1758
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -1308,7 +1376,11 @@
                     "endOffset": 1868
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -1327,7 +1399,11 @@
                     "endOffset": 1993
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -1346,7 +1422,11 @@
                     "endOffset": 2093
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -1365,7 +1445,11 @@
                     "endOffset": 2370
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 24,
                         "startColumn": 4,
@@ -1384,7 +1468,11 @@
                     "endOffset": 2500
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -1403,7 +1491,11 @@
                     "endOffset": 2680
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -1422,7 +1514,11 @@
                     "endOffset": 2809
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -1441,7 +1537,11 @@
                     "endOffset": 2942
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -1460,7 +1560,11 @@
                     "endOffset": 3167
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -1479,7 +1583,11 @@
                     "endOffset": 3389
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -1498,7 +1606,11 @@
                     "endOffset": 3521
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -1517,7 +1629,11 @@
                     "endOffset": 3697
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -1536,7 +1652,11 @@
                     "endOffset": 3817
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -1555,7 +1675,11 @@
                     "endOffset": 3995
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -1574,7 +1698,11 @@
                     "endOffset": 4114
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -1593,7 +1721,11 @@
                     "endOffset": 4249
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -1612,7 +1744,11 @@
                     "endOffset": 4426
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 28,
                         "startColumn": 4,
@@ -1631,7 +1767,11 @@
                     "endOffset": 4553
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 27,
                         "startColumn": 4,
@@ -1650,7 +1790,11 @@
                     "endOffset": 4721
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 26,
                         "startColumn": 4,
@@ -1669,7 +1813,11 @@
                     "endOffset": 4843
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 25,
                         "startColumn": 4,
@@ -1688,7 +1836,11 @@
                     "endOffset": 5112
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values-pt-rBR/common_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values-pt-rBR/common_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -1707,7 +1859,11 @@
                     "endOffset": 5381
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -1726,7 +1882,11 @@
                     "endOffset": 5505
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -1745,7 +1905,11 @@
                     "endOffset": 5615
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,
@@ -1764,7 +1928,11 @@
                     "endOffset": 5810
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -1783,7 +1951,11 @@
                     "endOffset": 5942
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -1802,7 +1974,11 @@
                     "endOffset": 6158
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -1821,7 +1997,11 @@
                     "endOffset": 6295
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -1840,7 +2020,11 @@
                     "endOffset": 6482
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -1859,7 +2043,11 @@
                     "endOffset": 6580
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 23,
                         "startColumn": 4,
@@ -1878,7 +2066,11 @@
                     "endOffset": 6676
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 29,
                         "startColumn": 4,
@@ -1897,7 +2089,11 @@
                     "endOffset": 6790
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values-pt-rBR/base_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 30,
                         "startColumn": 4,
@@ -1916,7 +2112,11 @@
                     "endOffset": 6896
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-pt-rBR/location_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-pt-rBR/location_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -1935,7 +2135,11 @@
                     "endOffset": 6995
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-pt-rBR/location_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-pt-rBR/location_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -1954,7 +2158,11 @@
                     "endOffset": 7096
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-pt-rBR/values-pt-rBR.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -1973,7 +2181,11 @@
                     "endOffset": 7206
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/res/values-pt-rBR/wallet_strings.xml",
+=======
+                    "file": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/res/values-pt-rBR/wallet_strings.xml",
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,

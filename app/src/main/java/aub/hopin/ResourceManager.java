@@ -17,7 +17,13 @@ public class ResourceManager {
     }
 
     private static void ensureCache() {
-        if (cache == null) cache = new HashMap<String, Bitmap>();
+        if (cache == null) {
+            cache = new HashMap<>();
+        }
+    }
+
+    private static String resourceName(String email) {
+        return "profile_" + email;
     }
 
     public static Bitmap getProfileImage(String email) {
@@ -26,7 +32,7 @@ public class ResourceManager {
             if (email == null || email.length() == 0) {
                 return defaultProfileImage;
             } else {
-                String name = "profile_" + email;
+                String name = resourceName(email);
                 if (cache.containsKey(name)) {
                     return cache.get(name);
                 } else {
@@ -35,7 +41,7 @@ public class ResourceManager {
                     return cache.get(name);
                 }
             }
-        } catch (Throwable t) {
+        } catch (ConnectionFailureException e) {
             Log.e("error", "Failed to get profile image from resource manager.");
             return null;
         }
@@ -46,7 +52,7 @@ public class ResourceManager {
         if (email == null || email.length() == 0) {
             return;
         } else {
-            String name = "profile_" + email;
+            String name = resourceName(email);
             if (cache.containsKey(name)) {
                 cache.remove(name);
             }

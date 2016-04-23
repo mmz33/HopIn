@@ -4,7 +4,12 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/res/layout-sw600dp-v13/design_layout_snackbar.xml"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     }
 ]

@@ -6,10 +6,14 @@ public class Vehicle {
     public String color;
     public String ownerEmail;
 
+    public Vehicle(String ownerEmail) {
+        this(0, "", "", ownerEmail);
+    }
+
     public Vehicle(int capacity, String make, String color, String ownerEmail) {
-        this.capacity = capacity;
-        this.make = make;
-        this.color = color;
+        this.capacity   = capacity;
+        this.make       = make;
+        this.color      = color;
         this.ownerEmail = ownerEmail;
     }
 }

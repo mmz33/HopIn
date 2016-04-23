@@ -8,20 +8,37 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_tall_off_client.png"
     },
     {
+<<<<<<< HEAD
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_focused.9.png"
+    },
+    {
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_disabled.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_disabled.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_focused.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_focused.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_small_off_client.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_small_off_client.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_focused.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_focused.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_normal.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_pressed.9.png",
@@ -32,6 +49,7 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_full_open_on_phone.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_disabled.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_disabled.9.png"
     },
@@ -54,12 +72,29 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_focused.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_focused.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_normal.9.png",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_normal.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_pressed.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_pressed.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_focused.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_focused.9.png"
     },
@@ -70,14 +105,35 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_small_off_client.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_small_off_client.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_tall_off_client.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_tall_off_client.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_normal.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_full_open_on_phone.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_full_open_on_phone.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_focused.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_focused.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_focused.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_focused.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_disabled.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_small_off_client.png",
@@ -88,8 +144,13 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_disabled.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_normal.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_disabled.9.png",
@@ -100,8 +161,13 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_pressed.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_disabled.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_disabled.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_pressed.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_disabled.9.png",
@@ -112,16 +178,24 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_pressed.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_normal.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_normal.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_focused.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_standard_off_client.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_standard_off_client.png"
+<<<<<<< HEAD
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_standard_off_client.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_standard_off_client.png"
+=======
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_normal.9.png",
@@ -130,6 +204,10 @@
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_pressed.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_pressed.9.png"
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_focused.9.png",
@@ -156,6 +234,7 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_disabled.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_normal.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_normal.9.png"
     },
@@ -170,26 +249,72 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_disabled.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_focused.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_normal.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_normal.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_normal.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_disabled.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_disabled.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_pressed.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_normal.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_normal.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_disabled.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_disabled.9.png"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_disabled.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_medium_off_client.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_medium_off_client.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_disabled.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_focused.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_standard_off_client.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_standard_off_client.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_focused.9.png",
@@ -200,6 +325,13 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_focused.9.png"
     },
     {
+<<<<<<< HEAD
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_normal.9.png"
+    },
+    {
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_disabled.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_disabled.9.png"
     },
@@ -208,6 +340,7 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_pressed.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_pressed.9.png"
     },
@@ -222,6 +355,14 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_normal.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_normal.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_focused.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_disabled.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_disabled.9.png",
@@ -232,20 +373,34 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_normal.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_disabled.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_focused.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_focused.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_focused.9.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_focused.9.png"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_dark_pressed.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_normal.9.png"
+    },
+    {
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_focused.9.png",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_focused.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_dark_normal.9.png",
@@ -256,6 +411,7 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_normal.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_normal.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_normal.9.png"
     },
@@ -270,10 +426,22 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_light_focused.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_focused.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_dark_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_dark_focused.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_medium_off_client.png",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/res/drawable-tvdpi/ic_plusone_medium_off_client.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_icon_light_disabled.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_focused.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_dark_focused.9.png"
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_text_dark_focused.9.png",
@@ -288,11 +456,24 @@
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_text_light_pressed.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_pressed.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_pressed.9.png"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_google_signin_btn_icon_light_disabled.9.png",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_google_signin_btn_icon_light_disabled.9.png"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_pressed.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_light_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_light_normal.9.png"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/common_plus_signin_btn_text_dark_normal.9.png",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable-tvdpi/common_plus_signin_btn_text_dark_normal.9.png"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     }
 ]

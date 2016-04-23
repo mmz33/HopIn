@@ -1,7 +1,12 @@
 [
     {
+<<<<<<< HEAD
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout-v17/mr_media_route_list_item.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/layout-v17/mr_media_route_list_item.xml"
+=======
+        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout-v17/mr_media_route_list_item.xml",
+        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/layout-v17/mr_media_route_list_item.xml"
+>>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout-v17/mr_media_route_list_item.xml",

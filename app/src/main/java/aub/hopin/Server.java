@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -67,6 +68,19 @@ public class Server {
             if (!scanner.hasNextLine()) break;
             String val = scanner.nextLine();
             result.put(key, val);
+        }
+        scanner.close();
+        return result;
+    }
+
+    // Reads the contents of an InputStream into a List.
+    private static ArrayList<String> parseList(InputStream stream) throws IOException {
+        String contents = readContents(stream);
+        Scanner scanner = new Scanner(contents);
+        ArrayList<String> result = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            String element = scanner.nextLine();
+            result.add(element);
         }
         scanner.close();
         return result;
@@ -124,6 +138,32 @@ public class Server {
         }
     }
 
+    // Retrieves a response from the server in the form of a list.
+    private static ArrayList<String> getResponseList(String link) throws ConnectionFailureException {
+        try {
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200)
+                return parseList(connection.getInputStream());
+
+            throw new ConnectionFailureException();
+        } catch (MalformedURLException e) {
+            Log.e("error", "Bad server url.");
+            return null;
+        } catch (IOException e) {
+            Log.e("error", "Could not open url connection.");
+            throw new ConnectionFailureException();
+        }
+    }
+
     // Downloads an image from the server.
     private static Bitmap downloadBitmap(String url) throws ConnectionFailureException {
         try {
@@ -168,25 +208,6 @@ public class Server {
         args.put("email", email);
         args.put("ssid", ActiveUser.getSessionId());
         return downloadBitmap(buildRequest("getprofileimg", args));
-    }
-
-    //public static Bitmap downloadScheduleImage(String email) throws ConnectionFailureException {
-    //    HashMap<String, String> args = new HashMap<>();
-    //    args.put("email", email);
-    //    args.put("ssid", ActiveUser.getSessionId());
-    //    return downloadBitmap(buildRequest("getscheduleimg", args));
-    //}
-
-    // Retrieves a response from the server after an upload.
-    private static String getResponseUpload(String service, String email, String filename) throws ConnectionFailureException {
-        try {
-            FileInputStream is = new FileInputStream(new File(filename));
-            Bitmap bmp = BitmapFactory.decodeStream(is);
-            return getResponseUpload(service, email, bmp);
-        } catch (FileNotFoundException e) {
-            Log.e("error", "getResponseUpload: File not found!");
-            return null;
-        }
     }
 
     private static String getResponseUpload(String service, String email, Bitmap bmp) throws ConnectionFailureException {
@@ -259,33 +280,33 @@ public class Server {
         return getResponse(buildRequest("signin", args));
     }
 
-    public static String sendPhoneNumber(String email, String phoneNumber) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("phone", phoneNumber);
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("upphone", args));
-    }
+    //public static String sendPhoneNumber(String email, String phoneNumber) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("phone", phoneNumber);
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return getResponse(buildRequest("upphone", args));
+    //}
 
-    public static String sendAddress(String email, String address) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("address", address);
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("upaddress", args));
-    }
+    //public static String sendAddress(String email, String address) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("address", address);
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return getResponse(buildRequest("upaddress", args));
+    //}
 
-    public static String sendPOBox(String email, String poBox) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("pobox", poBox);
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("uppobox", args));
-    }
+    //public static String sendPOBox(String email, String poBox) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("pobox", poBox);
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return getResponse(buildRequest("uppobox", args));
+    //}
 
-    public static String sendProfilePicture(String email, String fileName) throws ConnectionFailureException {
-        return getResponseUpload("upprofile", email, fileName);
-    }
+    //public static String sendProfilePicture(String email, String fileName) throws ConnectionFailureException {
+    //    return getResponseUpload("upprofile", email, fileName);
+    //}
 
     public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {
         return getResponseUpload("upprofile", email, bmp);
@@ -349,21 +370,21 @@ public class Server {
         return getResponse(buildRequest("feedback", args));
     }
 
-    public static String showPhone(String email, boolean b) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("show", b? "1" : "0");
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("showphone", args));
-    }
+    //public static String showPhone(String email, boolean b) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("show", b? "1" : "0");
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return getResponse(buildRequest("showphone", args));
+    //}
 
-    public static String showAddress(String email, boolean b) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
-        args.put("show", b ? "1" : "0");
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("showaddress", args));
-    }
+    //public static String showAddress(String email, boolean b) throws ConnectionFailureException {
+    //    HashMap<String, String> args = new HashMap<>();
+    //    args.put("email", email);
+    //    args.put("show", b ? "1" : "0");
+    //    args.put("ssid", ActiveUser.getSessionId());
+    //    return getResponse(buildRequest("showaddress", args));
+    //}
 
     public static String sendGlobalPosition(String email, double longitude, double latitude) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
@@ -374,10 +395,10 @@ public class Server {
         return getResponse(buildRequest("sendpos", args));
     }
 
-    public static HashMap<String, String> queryActiveUserPositionsAndImageHashes() throws ConnectionFailureException {
+    public static ArrayList<String> queryActiveUsers() throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", ActiveUser.getSessionId());
-        return getResponseMap(buildRequest("queryactive", args));
+        return getResponseList(buildRequest("queryactive", args));
     }
 
     public static HashMap<String, String> queryUserInfo(String email) throws ConnectionFailureException {
