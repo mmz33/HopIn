@@ -16,9 +16,9 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:id="@+id/car_info_vehicle_type_auto_complete_text"
+        android:layout_marginTop="39dp"
         android:layout_below="@+id/car_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp" />
+        android:layout_alignStart="@+id/car_info_okay" />
 
     <AutoCompleteTextView
         android:layout_width="150dp"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:ems="8"
+        android:ems="7"
         android:id="@+id/car_info_passengers"
         android:hint="Passengers"
         android:layout_below="@+id/car_info_colors_auto_complete_text"

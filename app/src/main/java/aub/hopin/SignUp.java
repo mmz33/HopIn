@@ -1,5 +1,7 @@
 package aub.hopin;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -120,6 +123,14 @@ public class SignUp extends AppCompatActivity {
         this.signUp.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+
+                        if(v != null) {
+                            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        }
+
+                        errorText.setText("");
+
                         String firstName = SignUp.this.firstNameBox.getText().toString();
                         String lastName = SignUp.this.lastNameBox.getText().toString();
                         String email = SignUp.this.emailBox.getText().toString().toLowerCase();

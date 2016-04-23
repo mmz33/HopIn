@@ -2952,10 +2952,10 @@ containing a value of this type.
         public static final int buy_with=0x7f0d0052;
         public static final int buy_with_google=0x7f0d0053;
         public static final int cancel_action=0x7f0d0120;
-        public static final int car_info_colors_auto_complete_text=0x7f0d0097;
+        public static final int car_info_colors_auto_complete_text=0x7f0d0098;
         public static final int car_info_error_text=0x7f0d009a;
-        public static final int car_info_okay=0x7f0d0099;
-        public static final int car_info_passengers=0x7f0d0098;
+        public static final int car_info_okay=0x7f0d0097;
+        public static final int car_info_passengers=0x7f0d0099;
         public static final int car_info_vehicle_color_text_view=0x7f0d009c;
         public static final int car_info_vehicle_type_auto_complete_text=0x7f0d0095;
         public static final int car_info_vehicle_type_text_view=0x7f0d009b;

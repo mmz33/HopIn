@@ -1,26 +1,14 @@
 [
     {
-        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_sign_page.xml",
-        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/src/main/res/menu/menu_sign_page.xml"
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/menu/activity_main_drawer.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/menu/activity_main_drawer.xml"
     },
     {
-        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/activity_main_drawer.xml",
-        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/src/main/res/menu/activity_main_drawer.xml"
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/menu/menu_map.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/menu/menu_map.xml"
     },
     {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_map.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/res/menu/menu_map.xml"
-    },
-    {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/activity_main_drawer.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/res/menu/activity_main_drawer.xml"
-    },
-    {
-        "merged": "/Users/cmps/Desktop/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_map.xml",
-        "source": "/Users/cmps/Desktop/Bdeir/HopIn/app/src/main/res/menu/menu_map.xml"
-    },
-    {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/menu/menu_sign_page.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/res/menu/menu_sign_page.xml"
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/menu/menu_sign_page.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/menu/menu_sign_page.xml"
     }
 ]

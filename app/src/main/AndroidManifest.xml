@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="com.aub.hopin.permission.MAPS_RECEIVE"></uses-permission>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -49,6 +50,7 @@
         <activity
             android:name=".SignUp"
             android:label="@string/title_activity_sign_up"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <intent-filter>
@@ -77,6 +79,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true"/>
+
         <activity
             android:name=".ScheduleSettings"
             android:label="@string/title_activity_schedule"
@@ -88,6 +94,7 @@
         <activity
             android:name=".CarInfoSettings"
             android:label="@string/title_activity_car"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileSettings"

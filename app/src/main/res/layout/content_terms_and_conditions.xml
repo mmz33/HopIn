@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Terms and Conditions"
         android:id="@+id/terms_and_conditions_text_view"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textColor="#000"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" />
