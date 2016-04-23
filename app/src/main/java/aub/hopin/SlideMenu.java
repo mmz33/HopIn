@@ -1,10 +1,6 @@
 package aub.hopin;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.identity.intents.AddressConstants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -142,19 +141,19 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(button1.getText().toString().equals("Passenger")) {
-                    if(button2.getText().equals("Wanting")) {
+                if (button1.getText().toString().equals("Passenger")) {
+                    if (button2.getText().equals("Wanting")) {
                         button2.setText("Passive");
                         button2.setBackgroundResource(R.color.colorGrey);
-                    } else if(button2.getText().toString().equals("Passive")){
+                    } else if (button2.getText().toString().equals("Passive")) {
                         button2.setText("Wanting");
                         button2.setBackgroundResource(R.color.colorRed);
                     }
-                } else if(button1.getText().toString().equals("Driver")) {
-                    if(button2.getText().toString().equals("Passive")) {
+                } else if (button1.getText().toString().equals("Driver")) {
+                    if (button2.getText().toString().equals("Passive")) {
                         button2.setText("Offering");
                         button2.setBackgroundResource(R.color.colorGreen);
-                    } else if(button2.getText().toString().equals("Offering")) {
+                    } else if (button2.getText().toString().equals("Offering")) {
                         button2.setText("Passive");
                         button2.setBackgroundResource(R.color.colorGrey);
                     }
@@ -162,7 +161,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        imageView.setImageBitmap(info.profileImage);
+        UserInfo info = ActiveUser.getInfo();
+        imageView.setImageBitmap(info.getProfileImage());
         userNameTextView.setText(info.firstName + " " + info.lastName);
         userEmailTextView.setText(info.email);
 
