@@ -25,6 +25,11 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <supports-screens android:largeScreens="true" />
+    <supports-screens android:xlargeScreens="true" />
+    <supports-screens android:normalScreens="true" />
+    <supports-screens android:smallScreens="true" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" /> <!-- Permissions required for GCM -->
@@ -101,7 +106,8 @@
         <activity
             android:name="aub.hopin.ContactInfoSettings"
             android:label="@string/title_activity_contact_information"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="aub.hopin.CarInfoSettings"
             android:label="@string/title_activity_car"
@@ -164,6 +170,10 @@
         <activity
             android:name="aub.hopin.Settings"
             android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="aub.hopin.RidePreferences"
+            android:label="@string/title_activity_ride_preferences"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity

@@ -50,14 +50,6 @@ public class  ProfileSettings extends AppCompatActivity {
 
     private ImageView profileImage;
     private EditText statusBox;
-    private RadioButton passengerButton;
-    private RadioButton driverButton;
-    private RadioGroup modeGroup;
-    private RadioGroup stateGroup;
-
-    private RadioButton passiveButton;
-    private RadioButton offeringButton;
-    private RadioButton wantingButton;
 
     private ProgressBar loading;
 
@@ -144,7 +136,7 @@ public class  ProfileSettings extends AppCompatActivity {
         }
     }
 
-    private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
+    /*private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
         private UserMode mode;
         private boolean success;
 
@@ -239,7 +231,7 @@ public class  ProfileSettings extends AppCompatActivity {
                 stateChangeEnabled = true;
             }
         }
-    }
+    }*/
 
     // Important:
     // ----------
@@ -263,19 +255,6 @@ public class  ProfileSettings extends AppCompatActivity {
 
         profilePhone.setText(profileInfo.showingPhone ? profileInfo.phoneNumber : "Hidden");
         profileEmail.setText(profileInfo.email);
-
-        switch (profileInfo.mode) {
-            case PassengerMode: passengerButton.setChecked(true); break;
-            case DriverMode:    driverButton.setChecked(true);    break;
-            default:            throw new IllegalArgumentException();
-        }
-
-        switch (profileInfo.state) {
-            case Passive:  passiveButton.setChecked(true);  break;
-            case Offering: offeringButton.setChecked(true); break;
-            case Wanting:  wantingButton.setChecked(true);  break;
-            default:       throw new IllegalArgumentException();
-        }
 
         switch (profileInfo.role) {
             case Student:   profileRole.setText("Student");   break;
@@ -334,7 +313,7 @@ public class  ProfileSettings extends AppCompatActivity {
             statusBox.setOnClickListener(clickListener);
         }
 
-        if (listener0 == null) {
+        /*if (listener0 == null) {
             listener0 = new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int id) {
                     if (modeChangeEnabled) new AsyncModeChange(id).execute();
@@ -350,7 +329,7 @@ public class  ProfileSettings extends AppCompatActivity {
                 }
             };
             stateGroup.setOnCheckedChangeListener(listener1);
-        }
+        }*/
     }
 
     @Override
@@ -362,13 +341,6 @@ public class  ProfileSettings extends AppCompatActivity {
 
         profileImage = (ImageView)findViewById(R.id.profile_image_view);
         statusBox = (EditText)findViewById(R.id.profile_status_message);
-        modeGroup = (RadioGroup)findViewById(R.id.profile_switch_user_type_radio_group);
-        passengerButton = (RadioButton)findViewById(R.id.profile_passenger_radio_button);
-        driverButton = (RadioButton)findViewById(R.id.profile_driver_radio_button);
-        stateGroup = (RadioGroup)findViewById(R.id.profile_driver_state_group);
-        passiveButton = (RadioButton)findViewById(R.id.profile_state_group_passive);
-        offeringButton = (RadioButton)findViewById(R.id.profile_state_group_offering);
-        wantingButton = (RadioButton)findViewById(R.id.profile_state_group_want);
         loading = (ProgressBar)findViewById(R.id.profile_loading);
 
         profilePhone = (TextView)findViewById(R.id.profile_user_phone);

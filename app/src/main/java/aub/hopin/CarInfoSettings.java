@@ -1,5 +1,6 @@
 package aub.hopin;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -172,6 +174,12 @@ public class CarInfoSettings extends AppCompatActivity {
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                if(v != null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+
                 String make = vehicleType.getEditableText().toString();
                 String color = vehicleColor.getEditableText().toString();
                 String capacityStr = carCapacity.getEditableText().toString();

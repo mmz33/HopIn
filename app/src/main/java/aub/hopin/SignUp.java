@@ -29,9 +29,6 @@ public class SignUp extends AppCompatActivity {
     private RadioButton optionFemale;
     private RadioButton optionOther;
 
-    private RadioButton optionDriver;
-    private RadioButton optionPassenger;
-
     private RadioButton optionStudent;
     private RadioButton optionProfessor;
 
@@ -110,8 +107,6 @@ public class SignUp extends AppCompatActivity {
         this.optionMale = (RadioButton)findViewById(R.id.sign_up_male);
         this.optionFemale = (RadioButton)findViewById(R.id.sign_up_female);
         this.optionOther = (RadioButton)findViewById(R.id.sign_up_other);
-        this.optionDriver = (RadioButton)findViewById(R.id.sign_up_driver);
-        this.optionPassenger = (RadioButton)findViewById(R.id.sign_up_passenger);
         this.signUp = (Button)findViewById(R.id.sign_up_okay);
         this.errorText = (TextView)findViewById(R.id.sign_up_error_text);
         this.optionStudent = (RadioButton)findViewById(R.id.sign_up_student);
@@ -146,10 +141,6 @@ public class SignUp extends AppCompatActivity {
                         else if (SignUp.this.optionFemale.isChecked()) gender = UserGender.Female;
                         else if (SignUp.this.optionOther.isChecked()) gender = UserGender.Other;
 
-                        // Find the selected mode.
-                        if (SignUp.this.optionDriver.isChecked()) mode = UserMode.DriverMode;
-                        else if (SignUp.this.optionPassenger.isChecked()) mode = UserMode.PassengerMode;
-
                         if (SignUp.this.optionStudent.isChecked()) role = UserRole.Student;
                         else if (SignUp.this.optionProfessor.isChecked()) role = UserRole.Professor;
 
@@ -166,8 +157,6 @@ public class SignUp extends AppCompatActivity {
                             SignUp.this.errorText.setText("Please input age.");
                         else if (gender == UserGender.Unspecified)
                             SignUp.this.errorText.setText("Please specify gender.");
-                        else if (mode == UserMode.Unspecified)
-                            SignUp.this.errorText.setText("Please specify mode.");
                         else if (Integer.parseInt(age) < 5)
                             SignUp.this.errorText.setText("Age too low.");
                         else if (role == UserRole.Unspecified)

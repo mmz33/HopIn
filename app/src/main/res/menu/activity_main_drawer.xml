@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group>
         <item
@@ -16,6 +19,11 @@
             android:id="@+id/nav_contact_info"
             android:title="Contact Information"
             android:icon="@drawable/ic_action_contact_information" />
+
+        <item
+            android:id="@+id/nav_ride_preferences"
+            android:title="Ride Preferences"
+            android:icon="@drawable/ic_action_preference"/>
 
         <item
             android:id="@+id/nav_schedule"

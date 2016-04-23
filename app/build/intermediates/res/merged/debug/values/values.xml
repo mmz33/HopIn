@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="distance">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>Unlimited</item>
+    </string-array>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
     <attr format="boolean" name="isLightTheme"/>
@@ -39,9 +50,14 @@
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlue">#287ACC</color>
     <color name="colorBlueGrey800">#00695C</color>
+    <color name="colorGreen">#58CF58</color>
+    <color name="colorGrey">#A8A8A8</color>
+    <color name="colorOrange">#E59400</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorRed">#FF4C4C</color>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
     <color name="common_google_signin_btn_text_dark_disabled">#1F000000</color>
@@ -453,6 +469,7 @@
     <string name="title_activity_notification">Notification</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_report_problem">ReportProblem</string>
+    <string name="title_activity_ride_preferences">RidePreferences</string>
     <string name="title_activity_right_settings">RightSettings</string>
     <string name="title_activity_s">Notification</string>
     <string name="title_activity_schedule">Schedule</string>

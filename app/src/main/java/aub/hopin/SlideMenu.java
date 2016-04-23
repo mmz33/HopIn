@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -32,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.identity.intents.AddressConstants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,6 +46,8 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -348,6 +353,13 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         // upload/store your location here
     }*/
 
+    private ImageView imageView;
+    private TextView userNameTextView;
+    private TextView userEmailTextView;
+
+    private Button button1;
+    private Button button2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -383,6 +395,56 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setItemIconTintList(null);
         sFm = getSupportFragmentManager();
 
+        View hView = navigationView.getHeaderView(0);
+        imageView = (ImageView)hView.findViewById(R.id.nav_header_image_view);
+        userNameTextView = (TextView)hView.findViewById(R.id.nav_header_user_name);
+        userEmailTextView = (TextView)hView.findViewById(R.id.nav_header_user_email);
+
+        button1 = (Button)hView.findViewById(R.id.nav_header_main_button1);
+        button2 = (Button)hView.findViewById(R.id.nav_header_main_button2);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button2.setText("Passive");
+                button2.setBackgroundResource(R.color.colorGrey);
+                if(button1.getText().toString().equals("Driver")) {
+                    button1.setText("Passenger");
+                    button1.setBackgroundResource(R.color.colorBlue);
+                } else if(button1.getText().toString().equals("Passenger")){
+                    button1.setText("Driver");
+                    button1.setBackgroundResource(R.color.colorOrange);
+                }
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(button1.getText().toString().equals("Passenger")) {
+                    if(button2.getText().equals("Wanting")) {
+                        button2.setText("Passive");
+                        button2.setBackgroundResource(R.color.colorGrey);
+                    } else if(button2.getText().toString().equals("Passive")){
+                        button2.setText("Wanting");
+                        button2.setBackgroundResource(R.color.colorRed);
+                    }
+                } else if(button1.getText().toString().equals("Driver")) {
+                    if(button2.getText().toString().equals("Passive")) {
+                        button2.setText("Offering");
+                        button2.setBackgroundResource(R.color.colorGreen);
+                    } else if(button2.getText().toString().equals("Offering")) {
+                        button2.setText("Passive");
+                        button2.setBackgroundResource(R.color.colorGrey);
+                    }
+                }
+            }
+        });
+
+        imageView.setImageBitmap(info.profileImage);
+        userNameTextView.setText(info.firstName + " " + info.lastName);
+        userEmailTextView.setText(info.email);
+
         // Show the map
         if (!supportMapFragment.isAdded())
             sFm.beginTransaction().add(R.id.content_frame, supportMapFragment).commit();
@@ -408,7 +470,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         };
 
         try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         } catch (SecurityException e) {
             Toast.makeText(getApplicationContext(), "Failed to request location updates.", Toast.LENGTH_SHORT).show();
         }
@@ -489,6 +551,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_contact_info) {
             startActivity(new Intent(SlideMenu.this, ContactInfoSettings.class));
+            sFm.beginTransaction().show(supportMapFragment).commit();
+        } else if(id == R.id.nav_ride_preferences) {
+            startActivity(new Intent(SlideMenu.this, RidePreferences.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_logout) {
             new AsyncLogout().execute();
