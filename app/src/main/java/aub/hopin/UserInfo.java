@@ -38,10 +38,19 @@ public class UserInfo {
     public Vehicle vehicle         = null;
     public Runnable onLoadCallback = null;
 
-    public double longitude;
-    public double latitude;
+    public double longitude = 0.0;
+    public double latitude  = 0.0;
+    public boolean active   = true;
 
-    public boolean active;
+    public double curDestinationLatitude = 0.0;
+    public double curDestinationLongitude = 0.0;
+
+    public boolean prefsWithMen = true;
+    public boolean prefsWithWomen = true;
+    public boolean prefsWithStudents = true;
+    public boolean prefsWithTeachers = true;
+
+    public double notificationRadius = 5.0;
 
     public UserInfo(String email, boolean blocking, Runnable onLoad) {
         this.onLoadCallback = onLoad;
@@ -60,7 +69,6 @@ public class UserInfo {
     public UserInfo(String email, boolean blocking) {
         this(email, blocking, null);
     }
-
     public UserInfo(String email) {
         this(email, false);
     }
@@ -68,7 +76,6 @@ public class UserInfo {
     public Bitmap getProfileImage() {
         return profileImage;
     }
-
     public void setProfileImage(Bitmap bitmap) {
         profileImage = ImageUtils.makeRounded(bitmap);
     }
@@ -76,7 +83,6 @@ public class UserInfo {
     public String getProfileImageHash() {
         return profileHash;
     }
-
     public void setProfileImageHash(String hash) {
         profileHash = hash;
     }
@@ -88,7 +94,6 @@ public class UserInfo {
     public boolean isValid() {
         return infoValid;
     }
-
     public void validate() {
         infoValid = true;
     }
@@ -96,7 +101,6 @@ public class UserInfo {
     public void lock() {
         try { semaphore.acquire(); } catch (InterruptedException e) {}
     }
-
     public void unlock() {
         semaphore.release();
     }

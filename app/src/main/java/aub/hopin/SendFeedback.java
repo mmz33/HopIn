@@ -20,13 +20,12 @@ import android.widget.Toast;
 public class SendFeedback extends AppCompatActivity {
 
     private EditText feedbackBox;
-    private TextView errorText;
     private Button sendButton;
+    private boolean currentlySendingFeedback;
 
     private class AsyncSendFeedback extends AsyncTask<Void, Void, Void> {
         private String email;
         private String message;
-        private String errorMessage;
         private boolean success;
 
         protected void onPreExecute() {
@@ -38,22 +37,19 @@ public class SendFeedback extends AppCompatActivity {
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendFeedback(email, message).equals("OK")) {
-                    success = true;
-                }
-            } catch (ConnectionFailureException e) {
-                errorMessage = "Failed to connect to server. Try again.";
-            }
+                success = Server.sendFeedback(email, message).equals("OK");
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (success) {
-                Toast.makeText(getApplicationContext(), "Successfully sent feedback!", Toast.LENGTH_SHORT);
+                Toast.makeText(SendFeedback.this, "Thank you!", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                errorText.setText(errorMessage);
+                Toast.makeText(SendFeedback.this, "Failed to send feedback.", Toast.LENGTH_SHORT).show();
+                currentlySendingFeedback = false;
             }
         }
     }
@@ -66,7 +62,8 @@ public class SendFeedback extends AppCompatActivity {
 
         feedbackBox = (EditText)findViewById(R.id.send_feedback_textbox);
         sendButton = (Button)findViewById(R.id.send_feedback_send);
-        errorText = (TextView)findViewById(R.id.send_feedback_error_text);
+
+        currentlySendingFeedback = false;
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,7 +71,10 @@ public class SendFeedback extends AppCompatActivity {
                     InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-                new AsyncSendFeedback().execute();
+                if (!currentlySendingFeedback) {
+                    currentlySendingFeedback = true;
+                    new AsyncSendFeedback().execute();
+                }
             }
         });
     }

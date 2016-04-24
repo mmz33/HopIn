@@ -22,6 +22,7 @@ public class SignUpConfirm extends AppCompatActivity {
     private String email;
 
     private ProgressBar loading;
+    private boolean currentlyConfirming;
 
     private class AsyncConfirm extends AsyncTask<Void, Void, Void> {
         private String code;
@@ -40,7 +41,7 @@ public class SignUpConfirm extends AppCompatActivity {
                 if (response.startsWith("OK")) {
                     String ssid = response.substring(3);
                     ActiveUser.setSessionId(ssid);
-                    ActiveUser.setInfo(new UserInfo(email, true));
+                    ActiveUser.setInfo(UserInfoFactory.get(email, true));
                 } else {
                     errorMessage = response;
                 }
@@ -55,8 +56,9 @@ public class SignUpConfirm extends AppCompatActivity {
             loading.setVisibility(View.GONE);
             if (errorMessage.length() > 0) {
                 errorText.setText(errorMessage);
+                currentlyConfirming = false;
             } else {
-                startActivity(new Intent(SignUpConfirm.this, SlideMenu.class));
+                startActivity(new Intent(SignUpConfirm.this, MainMap.class));
                 finish();
             }
         }
@@ -70,6 +72,7 @@ public class SignUpConfirm extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         email = getIntent().getExtras().getString("email");
+        currentlyConfirming = false;
 
         confirmCodeBox = (EditText)findViewById(R.id.sign_up_confirm_box);
         confirmButton = (Button)findViewById(R.id.sign_confirm_next);
@@ -82,7 +85,10 @@ public class SignUpConfirm extends AppCompatActivity {
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new AsyncConfirm().execute();
+                if (!currentlyConfirming) {
+                    currentlyConfirming = true;
+                    new AsyncConfirm().execute();
+                }
             }
         });
 

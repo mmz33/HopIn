@@ -40,7 +40,7 @@ public class SignPage extends AppCompatActivity {
             try {
                 if (Server.checkSession(sessionId).equals("YES")) {
                     ActiveUser.setSessionId(sessionId);
-                    ActiveUser.setInfo(new UserInfo(email, true));
+                    ActiveUser.setInfo(UserInfoFactory.get(email, true));
                     success = true;
                 } else {
                     success = false;
@@ -54,7 +54,7 @@ public class SignPage extends AppCompatActivity {
             super.onPostExecute(result);
             if (success) {
                 Toast.makeText(getApplicationContext(), "Autologin Successful.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SignPage.this, SlideMenu.class));
+                startActivity(new Intent(SignPage.this, MainMap.class));
             } else {
                 Toast.makeText(getApplicationContext(), "Autologin Failed.", Toast.LENGTH_SHORT).show();
             }
@@ -68,6 +68,8 @@ public class SignPage extends AppCompatActivity {
         setContentView(R.layout.activity_sign_page);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        GlobalContext.init(getApplicationContext());
 
         // This allows the volume buttons on the device
         // to directly affect the application itself.

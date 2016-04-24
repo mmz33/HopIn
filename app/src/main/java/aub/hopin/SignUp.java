@@ -36,6 +36,7 @@ public class SignUp extends AppCompatActivity {
     private TextView errorText;
 
     private ProgressBar loading;
+    private boolean currentlySigningUp;
 
     private class AsyncSignUp extends AsyncTask<Void, Void, Void> {
         private String firstName;
@@ -89,6 +90,7 @@ public class SignUp extends AppCompatActivity {
                 finish();
             } else {
                 errorText.setText(errorMessage);
+                currentlySigningUp = false;
             }
         }
     }
@@ -115,11 +117,12 @@ public class SignUp extends AppCompatActivity {
         loading = (ProgressBar)findViewById(R.id.sign_up_loading);
         loading.setVisibility(View.GONE);
 
+        currentlySigningUp = false;
+
         this.signUp.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-
-                        if(v != null) {
+                        if (v != null) {
                             InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                             inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         }
@@ -162,7 +165,10 @@ public class SignUp extends AppCompatActivity {
                         else if (role == UserRole.Unspecified)
                             SignUp.this.errorText.setText("Please specify role.");
                         else {
-                            new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
+                            if (!currentlySigningUp) {
+                                currentlySigningUp = true;
+                                new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
+                            }
                         }
                     }
                 });

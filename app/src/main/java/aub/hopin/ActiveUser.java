@@ -23,4 +23,9 @@ public class ActiveUser {
     public static void setSessionId(String id) {
         sessionId = id;
     }
+
+    public static void clearSession() {
+        sessionId = "";
+        info = null;
+    }
 }

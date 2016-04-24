@@ -1,6 +1,5 @@
 package aub.hopin;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +10,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
-
 
 public class UserMapMarker {
     private GoogleMap parentMap;
@@ -54,11 +52,14 @@ public class UserMapMarker {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                overlay.setImage(getImageDescripter());
+                if (overlay != null) {
+                    overlay.setImage(getImageDescripter());
+                }
             }
         });
     }
     public void destroy() {
         UserMapMarkerUpdater.remove(this);
+        overlay.remove();
     }
 }

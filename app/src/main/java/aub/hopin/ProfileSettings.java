@@ -406,7 +406,6 @@ public class  ProfileSettings extends AppCompatActivity {
     private void performCrop(Uri uri) {
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-
             cropIntent.setDataAndType(uri, "image/*");
 
             cropIntent.putExtra("crop", true);
@@ -422,7 +421,7 @@ public class  ProfileSettings extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_OK) return;
+        if (resultCode != RESULT_OK) return;
 
         switch (requestCode) {
             case PICK_FROM_GALLERY:
