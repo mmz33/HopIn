@@ -1,10 +1,12 @@
 package aub.hopin;
 
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,7 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.support.v4.app.FragmentManager;
+
+
 
 public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -60,7 +63,13 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                     if (!info.isValid()) continue;
 
                     if (!markers.containsKey(email)) {
-                        markers.put(email, new UserMapMarker(googleMap, email));
+                        final String e = email;
+                        SlideMenu.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                markers.put(e, new UserMapMarker(googleMap, e));
+                            }
+                        });
                     }
                 }
 
@@ -172,15 +181,11 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
         sFm.beginTransaction().show(supportMapFragment).commit();
 
-        LocationServices.start(getApplicationContext());
-
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             public void run() { new AsyncSetupMarkers().execute(); }
         };
         t.scheduleAtFixedRate(task, 1000, 1000);
-
-        setUpMap();
     }
 
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
@@ -263,7 +268,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     }
 
     public void onMapReady(GoogleMap map) {
+        LocationServices.start(getApplicationContext());
         googleMap = map;
+        setUpMap();
     }
 
     // make the current location as default

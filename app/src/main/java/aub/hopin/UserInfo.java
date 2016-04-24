@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class UserInfo {
     private boolean infoValid   = false;
     private Semaphore semaphore = new Semaphore(1);
-    private Bitmap profileImage = null;
+    public Bitmap profileImage = null;
     private String profileHash  = "";
 
     public String firstName = "";

@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<merger version="3"><dataSet config="main"><source path="/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/androidTest/assets"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="/Users/cmps/Desktop/Bdeir/HopIn/app/src/androidTest/assets"/></dataSet></merger>
->>>>>>> e934bec89cb24da6d088930341095c7030b32ecf
+<merger version="3"><dataSet config="main"><source path="/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/androidTest/assets"/></dataSet></merger>

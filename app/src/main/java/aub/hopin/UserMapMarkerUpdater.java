@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by cmps on 4/23/16.
- */
 public abstract class UserMapMarkerUpdater {
     private static HashMap<String, UserMapMarker> userMarkerMap = new HashMap<>();
     private static HashMap<String, String> currentHashes = new HashMap<>();
@@ -23,6 +20,7 @@ public abstract class UserMapMarkerUpdater {
                     String curHash = info.getProfileImageHash();
                     if (!oldHash.equals(curHash)) {
                         UserMapMarker marker = userMarkerMap.get(email);
+
                         marker.updateImage();
                     }
                     currentHashes.put(email, curHash);
