@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 public class MainMap extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -53,9 +54,12 @@ public class MainMap extends AppCompatActivity implements
     private NavigationView navigationView;
     private GoogleMap googleMap;
     private FragmentManager sFm;
+
     private HashMap<String, UserMapMarker> markers;
     private HashMap<String, UserMapDestinationMarker> destinationMarkers;
+
     private boolean currentlySettingDestination;
+    private Semaphore semaphore;
 
     // Asynchronous marker setup. This will update the
     // markers on the map according to the locations
@@ -67,8 +71,10 @@ public class MainMap extends AppCompatActivity implements
 
         protected Void doInBackground(Void... params) {
             try {
+                try { semaphore.acquire(); } catch (InterruptedException e) {}
                 ArrayList<String> activeUsers = Server.queryActiveUsers();
 
+                // Setup the markers for the new users of interest.
                 for (String email : activeUsers) {
                     UserInfo info = UserInfoFactory.get(email);
                     if (info == null) continue;
@@ -77,7 +83,6 @@ public class MainMap extends AppCompatActivity implements
                     if (!markers.containsKey(email)) {
                         final String e = email;
                         MainMap.this.runOnUiThread(new Runnable() {
-                            @Override
                             public void run() {
                                 markers.put(e, new UserMapMarker(googleMap, e));
                             }
@@ -85,17 +90,19 @@ public class MainMap extends AppCompatActivity implements
                     }
                 }
 
+                // Remove the markers for the users who are no longer of interest.
                 ArrayList<String> toRemove = new ArrayList<>();
                 for (String email : markers.keySet()) {
                     if (!activeUsers.contains(email)) {
                         toRemove.add(email);
                     }
                 }
-
                 for (String email : toRemove) {
                     markers.get(email).destroy();
                     markers.remove(email);
                 }
+
+                semaphore.release();
             } catch (ConnectionFailureException e) {}
             return null;
         }
@@ -106,10 +113,17 @@ public class MainMap extends AppCompatActivity implements
     }
 
     private class AsyncSendDestination extends AsyncTask<Void, Void, Void> {
+        private UserInfo info;
         private boolean success;
-        private String email;
         private double lat;
         private double lon;
+
+        public AsyncSendDestination(UserInfo info, double latitude, double longitude) {
+            success = false;
+            lat = latitude;
+            lon = longitude;
+            this.info = info;
+        }
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -117,7 +131,7 @@ public class MainMap extends AppCompatActivity implements
 
         protected Void doInBackground(Void... params) {
             try {
-                if (Server.sendDestination(email, lat, lon).equals("OK")) {
+                if (Server.sendDestination(info.email, lat, lon).equals("OK")) {
                     info.curDestinationLatitude = lat;
                     info.curDestinationLongitude = lon;
                     success = true;
@@ -130,7 +144,7 @@ public class MainMap extends AppCompatActivity implements
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (!success) {
-                Toast.makeText(SlideMenu.this, "Failed to send destination!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainMap.this, "Failed to send destination!", Toast.LENGTH_SHORT).show();
                 currentlySettingDestination = false;
             }
         }
@@ -154,6 +168,8 @@ public class MainMap extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        semaphore = new Semaphore(1);
+
         markers = new HashMap<>();
         destinationMarkers = new HashMap<>();
 
@@ -162,6 +178,7 @@ public class MainMap extends AppCompatActivity implements
 
         selectDestination = (LinearLayout)findViewById(R.id.select_destination_layout);
         selectDestination.setVisibility(LinearLayout.GONE);
+
         final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
         final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
 
@@ -181,6 +198,8 @@ public class MainMap extends AppCompatActivity implements
         slideMenuProfileImage = (ImageView)hView.findViewById(R.id.nav_header_image_view);
         slideMenuUserName = (TextView)hView.findViewById(R.id.nav_header_user_name);
         slideMenuUserEmail = (TextView)hView.findViewById(R.id.nav_header_user_email);
+
+        SlideMenuUpdater.start(slideMenuProfileImage);
 
         userModeButton = (Button)hView.findViewById(R.id.nav_header_main_button1);
         userStateButton = (Button)hView.findViewById(R.id.nav_header_main_button2);
@@ -233,6 +252,7 @@ public class MainMap extends AppCompatActivity implements
                                     selectDestination.startAnimation(slide_up);
                                     slide_up.setFillAfter(true);
                                     currentlySettingDestination = false;
+                                    new AsyncSendDestination(ActiveUser.getInfo(), latLng.latitude, latLng.longitude).execute();
                                 }
                             }
                         });
@@ -270,6 +290,8 @@ public class MainMap extends AppCompatActivity implements
         };
         t.scheduleAtFixedRate(task, 500, 1000);
     }
+
+    //boolean currentlySendingLogOut;
 
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
         private boolean success;

@@ -51,6 +51,7 @@ public class UserInfoLoader implements Runnable {
 
             info.curDestinationLatitude = Double.parseDouble(response.get("curdestination_latitude"));
             info.curDestinationLongitude = Double.parseDouble(response.get("curdestination_longitude"));
+            info.hasDestination = response.get("hasdestination").equals("1");
 
             info.prefsWithMen = response.get("prefs_withmen").equals("1");
             info.prefsWithWomen = response.get("prefs_withwomen").equals("1");

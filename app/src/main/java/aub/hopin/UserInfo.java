@@ -51,6 +51,7 @@ public class UserInfo {
     public boolean prefsWithTeachers = true;
 
     public double notificationRadius = 5.0;
+    public boolean hasDestination = false;
 
     public UserInfo(String email, boolean blocking, Runnable onLoad) {
         this.onLoadCallback = onLoad;

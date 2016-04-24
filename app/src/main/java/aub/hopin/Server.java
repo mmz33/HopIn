@@ -280,7 +280,7 @@ public class Server {
         return getResponse(buildRequest("signin", args));
     }
 
-    public static String sendDesination(String email, double latitude, double longitude) throws ConnectionFailureException {
+    public static String sendDestination(String email, double latitude, double longitude) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("lat", String.format("%.12f", latitude));

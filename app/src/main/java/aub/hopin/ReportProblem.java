@@ -62,7 +62,7 @@ public class ReportProblem extends AppCompatActivity {
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(v != null) {
+                if (v != null) {
                     InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
