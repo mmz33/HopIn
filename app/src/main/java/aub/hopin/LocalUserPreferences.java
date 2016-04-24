@@ -12,7 +12,7 @@ public class LocalUserPreferences {
         }
     }
 
-    public static MeasurementUnits getUnits(Context ctx) {
+    public static MeasurementUnits getUnits() {
         MeasurementUnitsSetting setting = getUnitsSetting();
 
         switch (setting) {
@@ -21,7 +21,7 @@ public class LocalUserPreferences {
             case Imperial:
                 return MeasurementUnits.Imperial;
             case Automatic:
-                String locale = ctx.getResources().getConfiguration().locale.getCountry();
+                String locale = GlobalContext.get().getResources().getConfiguration().locale.getCountry();
                 if (locale.equals("US")) {
                     return MeasurementUnits.Imperial;
                 } else {

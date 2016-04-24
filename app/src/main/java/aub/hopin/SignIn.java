@@ -25,6 +25,7 @@ public class SignIn extends AppCompatActivity {
     private Button signIn;
     private TextView errorText;
     private ProgressBar loading;
+    private boolean currentlySigningIn;
 
     private class AsyncSignIn extends AsyncTask<Void, Void, Void> {
         private String emailText;
@@ -46,7 +47,7 @@ public class SignIn extends AppCompatActivity {
                 if (response.startsWith("OK")) {
                     String ssid = response.substring(3);
                     ActiveUser.setSessionId(ssid);
-                    ActiveUser.setInfo(new UserInfo(emailText, true));
+                    ActiveUser.setInfo(UserInfoFactory.get(emailText, true));
                 } else {
                     errorMessage = response;
                 }
@@ -61,9 +62,10 @@ public class SignIn extends AppCompatActivity {
             loading.setVisibility(View.GONE);
             if (errorMessage.length() > 0) {
                 errorText.setText(errorMessage);
+                currentlySigningIn = false;
             } else {
                 SessionLoader.saveData(ActiveUser.getSessionId(), ActiveUser.getEmail());
-                startActivity(new Intent(SignIn.this, SlideMenu.class));
+                startActivity(new Intent(SignIn.this, MainMap.class));
                 finish();
             }
         }
@@ -72,49 +74,56 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        email = (EditText)findViewById(R.id.sign_in_email);
-        password = (EditText)findViewById(R.id.sign_in_password);
-        forgotPassword = (TextView)findViewById(R.id.sign_in_forgot_password);
-        signIn = (Button)findViewById(R.id.sign_in_button);
-        errorText = (TextView)findViewById(R.id.sign_in_error_text);
+        email = (EditText) findViewById(R.id.sign_in_email);
+        password = (EditText) findViewById(R.id.sign_in_password);
+        forgotPassword = (TextView) findViewById(R.id.sign_in_forgot_password);
+        signIn = (Button) findViewById(R.id.sign_in_button);
+        errorText = (TextView) findViewById(R.id.sign_in_error_text);
         errorText.setText("");
 
-        loading = (ProgressBar)findViewById(R.id.sign_in_loading);
+        loading = (ProgressBar) findViewById(R.id.sign_in_loading);
         loading.setVisibility(View.GONE);
+
+        currentlySigningIn = false;
 
         signIn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(v != null) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (v != null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-                new AsyncSignIn().execute();
+                if (!currentlySigningIn) {
+                    currentlySigningIn = true;
+                    new AsyncSignIn().execute();
+                }
             }
         });
 
         email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {errorText.setText("");}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                errorText.setText("");
+            }
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {errorText.setText("");}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                errorText.setText("");
+            }
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 }

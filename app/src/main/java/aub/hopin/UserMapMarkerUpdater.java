@@ -20,7 +20,6 @@ public abstract class UserMapMarkerUpdater {
                     String curHash = info.getProfileImageHash();
                     if (!oldHash.equals(curHash)) {
                         UserMapMarker marker = userMarkerMap.get(email);
-
                         marker.updateImage();
                     }
                     currentHashes.put(email, curHash);
@@ -41,5 +40,9 @@ public abstract class UserMapMarkerUpdater {
         String email = marker.getEmail();
         userMarkerMap.remove(email);
         currentHashes.remove(email);
+    }
+
+    public static void clear() {
+
     }
 }

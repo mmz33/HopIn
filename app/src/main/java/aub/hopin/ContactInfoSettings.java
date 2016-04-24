@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -23,9 +24,9 @@ public class ContactInfoSettings extends AppCompatActivity {
     private EditText postOfficeBox;
     private CheckBox showPhoneBox;
     private CheckBox showAddressBox;
-    private TextView errorText;
     private Button okayButton;
     private ProgressBar spinner;
+    private boolean currentlyUpdating;
 
     private class AsyncContactInfoUpdate extends AsyncTask<Void, Void, Void> {
         private String phoneNumber;
@@ -35,7 +36,6 @@ public class ContactInfoSettings extends AppCompatActivity {
         private boolean showAddress;
         private boolean success;
         private UserInfo info;
-        private String errorMessage;
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -46,8 +46,6 @@ public class ContactInfoSettings extends AppCompatActivity {
             showPhone = showPhoneBox.isChecked();
             showAddress = showAddressBox.isChecked();
             success = false;
-            errorMessage = "";
-            errorText.setText("");
             spinner.setVisibility(View.VISIBLE);
         }
 
@@ -67,24 +65,21 @@ public class ContactInfoSettings extends AppCompatActivity {
                     info.showingPhone = showPhone;
                     info.showingAddress = showAddress;
                     success = true;
-                } else {
-                    errorMessage = response;
                 }
-            } catch (ConnectionFailureException e) {
-                errorMessage = "Failed to connect to server.";
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            phoneNumberBox.setText(info.phoneNumber);
-            addressBox.setText(info.address);
-            postOfficeBox.setText(info.poBox);
-            showPhoneBox.setChecked(info.showingPhone);
-            showAddressBox.setChecked(info.showingAddress);
             if (!success) {
-                errorText.setText(errorMessage);
+                phoneNumberBox.setText(info.phoneNumber);
+                addressBox.setText(info.address);
+                postOfficeBox.setText(info.poBox);
+                showPhoneBox.setChecked(info.showingPhone);
+                showAddressBox.setChecked(info.showingAddress);
+                Toast.makeText(ContactInfoSettings.this, "Failed to send contact info!", Toast.LENGTH_SHORT).show();
+                currentlyUpdating = false;
             } else {
                 finish();
             }
@@ -105,28 +100,28 @@ public class ContactInfoSettings extends AppCompatActivity {
         showPhoneBox = (CheckBox)findViewById(R.id.contact_info_show_phone);
         showAddressBox = (CheckBox)findViewById(R.id.contact_info_show_address);
         okayButton = (Button)findViewById(R.id.contact_info_okay);
-        errorText = (TextView)findViewById(R.id.contact_info_error_text);
         spinner = (ProgressBar)findViewById(R.id.contact_info_loading);
 
         UserInfo info = ActiveUser.getInfo();
+        currentlyUpdating = false;
 
         phoneNumberBox.setText(info.phoneNumber);
         addressBox.setText(info.address);
         postOfficeBox.setText(info.poBox);
         showPhoneBox.setChecked(info.showingPhone);
         showAddressBox.setChecked(info.showingAddress);
-        errorText.setText("");
         spinner.setVisibility(View.GONE);
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                if(v != null) {
+                if (v != null) {
                     InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-
-                new AsyncContactInfoUpdate().execute();
+                if (!currentlyUpdating) {
+                    currentlyUpdating = true;
+                    new AsyncContactInfoUpdate().execute();
+                }
             }
         });
     }

@@ -1,6 +1,5 @@
 package aub.hopin;
 
-
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.location.Location;
@@ -28,6 +27,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,17 +43,16 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
-public class SlideMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
-
+public class MainMap extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        OnMapReadyCallback
+{
     private SupportMapFragment supportMapFragment;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private GoogleMap googleMap;
     private FragmentManager sFm;
-
     private HashMap<String, UserMapMarker> markers;
     private HashMap<String, UserMapDestinationMarker> destinationMarkers;
     private boolean currentlySettingDestination;
@@ -75,7 +76,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
 
                     if (!markers.containsKey(email)) {
                         final String e = email;
-                        SlideMenu.this.runOnUiThread(new Runnable() {
+                        MainMap.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 markers.put(e, new UserMapMarker(googleMap, e));
@@ -84,7 +85,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                     }
                 }
 
-                ArrayList<String> toRemove = new ArrayList<String>();
+                ArrayList<String> toRemove = new ArrayList<>();
                 for (String email : markers.keySet()) {
                     if (!activeUsers.contains(email)) {
                         toRemove.add(email);
@@ -110,35 +111,37 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         private double lat;
         private double lon;
 
-        @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
-        @Override
         protected Void doInBackground(Void... params) {
-            //try {
-                //if(sendDestination(email, lat, lon).equals("OK")) {
-                  //  success = true;
-                //}
-            //} catch (ConnectionFailureException e) {}
+            try {
+                if (Server.sendDestination(email, lat, lon).equals("OK")) {
+                    info.curDestinationLatitude = lat;
+                    info.curDestinationLongitude = lon;
+                    success = true;
+                }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if(!success)
+            if (!success) {
                 Toast.makeText(SlideMenu.this, "Failed to send destination!", Toast.LENGTH_SHORT).show();
+                currentlySettingDestination = false;
+            }
         }
     }
 
-    private ImageView imageView;
-    private TextView userNameTextView;
-    private TextView userEmailTextView;
+    private ImageView slideMenuProfileImage;
+    private TextView slideMenuUserName;
+    private TextView slideMenuUserEmail;
 
-    private Button button1;
-    private Button button2;
+    private Button userModeButton;
+    private Button userStateButton;
 
     private LinearLayout selectDestination;
 
@@ -175,38 +178,38 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         currentlySettingDestination = false;
 
         View hView = navigationView.getHeaderView(0);
-        imageView = (ImageView)hView.findViewById(R.id.nav_header_image_view);
-        userNameTextView = (TextView)hView.findViewById(R.id.nav_header_user_name);
-        userEmailTextView = (TextView)hView.findViewById(R.id.nav_header_user_email);
+        slideMenuProfileImage = (ImageView)hView.findViewById(R.id.nav_header_image_view);
+        slideMenuUserName = (TextView)hView.findViewById(R.id.nav_header_user_name);
+        slideMenuUserEmail = (TextView)hView.findViewById(R.id.nav_header_user_email);
 
-        button1 = (Button)hView.findViewById(R.id.nav_header_main_button1);
-        button2 = (Button)hView.findViewById(R.id.nav_header_main_button2);
+        userModeButton = (Button)hView.findViewById(R.id.nav_header_main_button1);
+        userStateButton = (Button)hView.findViewById(R.id.nav_header_main_button2);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        userModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                button2.setText("Passive");
-                button2.setBackgroundResource(R.color.colorGrey);
-                if(button1.getText().toString().equals("Driver")) {
-                    button1.setText("Passenger");
-                    button1.setBackgroundResource(R.color.colorBlue);
-                } else if(button1.getText().toString().equals("Passenger")){
-                    button1.setText("Driver");
-                    button1.setBackgroundResource(R.color.colorOrange);
+                userStateButton.setText("Passive");
+                userStateButton.setBackgroundResource(R.color.colorGrey);
+                if(userModeButton.getText().toString().equals("Driver")) {
+                    userModeButton.setText("Passenger");
+                    userModeButton.setBackgroundResource(R.color.colorBlue);
+                } else if(userModeButton.getText().toString().equals("Passenger")){
+                    userModeButton.setText("Driver");
+                    userModeButton.setBackgroundResource(R.color.colorOrange);
                 }
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        userStateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (button1.getText().toString().equals("Passenger")) {
-                    if (button2.getText().equals("Wanting")) {
-                        button2.setText("Passive");
-                        button2.setBackgroundResource(R.color.colorGrey);
-                    } else if (button2.getText().toString().equals("Passive")) {
-                        button2.setText("Wanting");
-                        button2.setBackgroundResource(R.color.colorRed);
+                if (userModeButton.getText().toString().equals("Passenger")) {
+                    if (userStateButton.getText().equals("Wanting")) {
+                        userStateButton.setText("Passive");
+                        userStateButton.setBackgroundResource(R.color.colorGrey);
+                    } else if (userStateButton.getText().toString().equals("Passive")) {
+                        userStateButton.setText("Wanting");
+                        userStateButton.setBackgroundResource(R.color.colorRed);
 
                         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -234,22 +237,22 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                             }
                         });
                     }
-                } else if (button1.getText().toString().equals("Driver")) {
-                    if (button2.getText().toString().equals("Passive")) {
-                        button2.setText("Offering");
-                        button2.setBackgroundResource(R.color.colorGreen);
-                    } else if (button2.getText().toString().equals("Offering")) {
-                        button2.setText("Passive");
-                        button2.setBackgroundResource(R.color.colorGrey);
+                } else if (userModeButton.getText().toString().equals("Driver")) {
+                    if (userStateButton.getText().toString().equals("Passive")) {
+                        userStateButton.setText("Offering");
+                        userStateButton.setBackgroundResource(R.color.colorGreen);
+                    } else if (userStateButton.getText().toString().equals("Offering")) {
+                        userStateButton.setText("Passive");
+                        userStateButton.setBackgroundResource(R.color.colorGrey);
                     }
                 }
             }
         });
 
         UserInfo info = ActiveUser.getInfo();
-        imageView.setImageBitmap(info.getProfileImage());
-        userNameTextView.setText(info.firstName + " " + info.lastName);
-        userEmailTextView.setText(info.email);
+        slideMenuProfileImage.setImageBitmap(info.getProfileImage());
+        slideMenuUserName.setText(info.firstName + " " + info.lastName);
+        slideMenuUserEmail.setText(info.email);
 
         // Show the map
         if (!supportMapFragment.isAdded()) {
@@ -257,11 +260,15 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
         sFm.beginTransaction().show(supportMapFragment).commit();
 
+        // TODO:
+        // Use a semaphore to lock the markers in between
+        // asynchronous updates.
+
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             public void run() { new AsyncSetupMarkers().execute(); }
         };
-        t.scheduleAtFixedRate(task, 1000, 1000);
+        t.scheduleAtFixedRate(task, 500, 1000);
     }
 
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
@@ -284,6 +291,9 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             if (!success) {
                 Toast.makeText(getApplicationContext(), "Failed to logout.", Toast.LENGTH_SHORT).show();
             } else {
+                UserMapMarkerUpdater.clear();
+                UserInfoUpdater.clear();
+                ActiveUser.clearSession();
                 SessionLoader.clean();
                 finish();
             }
@@ -297,36 +307,33 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
             sFm.beginTransaction().hide(supportMapFragment).commit();
 
         if (id == R.id.nav_settings) {
-            startActivity(new Intent(SlideMenu.this, Settings.class));
+            startActivity(new Intent(MainMap.this, Settings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(SlideMenu.this, ProfileSettings.class);
+            Intent intent = new Intent(MainMap.this, ProfileSettings.class);
             intent.putExtra("email", ActiveUser.getEmail());
             startActivity(intent);
             sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_schedule) {
-            startActivity(new Intent(SlideMenu.this, ScheduleSettings.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_feedback) {
-            startActivity(new Intent(SlideMenu.this, FeedbackSettings.class));
+            startActivity(new Intent(MainMap.this, FeedbackSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_vehicle_type) {
-            startActivity(new Intent(SlideMenu.this, CarInfoSettings.class));
+            startActivity(new Intent(MainMap.this, CarInfoSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_help) {
-            startActivity(new Intent(SlideMenu.this, Help.class));
+            startActivity(new Intent(MainMap.this, Help.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_about) {
-            startActivity(new Intent(SlideMenu.this, About.class));
+            startActivity(new Intent(MainMap.this, About.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_terms_conditions) {
-            startActivity(new Intent(SlideMenu.this, TermsAndConditions.class));
+            startActivity(new Intent(MainMap.this, TermsAndConditions.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_contact_info) {
-            startActivity(new Intent(SlideMenu.this, ContactInfoSettings.class));
+            startActivity(new Intent(MainMap.this, ContactInfoSettings.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_ride_preferences) {
-            startActivity(new Intent(SlideMenu.this, RidePreferences.class));
+            startActivity(new Intent(MainMap.this, RidePreferences.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if(id == R.id.nav_logout) {
             new AsyncLogout().execute();
@@ -344,14 +351,15 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     }
 
     public void onMapReady(GoogleMap map) {
-        LocationServices.start(getApplicationContext());
         googleMap = map;
+        googleMap.getUiSettings().setRotateGesturesEnabled(false);
+        LocationService.getInstance().start();
         setUpMap();
     }
 
     // make the current location as default
     public void setUpMap() {
-        Location location = LocationServices.getCurrentLocation();
+        Location location = LocationService.getInstance().getCurrentLocation();
         if (location != null) {
             LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
             CameraPosition.Builder builder = new CameraPosition.Builder();

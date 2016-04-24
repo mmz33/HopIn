@@ -9,7 +9,7 @@ public abstract class ModeSwitchEvent {
     private static List<ModeSwitchListener> listeners = new ArrayList<ModeSwitchListener>();
 
     public static void fire(String email) {
-        for(ModeSwitchListener listener : listeners) {
+        for (ModeSwitchListener listener : listeners) {
             listener.onSwitch(email);
         }
     }

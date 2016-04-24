@@ -26,4 +26,15 @@ public abstract class UserInfoUpdater {
     public static void requestPeriodicUpdates(UserInfo info) {
         userInfoHashMap.put(info.email, info);
     }
+
+    public static void remove(UserInfo info) {
+        String email = info.email;
+        if (userInfoHashMap.containsKey(email)) {
+            userInfoHashMap.remove(email);
+        }
+    }
+
+    public static void clear() {
+        userInfoHashMap.clear();
+    }
 }

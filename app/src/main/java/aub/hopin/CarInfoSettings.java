@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -23,9 +24,9 @@ public class CarInfoSettings extends AppCompatActivity {
 
     private EditText carCapacity;
     private Button okayButton;
-    private TextView errorText;
     private AutoCompleteTextView vehicleType;
     private AutoCompleteTextView vehicleColor;
+    private boolean currentlySendingInfo;
 
     private static final String[] CAR_MAKES = new String[] {
             "Acura",     "Alfa Romeo",     "AMC",     "Ariel",     "Aston Martin",
@@ -77,7 +78,6 @@ public class CarInfoSettings extends AppCompatActivity {
 
     private class AsyncUpdateCarInfo extends AsyncTask<Void, Void, Void> {
         private UserInfo info;
-        private String errorMessage;
         private String make;
         private String color;
         private int capacity;
@@ -87,7 +87,6 @@ public class CarInfoSettings extends AppCompatActivity {
             this.make = make;
             this.color = color;
             this.capacity = capacity;
-            this.errorMessage = "";
             this.info = ActiveUser.getInfo();
             this.success = false;
         }
@@ -100,21 +99,13 @@ public class CarInfoSettings extends AppCompatActivity {
             try {
                 String response = Server.sendVehicleInfo(info.email, make, color, capacity);
                 if (response.equals("OK")) {
-                    if (info.vehicle == null)
-                        info.vehicle = new Vehicle(capacity, make, color, info.email);
-                    else {
-                        info.vehicle.capacity = capacity;
-                        info.vehicle.color = color;
-                        info.vehicle.make = make;
-                        info.vehicle.ownerEmail = info.email;
-                    }
+                    info.vehicle.capacity = capacity;
+                    info.vehicle.color = color;
+                    info.vehicle.make = make;
+                    info.vehicle.ownerEmail = info.email;
                     success = true;
-                } else {
-                    errorMessage = response;
                 }
-            } catch (ConnectionFailureException e) {
-                errorMessage = "Failed to connect to server.";
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
@@ -123,10 +114,11 @@ public class CarInfoSettings extends AppCompatActivity {
             if (success) {
                 finish();
             } else {
+                Toast.makeText(CarInfoSettings.this, "Failed to send vehicle info!", Toast.LENGTH_SHORT).show();
                 vehicleType.setText(info.vehicle.make);
                 vehicleColor.setText(info.vehicle.color);
                 carCapacity.setText("" + info.vehicle.capacity);
-                errorText.setText(errorMessage);
+                currentlySendingInfo = false;
             }
         }
     }
@@ -138,11 +130,12 @@ public class CarInfoSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        currentlySendingInfo = false;
+
         vehicleType = (AutoCompleteTextView)findViewById(R.id.car_info_vehicle_type_auto_complete_text);
         vehicleColor = (AutoCompleteTextView)findViewById(R.id.car_info_colors_auto_complete_text);
         carCapacity = (EditText)findViewById(R.id.car_info_passengers);
         okayButton  = (Button)findViewById(R.id.car_info_okay);
-        errorText   = (TextView)findViewById(R.id.car_info_error_text);
 
         final ArrayAdapter<String> vehicleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CAR_MAKES);
         AutoCompleteTextView cars = vehicleType;
@@ -164,51 +157,34 @@ public class CarInfoSettings extends AppCompatActivity {
             carCapacity.setText("");
         }
 
-        errorText.setText("");
-
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                if(v != null) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (v != null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
 
-                String make = vehicleType.getEditableText().toString();
-                String color = vehicleColor.getEditableText().toString();
-                String capacityStr = carCapacity.getEditableText().toString();
+                if (!currentlySendingInfo) {
+                    currentlySendingInfo = true;
+                    String make = vehicleType.getEditableText().toString();
+                    String color = vehicleColor.getEditableText().toString();
+                    String capacityStr = carCapacity.getEditableText().toString();
 
-                if (!validCarMake(make)) {
-                    errorText.setText("Invalid car make.");
-                } else if (!validCarColor(color)) {
-                    errorText.setText("Invalid car color.");
-                } else if (capacityStr.length() == 0) {
-                    errorText.setText("Invalid capacity.");
-                } else {
-                    int capacity = Integer.parseInt(capacityStr);
-                    if (!validCarCapacity(capacity)) {
-                        errorText.setText("Capacity out of allowed range.");
+                    if (!validCarMake(make)) {
+                        Toast.makeText(CarInfoSettings.this, "Invalid make!", Toast.LENGTH_SHORT).show();
+                    } else if (!validCarColor(color)) {
+                        Toast.makeText(CarInfoSettings.this, "Invalid color!", Toast.LENGTH_SHORT).show();
+                    } else if (capacityStr.length() == 0) {
+                        Toast.makeText(CarInfoSettings.this, "Invalid capacity!", Toast.LENGTH_SHORT).show();
                     } else {
-                        new AsyncUpdateCarInfo(make, color, capacity).execute();
+                        int capacity = Integer.parseInt(capacityStr);
+                        if (!validCarCapacity(capacity)) {
+                            Toast.makeText(CarInfoSettings.this, "Capacity out of range!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            new AsyncUpdateCarInfo(make, color, capacity).execute();
+                        }
                     }
                 }
-            }
-        });
-
-        carCapacity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
     }

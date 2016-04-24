@@ -280,6 +280,15 @@ public class Server {
         return getResponse(buildRequest("signin", args));
     }
 
+    public static String sendDesination(String email, double latitude, double longitude) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("lat", String.format("%.12f", latitude));
+        args.put("lon", String.format("%.12f", longitude));
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("updestination", args));
+    }
+
     //public static String sendPhoneNumber(String email, String phoneNumber) throws ConnectionFailureException {
     //    HashMap<String, String> args = new HashMap<>();
     //    args.put("email", email);
@@ -310,6 +319,18 @@ public class Server {
 
     public static String sendProfilePicture(String email, Bitmap bmp) throws ConnectionFailureException {
         return getResponseUpload("upprofile", email, bmp);
+    }
+
+    public static String sendRidePreferences(String email, boolean withMen, boolean withWomen, boolean withStudents, boolean withTeachers, double notificationRadius) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("withmen", withMen? "1" : "0");
+        args.put("withwomen", withWomen? "1" : "0");
+        args.put("withstudents", withStudents? "1" : "0");
+        args.put("withteachers", withTeachers? "1" : "0");
+        args.put("notifradius", String.format("%.12f", notificationRadius));
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("uprideprefs", args));
     }
 
     public static String sendVehicleInfo(String email, String make, String color, int capacity) throws ConnectionFailureException {
