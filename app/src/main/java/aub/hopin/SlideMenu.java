@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +53,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private FragmentManager sFm;
 
     private HashMap<String, UserMapMarker> markers;
+    private HashMap<String, UserMapDestinationMarker> destinationMarkers;
     private boolean currentlySettingDestination;
 
     // Asynchronous marker setup. This will update the
@@ -101,6 +104,35 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
+    private class AsyncSendDestination extends AsyncTask<Void, Void, Void> {
+        private boolean success;
+        private String email;
+        private double lat;
+        private double lon;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            //try {
+                //if(sendDestination(email, lat, lon).equals("OK")) {
+                  //  success = true;
+                //}
+            //} catch (ConnectionFailureException e) {}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(!success)
+                Toast.makeText(SlideMenu.this, "Failed to send destination!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private ImageView imageView;
     private TextView userNameTextView;
     private TextView userEmailTextView;
@@ -120,6 +152,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         setSupportActionBar(toolbar);
 
         markers = new HashMap<>();
+        destinationMarkers = new HashMap<>();
 
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
@@ -188,7 +221,12 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                             @Override
                             public void onMapLongClick(LatLng latLng) {
                                 if (currentlySettingDestination) {
-                                    googleMap.addMarker(new MarkerOptions().position(latLng).title(latLng.toString()));
+                                    String e = ActiveUser.getEmail();
+                                    if (destinationMarkers.containsKey(e)) {
+                                        destinationMarkers.get(e).destroy();
+                                        destinationMarkers.remove(e);
+                                    }
+                                    destinationMarkers.put(e, new UserMapDestinationMarker(googleMap, e, latLng));
                                     selectDestination.startAnimation(slide_up);
                                     slide_up.setFillAfter(true);
                                     currentlySettingDestination = false;

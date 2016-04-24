@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Select destination"
+            android:text="Hold To Select destination"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:gravity="center"
