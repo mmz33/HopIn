@@ -2,6 +2,7 @@ package aub.hopin;
 
 
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,11 +13,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +51,7 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private FragmentManager sFm;
 
     private HashMap<String, UserMapMarker> markers;
+    private boolean currentlySettingDestination;
 
     // Asynchronous marker setup. This will update the
     // markers on the map according to the locations
@@ -100,6 +108,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
     private Button button1;
     private Button button2;
 
+    private LinearLayout selectDestination;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +124,11 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         supportMapFragment = SupportMapFragment.newInstance();
         supportMapFragment.getMapAsync(this);
 
+        selectDestination = (LinearLayout)findViewById(R.id.select_destination_layout);
+        selectDestination.setVisibility(LinearLayout.GONE);
+        final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -123,6 +138,8 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         sFm = getSupportFragmentManager();
+
+        currentlySettingDestination = false;
 
         View hView = navigationView.getHeaderView(0);
         imageView = (ImageView)hView.findViewById(R.id.nav_header_image_view);
@@ -157,6 +174,27 @@ public class SlideMenu extends AppCompatActivity implements NavigationView.OnNav
                     } else if (button2.getText().toString().equals("Passive")) {
                         button2.setText("Wanting");
                         button2.setBackgroundResource(R.color.colorRed);
+
+                        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        if (drawer.isDrawerOpen(GravityCompat.START)) {
+                            drawer.closeDrawer(GravityCompat.START);
+                        }
+                        selectDestination.setVisibility(LinearLayout.VISIBLE);
+                        selectDestination.startAnimation(slide_down);
+                        slide_down.setFillAfter(true);
+                        currentlySettingDestination = true;
+
+                        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                            @Override
+                            public void onMapLongClick(LatLng latLng) {
+                                if (currentlySettingDestination) {
+                                    googleMap.addMarker(new MarkerOptions().position(latLng).title(latLng.toString()));
+                                    selectDestination.startAnimation(slide_up);
+                                    slide_up.setFillAfter(true);
+                                    currentlySettingDestination = false;
+                                }
+                            }
+                        });
                     }
                 } else if (button1.getText().toString().equals("Driver")) {
                     if (button2.getText().toString().equals("Passive")) {

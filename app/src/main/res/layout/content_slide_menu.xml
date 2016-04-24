@@ -13,6 +13,27 @@
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:id="@+id/select_destination_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="-50dp"
+        android:background="@drawable/layout_border">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Select destination"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:id="@+id/select_destination_text_view"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </RelativeLayout>

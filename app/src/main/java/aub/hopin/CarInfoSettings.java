@@ -123,15 +123,9 @@ public class CarInfoSettings extends AppCompatActivity {
             if (success) {
                 finish();
             } else {
-                if (info.vehicle != null) {
-                    vehicleType.setText(info.vehicle.make);
-                    vehicleColor.setText(info.vehicle.color);
-                    carCapacity.setText("" + info.vehicle.capacity);
-                } else {
-                    vehicleType.setText("");
-                    vehicleColor.setText("");
-                    carCapacity.setText("");
-                }
+                vehicleType.setText(info.vehicle.make);
+                vehicleColor.setText(info.vehicle.color);
+                carCapacity.setText("" + info.vehicle.capacity);
                 errorText.setText(errorMessage);
             }
         }
