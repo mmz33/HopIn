@@ -500,7 +500,6 @@ public class Server {
         ArrayList<String> emails = new ArrayList<>();
         for (int i = 0; i < response.size(); ++i) {
             String email = response.get(i).get("email");
-            UserInfoFactory.get(email, response.get(i));
             emails.add(email);
         }
 
