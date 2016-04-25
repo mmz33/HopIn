@@ -68,7 +68,7 @@ public class ReportProblem extends AppCompatActivity {
                 }
                 if (!currentlyReportingProblem) {
                     currentlyReportingProblem = true;
-                    new AsyncProblemReport().execute();
+                    new AsyncProblemReport().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });

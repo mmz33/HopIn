@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Connection;
 
@@ -23,50 +24,53 @@ public class SignIn extends AppCompatActivity {
     private EditText password;
     private TextView forgotPassword;
     private Button signIn;
-    private TextView errorText;
     private ProgressBar loading;
     private boolean currentlySigningIn;
 
     private class AsyncSignIn extends AsyncTask<Void, Void, Void> {
         private String emailText;
         private String passwordText;
-        private String errorMessage;
+        private String customErrorMessage;
+        private boolean success;
 
         protected void onPreExecute() {
             super.onPreExecute();
             loading.setVisibility(View.VISIBLE);
             emailText = email.getText().toString().toLowerCase();
             passwordText = password.getText().toString();
-            errorMessage = "";
-            errorText.setText("");
+            customErrorMessage = "";
+            success = false;
         }
 
         protected Void doInBackground(Void... params) {
             try {
                 String response = Server.signIn(emailText, passwordText);
                 if (response.startsWith("OK")) {
-                    String ssid = response.substring(3);
+                    String ssid = response.substring(3, response.indexOf('\n'));
+                    String userInfoContent = response.substring(response.indexOf('\n') + 1);
                     ActiveUser.setSessionId(ssid);
-                    ActiveUser.setInfo(UserInfoFactory.get(emailText, true));
+                    ActiveUser.setInfo(UserInfoFactory.get(emailText, userInfoContent));
+                    success = true;
                 } else {
-                    errorMessage = response;
+                    customErrorMessage = response;
                 }
-            } catch (ConnectionFailureException e) {
-                errorMessage = "Failed to connect to server. Try again.";
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             loading.setVisibility(View.GONE);
-            if (errorMessage.length() > 0) {
-                errorText.setText(errorMessage);
-                currentlySigningIn = false;
-            } else {
+            if (success) {
                 SessionLoader.saveData(ActiveUser.getSessionId(), ActiveUser.getEmail());
                 startActivity(new Intent(SignIn.this, MainMap.class));
                 finish();
+            } else {
+                if (customErrorMessage.length() == 0) {
+                    customErrorMessage = "Failed to connect to server!";
+                }
+                Toast.makeText(SignIn.this, customErrorMessage, Toast.LENGTH_SHORT).show();
+                currentlySigningIn = false;
             }
         }
     };
@@ -81,8 +85,6 @@ public class SignIn extends AppCompatActivity {
         password = (EditText) findViewById(R.id.sign_in_password);
         forgotPassword = (TextView) findViewById(R.id.sign_in_forgot_password);
         signIn = (Button) findViewById(R.id.sign_in_button);
-        errorText = (TextView) findViewById(R.id.sign_in_error_text);
-        errorText.setText("");
 
         loading = (ProgressBar) findViewById(R.id.sign_in_loading);
         loading.setVisibility(View.GONE);
@@ -97,32 +99,8 @@ public class SignIn extends AppCompatActivity {
                 }
                 if (!currentlySigningIn) {
                     currentlySigningIn = true;
-                    new AsyncSignIn().execute();
+                    new AsyncSignIn().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
-            }
-        });
-
-        email.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                errorText.setText("");
-            }
-
-            public void afterTextChanged(Editable s) {
             }
         });
     }

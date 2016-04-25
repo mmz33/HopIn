@@ -5,29 +5,58 @@ import java.util.HashMap;
 
 public class UserInfoLoader implements Runnable {
     private UserInfo info;
+    private String content;
+    private HashMap<String, String> hashMap;
 
     public UserInfoLoader(UserInfo info) {
         this.info = info;
+        this.content = "";
+        this.hashMap = null;
+    }
+
+    public UserInfoLoader(UserInfo info, String content) {
+        this.info = info;
+        this.content = content;
+        this.hashMap = null;
+    }
+
+    public UserInfoLoader(UserInfo info, HashMap<String, String> hashmap) {
+        this.info = info;
+        this.content = "";
+        this.hashMap = hashmap;
     }
 
     public void run() {
         if (info.email.length() == 0) {
             return;
         } else {
-            try {
-                HashMap<String, String> response = Server.queryUserInfo(info.email);
-                updateFromServerResponse(info, response);
+            HashMap<String, String> hashmap;
+
+            if (content.length() > 0) {
+                hashmap = Server.parseMap(content);
+            } else if (hashMap != null) {
+                hashmap = hashMap;
+            } else {
+                try {
+                    hashmap = Server.queryUserInfo(info.email);
+                } catch (ConnectionFailureException e) { return; }
+            }
+
+            boolean success = updateFromServerResponse(info, hashmap);
+            if (success) {
                 if (info.onLoadCallback != null) {
                     info.onLoadCallback.run();
                 }
-                info.validate();
                 UserInfoUpdater.requestPeriodicUpdates(info);
-            } catch (ConnectionFailureException e) {}
+            }
         }
     }
 
-    public static void updateFromServerResponse(UserInfo info, HashMap<String, String> response) {
-        info.lock();
+    public static boolean updateFromServerResponse(UserInfo info, HashMap<String, String> response) {
+        if (info == null) return false;
+        if (response == null) return false;
+
+        boolean success = false;
 
         try {
             info.firstName = response.get("firstname");
@@ -62,19 +91,32 @@ public class UserInfoLoader implements Runnable {
 
             String oldHash = info.getProfileImageHash();
             info.setProfileImageHash(response.get("profilehash"));
-            if (!oldHash.equals(info.getProfileImageHash())) {
-                ResourceManager.setProfileImageDirty(info.email);
-                info.setProfileImage(ResourceManager.getProfileImage(info.email));
+
+            if (response.containsKey("imagebase64")) {
+                String data = response.get("imagebase64");
+                if (data.equals("default")) {
+                    info.setProfileImage(ResourceManager.getDefaultProfileImage());
+                } else {
+                    ResourceManager.setProfileImage(info.email, response.get("imagebase64"));
+                    info.setProfileImage(ResourceManager.getProfileImage(info.email));
+                }
+            } else {
+                if (!oldHash.equals(info.getProfileImageHash())) {
+                    ResourceManager.setProfileImageDirty(info.email);
+                    info.setProfileImage(ResourceManager.getProfileImage(info.email));
+                }
             }
 
             // Load vehicle data.
             info.vehicle.capacity = Integer.parseInt(response.get("vehiclecapacity"));
             info.vehicle.make = response.get("vehiclemake");
             info.vehicle.color = response.get("vehiclecolor");
+
+            success = true;
         } catch (Throwable t) {
             Log.e("error", "Failed to update user.");
         }
 
-        info.unlock();
+        return success;
     }
 }

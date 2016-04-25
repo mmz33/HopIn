@@ -41,17 +41,6 @@
         android:layout_below="@+id/contact_info_post_office"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_info_error_text"
-        android:text=""
-        android:textSize="15dp"
-        android:layout_marginTop="17dp"
-        android:textColor="#ff0033"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/contact_info_okay"/>
-
     <ProgressBar
         style="@style/GenericProgressIndicator"
         android:id="@+id/contact_info_loading"

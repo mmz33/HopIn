@@ -64,6 +64,8 @@ public class RidePreferences extends AppCompatActivity {
             if (!success) {
                 Toast.makeText(RidePreferences.this, "Failed to send preferences!", Toast.LENGTH_SHORT).show();
                 currentlySendingPrefs = false;
+            } else {
+                finish();
             }
             loading.setVisibility(View.GONE);
         }
@@ -90,13 +92,29 @@ public class RidePreferences extends AppCompatActivity {
         loading = (ProgressBar)findViewById(R.id.ride_preferences_loading);
         loading.setVisibility(View.GONE);
 
+        UserInfo info = ActiveUser.getInfo();
+        withMen.setChecked(info.prefsWithMen);
+        withWomen.setChecked(info.prefsWithWomen);
+        withStudents.setChecked(info.prefsWithStudents);
+        withProfessors.setChecked(info.prefsWithTeachers);
+
+        // Set the notification radius spinner appropriately.
+        int integralRadius = (int)(0.5 + info.notificationRadius);
+        int selection = 0;
+        int totalItems = notificationRadius.getCount();
+        notificationRadius.setSelection(selection);
+        while (selection + 1 < totalItems && !notificationRadius.getSelectedItem().toString().equals("" + integralRadius)) {
+            selection += 1;
+            notificationRadius.setSelection(selection);
+        }
+
         currentlySendingPrefs = false;
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!currentlySendingPrefs) {
                     currentlySendingPrefs = true;
-                    new AsyncSendPrefs().execute();
+                    new AsyncSendPrefs().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });

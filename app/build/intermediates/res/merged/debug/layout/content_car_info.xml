@@ -59,16 +59,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/car_info_error_text"
-        android:textColor="#d91d1d"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/car_info_okay"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Vehicle Type :"
         android:textSize="15dp"
         android:textColor="#000"
@@ -94,5 +84,14 @@
         android:layout_marginTop="22dp"
         android:layout_below="@+id/car_info_vehicle_type_auto_complete_text"
         android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        style="@style/GenericProgressIndicator"
+        android:id="@+id/car_info_loading"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/car_info_okay" />
 
 </RelativeLayout>

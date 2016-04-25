@@ -26,8 +26,8 @@
             android:icon="@drawable/ic_action_preference"/>
 
         <item
-            android:id="@+id/nav_schedule"
-            android:title="Schedule"
+            android:id="@+id/nav_daily_route"
+            android:title="Daily Route"
             android:icon="@drawable/ic_action_schedule"/>
 
         <item

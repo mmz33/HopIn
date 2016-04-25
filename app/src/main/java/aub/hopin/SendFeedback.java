@@ -73,7 +73,7 @@ public class SendFeedback extends AppCompatActivity {
                 }
                 if (!currentlySendingFeedback) {
                     currentlySendingFeedback = true;
-                    new AsyncSendFeedback().execute();
+                    new AsyncSendFeedback().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });

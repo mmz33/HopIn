@@ -61,11 +61,6 @@ public class  ProfileSettings extends AppCompatActivity {
 
     private UserInfo profileInfo;
     private View.OnClickListener clickListener;
-    private RadioGroup.OnCheckedChangeListener listener0;
-    private RadioGroup.OnCheckedChangeListener listener1;
-
-    private boolean modeChangeEnabled;
-    private boolean stateChangeEnabled;
 
     public class AsyncUploadProfilePictureBitmap extends AsyncTask<Void, Void, Void> {
         private boolean success;
@@ -84,7 +79,7 @@ public class  ProfileSettings extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                if(Server.sendProfilePicture(profileInfo.email, bitmap).equals("OK")) {
+                if (Server.sendProfilePicture(profileInfo.email, bitmap).equals("OK")) {
                     ResourceManager.setProfileImageDirty(profileInfo.email);
                     profileInfo.setProfileImage(ResourceManager.getProfileImage(profileInfo.email));
                     success = true;
@@ -97,9 +92,9 @@ public class  ProfileSettings extends AppCompatActivity {
             super.onPreExecute();
             loading.setVisibility(View.GONE);
             if (success) {
-                profileImage.setImageBitmap(profileInfo.profileImage);
+                profileImage.setImageBitmap(profileInfo.getProfileImage());
             } else {
-                Toast.makeText(getApplicationContext(), "Failed to upload image.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileSettings.this, "Failed to upload image.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -130,108 +125,11 @@ public class  ProfileSettings extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (!success) {
-                Toast.makeText(getApplicationContext(), "Failed to change status.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileSettings.this, "Failed to change status.", Toast.LENGTH_SHORT).show();
             }
             statusBox.setText(profileInfo.status);
         }
     }
-
-    /*private class AsyncModeChange extends AsyncTask<Void, Void, Void> {
-        private UserMode mode;
-        private boolean success;
-
-        public AsyncModeChange(int id) {
-            if (id == passengerButton.getId()) {
-                mode = UserMode.PassengerMode;
-            } else if (id == driverButton.getId()) {
-                mode = UserMode.DriverMode;
-            } else {
-                mode = UserMode.Unspecified;
-            }
-            success = false;
-        }
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected Void doInBackground(Void... params) {
-            try {
-                if (Server.sendModeSwitch(profileInfo.email, mode).equals("OK")) {
-                    success = true;
-                    profileInfo.mode = mode;
-                    ModeSwitchEvent.fire(profileInfo.email);
-                } else {
-                    Log.e("error", "Something went wrong with the mode switch.");
-                }
-            } catch (ConnectionFailureException e) {}
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (!success) {
-                Toast.makeText(getApplicationContext(), "Failed to switch mode.", Toast.LENGTH_SHORT).show();
-                modeChangeEnabled = false;
-                passengerButton.setChecked(false);
-                driverButton.setChecked(false);
-                switch (profileInfo.mode) {
-                    case PassengerMode: passengerButton.setChecked(true); break;
-                    case DriverMode:    driverButton.setChecked(true);    break;
-                    default:            throw new IllegalArgumentException();
-                }
-                modeChangeEnabled = true;
-            }
-        }
-    }
-
-    private class AsyncStateChange extends AsyncTask<Void, Void, Void> {
-        private UserState state;
-        private boolean success;
-
-        public AsyncStateChange(int id) {
-            if (id == passiveButton.getId()) {
-                state = UserState.Passive;
-            } else if (id == offeringButton.getId()) {
-                state = UserState.Offering;
-            } else if (id == wantingButton.getId()) {
-                state = UserState.Wanting;
-            }
-            success = false;
-        }
-
-        protected void onPreExecute() { super.onPreExecute(); }
-
-        protected Void doInBackground(Void... params) {
-            try {
-                if (Server.sendStateSwitch(profileInfo.email, state).equals("OK")) {
-                    profileInfo.state = state;
-                    success = true;
-                } else {
-                    Log.e("error", "Something went wrong with the state switch.");
-                }
-            } catch (ConnectionFailureException e) {}
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (!success) {
-                Toast.makeText(getApplicationContext(), "Failed to switch state.", Toast.LENGTH_SHORT).show();
-                stateChangeEnabled = false;
-                passiveButton.setChecked(false);
-                offeringButton.setChecked(false);
-                wantingButton.setChecked(false);
-                switch (profileInfo.state) {
-                    case Passive:  passiveButton.setChecked(true);  break;
-                    case Offering: offeringButton.setChecked(true); break;
-                    case Wanting:  wantingButton.setChecked(true);  break;
-                    default:       throw new IllegalArgumentException();
-                }
-                stateChangeEnabled = true;
-            }
-        }
-    }*/
 
     // Important:
     // ----------
@@ -250,7 +148,7 @@ public class  ProfileSettings extends AppCompatActivity {
         TextView title = (TextView)findViewById(R.id.profile_title);
         if (title != null) title.setText(profileInfo.firstName + " " + profileInfo.lastName);
 
-        profileImage.setImageBitmap(profileInfo.profileImage);
+        profileImage.setImageBitmap(profileInfo.getProfileImage());
         statusBox.setText(profileInfo.status);
 
         profilePhone.setText(profileInfo.showingPhone ? profileInfo.phoneNumber : "Hidden");
@@ -262,7 +160,7 @@ public class  ProfileSettings extends AppCompatActivity {
             default:        throw new IllegalArgumentException();
         }
 
-        if (profileInfo.vehicle != null) {
+        if (!profileInfo.vehicle.make.equals("")) {
             String vehicleString = "";
             vehicleString += profileInfo.vehicle.color;
             vehicleString += " ";
@@ -271,6 +169,8 @@ public class  ProfileSettings extends AppCompatActivity {
             vehicleString += profileInfo.vehicle.capacity;
             vehicleString += " people.";
             profileVehicle.setText(vehicleString);
+        } else {
+            profileVehicle.setText("No vehicle.");
         }
 
         if (clickListener == null) {
@@ -294,7 +194,7 @@ public class  ProfileSettings extends AppCompatActivity {
                             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new AsyncStatusUpdate(input.getText().toString()).execute();
+                                    new AsyncStatusUpdate(input.getText().toString()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 }
                             });
 
@@ -312,24 +212,6 @@ public class  ProfileSettings extends AppCompatActivity {
             };
             statusBox.setOnClickListener(clickListener);
         }
-
-        /*if (listener0 == null) {
-            listener0 = new RadioGroup.OnCheckedChangeListener() {
-                public void onCheckedChanged(RadioGroup group, int id) {
-                    if (modeChangeEnabled) new AsyncModeChange(id).execute();
-                }
-            };
-            modeGroup.setOnCheckedChangeListener(listener0);
-        }
-
-        if (listener1 == null) {
-            listener1 = new RadioGroup.OnCheckedChangeListener() {
-                public void onCheckedChanged(RadioGroup group, int id) {
-                    if (stateChangeEnabled) new AsyncStateChange(id).execute();
-                }
-            };
-            stateGroup.setOnCheckedChangeListener(listener1);
-        }*/
     }
 
     @Override
@@ -350,12 +232,6 @@ public class  ProfileSettings extends AppCompatActivity {
         profileRole = (TextView)findViewById(R.id.profile_role);
 
         clickListener = null;
-        listener0 = null;
-        listener1 = null;
-
-        modeChangeEnabled = true;
-        stateChangeEnabled = true;
-
         if (loading != null) loading.setVisibility(View.GONE);
 
         String email = getIntent().getExtras().getString("email");
@@ -432,7 +308,7 @@ public class  ProfileSettings extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 if(extras != null) {
                     Bitmap photo = extras.getParcelable("data");
-                    new AsyncUploadProfilePictureBitmap(photo).execute();
+                    new AsyncUploadProfilePictureBitmap(photo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
                 break;
             default:

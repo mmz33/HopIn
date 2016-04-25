@@ -7,42 +7,58 @@ import java.util.TimerTask;
 public abstract class UserMapMarkerUpdater {
     private static HashMap<String, UserMapMarker> userMarkerMap = new HashMap<>();
     private static HashMap<String, String> currentHashes = new HashMap<>();
+    private static Timer updateTimer = null;
     private static TimerTask updateTask = null;
 
-    static {
-        Timer timer = new Timer();
+    public static void start() {
+        updateTimer = new Timer();
         updateTask = new TimerTask() {
             public void run() {
                 for (String email : userMarkerMap.keySet()) {
                     UserInfo info = UserInfoFactory.get(email);
-                    info.lock();
+                    UserMapMarker marker = userMarkerMap.get(email);
+
+                    assert info != null;
+                    assert marker != null;
+
                     String oldHash = currentHashes.get(email);
                     String curHash = info.getProfileImageHash();
-                    if (!oldHash.equals(curHash)) {
-                        UserMapMarker marker = userMarkerMap.get(email);
+                    if (oldHash != null && curHash != null && !oldHash.equals(curHash)) {
                         marker.updateImage();
+                        currentHashes.put(email, curHash);
                     }
-                    currentHashes.put(email, curHash);
-                    info.unlock();
+
+                    marker.setPosition(info.latitude, info.longitude);
                 }
-            }};
-        timer.scheduleAtFixedRate(updateTask, 0, 750);
+            }
+        };
+        updateTimer.scheduleAtFixedRate(updateTask, 1000, 3000);
+    }
+
+    public static void stop() {
+        currentHashes.clear();
+        userMarkerMap.clear();
+        updateTimer.cancel();
+        updateTask = null;
     }
 
     public static void requestPeriodicUpdates(UserMapMarker marker) {
-        String email = marker.getEmail();
-        UserInfo info = UserInfoFactory.get(email);
-        userMarkerMap.put(email, marker);
-        currentHashes.put(email, info.getProfileImageHash());
+        if (marker != null) {
+            String email = marker.getEmail();
+            UserInfo info = UserInfoFactory.get(email);
+
+            assert info.getProfileImageHash() != null;
+
+            currentHashes.put(email, info.getProfileImageHash());
+            userMarkerMap.put(email, marker);
+        }
     }
 
     public static void remove(UserMapMarker marker) {
-        String email = marker.getEmail();
-        userMarkerMap.remove(email);
-        currentHashes.remove(email);
-    }
-
-    public static void clear() {
-
+        if (marker != null) {
+            String email = marker.getEmail();
+            userMarkerMap.remove(email);
+            currentHashes.remove(email);
+        }
     }
 }

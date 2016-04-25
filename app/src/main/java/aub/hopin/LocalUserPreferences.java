@@ -3,8 +3,15 @@ package aub.hopin;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 public class LocalUserPreferences {
     private static SharedPreferences prefs = null;
+    private static ArrayList<Runnable> callbacks = new ArrayList<>();
+
+    private static final boolean TILT_MAP_DEFAULT = false;
+    private static final boolean ZOOM_MAP_DEFAULT = true;
+    private static final boolean ROTATE_MAP_DEFAULT = false;
 
     public static void init(Context ctx) {
         if (prefs == null) {
@@ -12,64 +19,47 @@ public class LocalUserPreferences {
         }
     }
 
-    public static MeasurementUnits getUnits() {
-        MeasurementUnitsSetting setting = getUnitsSetting();
-
-        switch (setting) {
-            case Metric:
-                return MeasurementUnits.Metric;
-            case Imperial:
-                return MeasurementUnits.Imperial;
-            case Automatic:
-                String locale = GlobalContext.get().getResources().getConfiguration().locale.getCountry();
-                if (locale.equals("US")) {
-                    return MeasurementUnits.Imperial;
-                } else {
-                    return MeasurementUnits.Metric;
-                }
-            default:
-                return MeasurementUnits.Metric;
-        }
-    }
-
-    public static MeasurementUnitsSetting getUnitsSetting() {
-        int ordinal = prefs.getInt("unitsetting", MeasurementUnitsSetting.Automatic.ordinal());
-        return MeasurementUnitsSetting.values()[ordinal];
-    }
-
-    public static void setUnitsSetting(MeasurementUnitsSetting setting) {
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putInt("unitsetting", setting.ordinal());
-        edit.commit();
-    }
-
-    public static void setBackgroundNavigation(boolean b) {
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean("backnav", b);
-        edit.commit();
-    }
-
-    public static boolean getBackgroundNavigation() {
-        return prefs.getBoolean("backnav", false);
-    }
-
-    public static void setShowScaleOnMap(boolean b) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("showscale", b);
-        editor.commit();
-    }
-
-    public static boolean getShowScaleOnMap() {
-        return prefs.getBoolean("showscaleonmap", false);
-    }
-
     public static void setTiltMap(boolean b) {
         SharedPreferences.Editor edit = prefs.edit();
         edit.putBoolean("tilt", b);
         edit.commit();
+
+        for (Runnable f : callbacks) {
+            f.run();
+        }
+    }
+
+    public static void setZoomMap(boolean b) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("zoom", b);
+        edit.commit();
+
+        for (Runnable f : callbacks) {
+            f.run();
+        }
+    }
+
+    public static void setRotateMap(boolean b) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("rotate", b);
+        edit.commit();
+
+        for (Runnable f : callbacks) {
+            f.run();
+        }
     }
 
     public static boolean getTiltMap() {
-        return prefs.getBoolean("tilt", false);
+        return prefs.getBoolean("tilt", TILT_MAP_DEFAULT);
+    }
+    public static boolean getZoomMap() {
+        return prefs.getBoolean("zoom", ZOOM_MAP_DEFAULT);
+    }
+    public static boolean getRotateMap() {
+        return prefs.getBoolean("rotate", ROTATE_MAP_DEFAULT);
+    }
+
+    public static void registerOnChangeListener(Runnable runnable) {
+        callbacks.add(runnable);
     }
 }

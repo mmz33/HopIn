@@ -22,6 +22,10 @@ public class ResourceManager {
         }
     }
 
+    public static Bitmap getDefaultProfileImage() {
+        return defaultProfileImage;
+    }
+
     private static String resourceName(String email) {
         return "profile_" + email;
     }
@@ -56,6 +60,17 @@ public class ResourceManager {
             if (cache.containsKey(name)) {
                 cache.remove(name);
             }
+        }
+    }
+
+    public static void setProfileImage(String email, String base64) {
+        ensureCache();
+        if (email == null || email.length() == 0) {
+            return;
+        } else {
+            String name = resourceName(email);
+            Bitmap bmp = ImageUtils.decodeBase64(base64);
+            cache.put(name, bmp == null? defaultProfileImage : bmp);
         }
     }
 }

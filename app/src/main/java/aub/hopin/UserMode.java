@@ -1,7 +1,6 @@
 package aub.hopin;
 
 public enum UserMode {
-    Unspecified,
     DriverMode,
     PassengerMode;
     public static UserMode[] val = UserMode.values();
@@ -10,7 +9,6 @@ public enum UserMode {
         switch (s) {
             case "D": return UserMode.DriverMode;
             case "P": return UserMode.PassengerMode;
-            case "U": return UserMode.Unspecified;
             default: throw new IllegalArgumentException();
         }
     }
@@ -19,7 +17,6 @@ public enum UserMode {
         switch (m) {
             case DriverMode: return "D";
             case PassengerMode: return "P";
-            case Unspecified: return "U";
             default: throw new IllegalArgumentException();
         }
     }

@@ -12,9 +12,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UserInfo {
-    private boolean infoValid   = false;
-    private Semaphore semaphore = new Semaphore(1);
-    public Bitmap profileImage = null;
+    private Bitmap profileImage = null;
     private String profileHash  = "";
 
     public String firstName = "";
@@ -22,10 +20,10 @@ public class UserInfo {
     public String email     = "";
     public int age          = 0;
 
-    public UserGender gender = UserGender.Unspecified;
-    public UserMode mode     = UserMode.Unspecified;
+    public UserGender gender = UserGender.Other;
+    public UserMode mode     = UserMode.PassengerMode;
     public UserState state   = UserState.Passive;
-    public UserRole role     = UserRole.Unspecified;
+    public UserRole role     = UserRole.Student;
 
     public String phoneNumber = "";
     public String address     = "";
@@ -70,8 +68,27 @@ public class UserInfo {
     public UserInfo(String email, boolean blocking) {
         this(email, blocking, null);
     }
+
     public UserInfo(String email) {
         this(email, false);
+    }
+
+    public UserInfo(String email, String content) {
+        this.onLoadCallback = null;
+        this.vehicle = new Vehicle(email);
+        this.email = email;
+
+        Runnable loader = new UserInfoLoader(this, content);
+        loader.run();
+    }
+
+    public UserInfo(String email, HashMap<String, String> hashmap) {
+        this.onLoadCallback = null;
+        this.vehicle = new Vehicle(email);
+        this.email = email;
+
+        Runnable loader = new UserInfoLoader(this, hashmap);
+        loader.run();
     }
 
     public Bitmap getProfileImage() {
@@ -86,23 +103,5 @@ public class UserInfo {
     }
     public void setProfileImageHash(String hash) {
         profileHash = hash;
-    }
-
-    // Determines if the information inside this UserInfo object
-    // is valid. Valid means that there exists a time t such that
-    // the info inside this UserInfo object was the information
-    // of the user at time t.
-    public boolean isValid() {
-        return infoValid;
-    }
-    public void validate() {
-        infoValid = true;
-    }
-
-    public void lock() {
-        try { semaphore.acquire(); } catch (InterruptedException e) {}
-    }
-    public void unlock() {
-        semaphore.release();
     }
 }

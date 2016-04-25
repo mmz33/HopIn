@@ -52,16 +52,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Invalid code."
-        android:id="@+id/sign_confirm_error_text"
-        android:layout_below="@+id/sign_confirm_next"
-        android:textColor="#ff0033"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
-
     <ProgressBar
         style="@style/GenericProgressIndicator"
         android:id="@+id/sign_up_confirm_loading"

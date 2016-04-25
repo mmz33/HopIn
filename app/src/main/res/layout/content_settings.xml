@@ -14,81 +14,12 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/distance_units"
-            android:id="@+id/contact_information_title"
-            android:layout_gravity="center_horizontal"
-            android:textSize="35dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000000" />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/distance_units_radio_group"
-            android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:layout_below="@+id/contact_information_title"
-            android:layout_centerHorizontal="true">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/automatic"
-                android:id="@+id/distance_units_automatic"
-                android:checked="true"
-                android:textSize="20dp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/imperial"
-                android:id="@+id/distance_units_imperial"
-                android:checked="false"
-                android:textSize="20dp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Metric"
-                android:id="@+id/distance_units_metric"
-                android:checked="false"
-                android:textSize="20dp" />
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notifications"
-            android:id="@+id/notification_title"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="35dp"
-            android:textColor="#000000" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Background Navigation Instructions"
-            android:id="@+id/notifications_navigation"
-            android:layout_marginTop="45dp"
-            android:checked="false"
-            android:layout_below="@+id/notification_title"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Map Display Settings"
+            android:text="Map Gestures"
             android:layout_marginTop="50dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -101,52 +32,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Tilt Map"
+            android:text="Tilt Gestures"
             android:id="@+id/map_display_settings_tilt_map"
             android:checked="false"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_marginTop="45dp"
+            android:paddingRight="31dp"
             android:layout_below="@+id/navigation_settings_title"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
 
-        <TextView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Scale On Map"
-            android:layout_marginTop="50dp"
-            android:id="@+id/show_scale_on_map_title"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="35dp"
             android:layout_gravity="center"
-            android:textColor="#000000" />
+            android:text="Zoom Gestures"
+            android:id="@+id/map_display_settings_zoom_map"
+            android:checked="true"
+            android:textSize="20sp"
+            android:paddingRight="7dp"
+            android:layout_below="@+id/map_display_settings_tilt_map" />
 
-        <RadioGroup
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
             android:layout_gravity="center"
-            android:id="@+id/show_scale_on_map_radio_group"
-            android:layout_below="@+id/show_scale_on_map_title"
-            android:layout_centerHorizontal="true">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="When zooming in and out"
-                android:id="@+id/show_scale_when_zooming"
-                android:checked="false"
-                android:textSize="16dp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Always"
-                android:id="@+id/show_scale_always"
-                android:checked="false"
-                android:textSize="16dp" />
-        </RadioGroup>
+            android:text="Rotate Gestures"
+            android:id="@+id/map_display_settings_rotate_map"
+            android:checked="false"
+            android:textSize="20sp"
+            android:layout_below="@+id/map_display_settings_zoom_map"/>
 
     </LinearLayout>
 </ScrollView>

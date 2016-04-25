@@ -47,12 +47,12 @@ public class FeedbackSettings extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (!success) {
-                Toast.makeText(getApplicationContext(), "Failed to send rating.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedbackSettings.this, "Failed to send rating.", Toast.LENGTH_SHORT).show();
                 ratingSendEnabled = false;
                 ratingBar.setRating(0.0f);
                 ratingSendEnabled = true;
             } else {
-                Toast.makeText(getApplicationContext(), "Thank you!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedbackSettings.this, "Thank you!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -72,7 +72,7 @@ public class FeedbackSettings extends AppCompatActivity {
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar bar, float rating, boolean fromUser) {
-                if (ratingSendEnabled) new AsyncSendRating(rating, fromUser).execute();
+                if (ratingSendEnabled) new AsyncSendRating(rating, fromUser).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 

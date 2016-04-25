@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class CarInfoSettings extends AppCompatActivity {
     private AutoCompleteTextView vehicleType;
     private AutoCompleteTextView vehicleColor;
     private boolean currentlySendingInfo;
+
+    private ProgressBar loading;
 
     private static final String[] CAR_MAKES = new String[] {
             "Acura",     "Alfa Romeo",     "AMC",     "Ariel",     "Aston Martin",
@@ -93,6 +96,7 @@ public class CarInfoSettings extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+            loading.setVisibility(View.VISIBLE);
         }
 
         protected Void doInBackground(Void... instances) {
@@ -111,6 +115,7 @@ public class CarInfoSettings extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            loading.setVisibility(View.GONE);
             if (success) {
                 finish();
             } else {
@@ -136,6 +141,9 @@ public class CarInfoSettings extends AppCompatActivity {
         vehicleColor = (AutoCompleteTextView)findViewById(R.id.car_info_colors_auto_complete_text);
         carCapacity = (EditText)findViewById(R.id.car_info_passengers);
         okayButton  = (Button)findViewById(R.id.car_info_okay);
+
+        loading = (ProgressBar)findViewById(R.id.car_info_loading);
+        loading.setVisibility(View.GONE);
 
         final ArrayAdapter<String> vehicleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, CAR_MAKES);
         AutoCompleteTextView cars = vehicleType;
@@ -165,7 +173,6 @@ public class CarInfoSettings extends AppCompatActivity {
                 }
 
                 if (!currentlySendingInfo) {
-                    currentlySendingInfo = true;
                     String make = vehicleType.getEditableText().toString();
                     String color = vehicleColor.getEditableText().toString();
                     String capacityStr = carCapacity.getEditableText().toString();
@@ -181,7 +188,8 @@ public class CarInfoSettings extends AppCompatActivity {
                         if (!validCarCapacity(capacity)) {
                             Toast.makeText(CarInfoSettings.this, "Capacity out of range!", Toast.LENGTH_SHORT).show();
                         } else {
-                            new AsyncUpdateCarInfo(make, color, capacity).execute();
+                            currentlySendingInfo = true;
+                            new AsyncUpdateCarInfo(make, color, capacity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
                 }

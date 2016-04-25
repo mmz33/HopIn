@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notification Radius"
+        android:text="Notification Radius (Km)"
         android:textColor="#000"
         android:id="@+id/ride_preferences_notification_radius_text_view"
         android:layout_marginTop="37dp"

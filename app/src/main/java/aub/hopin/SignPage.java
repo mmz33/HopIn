@@ -53,10 +53,10 @@ public class SignPage extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (success) {
-                Toast.makeText(getApplicationContext(), "Autologin Successful.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignPage.this, "Autologin Successful.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(SignPage.this, MainMap.class));
             } else {
-                Toast.makeText(getApplicationContext(), "Autologin Failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignPage.this, "Autologin Failed.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -85,10 +85,10 @@ public class SignPage extends AppCompatActivity {
         if (SessionLoader.existsSessionId()) {
             String ssid = SessionLoader.loadId();
             String email = SessionLoader.loadEmail();
-            new AsyncAutologin(ssid, email).execute();
-            Toast.makeText(getApplicationContext(), "Logging in automatically...", Toast.LENGTH_SHORT).show();
+            new AsyncAutologin(ssid, email).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            Toast.makeText(SignPage.this, "Logging in automatically...", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "No session found...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignPage.this, "No session found...", Toast.LENGTH_SHORT).show();
         }
 
         // Create buttons.
@@ -113,24 +113,8 @@ public class SignPage extends AppCompatActivity {
         );
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_sign_page, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

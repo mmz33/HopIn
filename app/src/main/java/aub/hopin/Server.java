@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.io.InputStream;
@@ -58,6 +59,20 @@ public class Server {
         return builder.toString();
     }
 
+    // Parses a map using a string.
+    public static HashMap<String, String> parseMap(String data) {
+        Scanner scanner = new Scanner(data);
+        HashMap<String, String> result = new HashMap<>();
+        while (scanner.hasNextLine()) {
+            String key = scanner.nextLine();
+            if (!scanner.hasNextLine()) break;
+            String val = scanner.nextLine();
+            result.put(key, val);
+        }
+        scanner.close();
+        return result;
+    }
+
     // Reads the contents of an InputStream into a HashMap.
     private static HashMap<String, String> parseMap(InputStream stream) throws IOException {
         String contents = readContents(stream);
@@ -81,6 +96,26 @@ public class Server {
         while (scanner.hasNextLine()) {
             String element = scanner.nextLine();
             result.add(element);
+        }
+        scanner.close();
+        return result;
+    }
+
+    // Reads the contents of an InputStream into a List<Hashmap>.
+    private static ArrayList<HashMap<String, String>> parseListMap(InputStream stream) throws IOException {
+        String contents = readContents(stream);
+        Scanner scanner = new Scanner(contents);
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
+        int count = Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < count; ++i) {
+            int xi = Integer.parseInt(scanner.nextLine());
+            HashMap<String, String> hmap = new HashMap<>();
+            for (int j = 0; j < xi; ++j) {
+                String key = scanner.nextLine();
+                String value = scanner.nextLine();
+                hmap.put(key, value);
+            }
+            result.add(hmap);
         }
         scanner.close();
         return result;
@@ -160,6 +195,30 @@ public class Server {
             return null;
         } catch (IOException e) {
             Log.e("error", "Could not open url connection.");
+            throw new ConnectionFailureException();
+        }
+    }
+
+    // Retrieves a response from the server in the form of a list<map>
+    private static ArrayList<HashMap<String, String>> getResponseListMap(String link) throws ConnectionFailureException {
+        try {
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200)
+                return parseListMap(connection.getInputStream());
+
+            throw new ConnectionFailureException();
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IOException e) {
             throw new ConnectionFailureException();
         }
     }
@@ -351,20 +410,13 @@ public class Server {
         return getResponse(buildRequest("updatestatus", args));
     }
 
-    public static String sendModeSwitch(String email, UserMode mode) throws ConnectionFailureException {
+    public static String sendStateModeSwitch(String email, UserMode mode, UserState state) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
         args.put("mode", UserMode.toSymbol(mode));
-        args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("switchmode", args));
-    }
-
-    public static String sendStateSwitch(String email, UserState state) throws ConnectionFailureException {
-        HashMap<String, String> args = new HashMap<>();
-        args.put("email", email);
         args.put("state", UserState.toSymbol(state));
         args.put("ssid", ActiveUser.getSessionId());
-        return getResponse(buildRequest("switchstate", args));
+        return getResponse(buildRequest("switchstatemode", args));
     }
 
     public static String sendUserRating(String email, float stars) throws ConnectionFailureException {
@@ -391,22 +443,14 @@ public class Server {
         return getResponse(buildRequest("feedback", args));
     }
 
-    //public static String showPhone(String email, boolean b) throws ConnectionFailureException {
-    //    HashMap<String, String> args = new HashMap<>();
-    //    args.put("email", email);
-    //    args.put("show", b? "1" : "0");
-    //    args.put("ssid", ActiveUser.getSessionId());
-    //    return getResponse(buildRequest("showphone", args));
-    //}
-
-    //public static String showAddress(String email, boolean b) throws ConnectionFailureException {
-    //    HashMap<String, String> args = new HashMap<>();
-    //    args.put("email", email);
-    //    args.put("show", b ? "1" : "0");
-    //    args.put("ssid", ActiveUser.getSessionId());
-    //    return getResponse(buildRequest("showaddress", args));
-    //}
-
+    /**
+     * Sends the current position of the user to the server.
+     *
+     * @param email     the user email
+     * @param longitude the longitude of the user position
+     * @param latitude  the latitude of the user position
+     * @return          'OK' if the operation was successful
+     */
     public static String sendGlobalPosition(String email, double longitude, double latitude) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
@@ -416,10 +460,61 @@ public class Server {
         return getResponse(buildRequest("sendpos", args));
     }
 
-    public static ArrayList<String> queryActiveUsers() throws ConnectionFailureException {
+    //
+    // This function will make the server get all the users that may be of interest
+    // to the current user.
+    //
+    //  * You can only see active users.
+    //  * All ride preferences apply to the query.
+    //  * The only users you can see are those within your notification radius.
+    //  * You can only see a user if his notification radius allows for it.
+    //
+    //      For a passive driver:
+    //
+    //          *   States:     Passive, Wanting
+    //          *   Modes:      Passenger
+    //
+    //      For a passive passenger:
+    //
+    //          *   States:     Passive, Offering
+    //          *   Modes:      Driver
+    //
+    //      For an offering driver:
+    //
+    //          *   States:     Wanting
+    //          *   Modes:      Passenger
+    //          *   Driver destination must be within 200 meters of passenger destinations.
+    //
+    //      For a wanting passenger:
+    //
+    //          *   States:     Offering
+    //          *   Modes:      Driver
+    //          *   Passenger destination must be within 200 meters of driver destination.
+    //
+    public static ArrayList<String> queryUsersOfInterest() throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", ActiveUser.getSessionId());
-        return getResponseList(buildRequest("queryactive", args));
+        args.put("email", ActiveUser.getEmail());
+
+        ArrayList<HashMap<String, String>> response = getResponseListMap(buildRequest("queryinteresting", args));
+        if (response == null) return new ArrayList<>();
+
+        ArrayList<String> emails = new ArrayList<>();
+        for (int i = 0; i < response.size(); ++i) {
+            String email = response.get(i).get("email");
+            UserInfoFactory.get(email, response.get(i));
+            emails.add(email);
+        }
+
+        return emails;
+    }
+
+    // This will get all the users from the server.
+    public static ArrayList<String> queryAllUsers() throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("ssid", ActiveUser.getSessionId());
+        args.put("email", ActiveUser.getEmail());
+        return getResponseList(buildRequest("queryallusers", args));
     }
 
     public static HashMap<String, String> queryUserInfo(String email) throws ConnectionFailureException {
@@ -427,6 +522,16 @@ public class Server {
         args.put("email", email);
         args.put("ssid", ActiveUser.getSessionId());
         return getResponseMap(buildRequest("queryuser", args));
+    }
+
+    public static ArrayList<HashMap<String, String>> queryUsersInfo(ArrayList<String> emails) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("count", "" + emails.size());
+        for (int i = 0; i < emails.size(); ++i) {
+            args.put("email" + i, emails.get(i));
+        }
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponseListMap(buildRequest("queryusers", args));
     }
 
     public static String confirmCode(String email, String code) throws ConnectionFailureException {

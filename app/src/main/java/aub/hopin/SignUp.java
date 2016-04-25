@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
 
 
 public class SignUp extends AppCompatActivity {
@@ -33,8 +34,6 @@ public class SignUp extends AppCompatActivity {
     private RadioButton optionProfessor;
 
     private Button signUp;
-    private TextView errorText;
-
     private ProgressBar loading;
     private boolean currentlySigningUp;
 
@@ -47,7 +46,7 @@ public class SignUp extends AppCompatActivity {
         private UserMode mode;
         private UserRole role;
         private boolean success;
-        private String errorMessage;
+        private String customErrorMessage;
 
         public AsyncSignUp(String firstName, String lastName, String email, int age, UserMode mode, UserGender gender, UserRole role) {
             this.firstName = firstName;
@@ -58,7 +57,7 @@ public class SignUp extends AppCompatActivity {
             this.mode = mode;
             this.role = role;
             this.success = false;
-            this.errorMessage = "";
+            customErrorMessage = "";
         }
 
         protected void onPreExecute() {
@@ -72,11 +71,9 @@ public class SignUp extends AppCompatActivity {
                 if (response.equals("OK")) {
                     success = true;
                 } else {
-                    errorMessage = response;
+                    customErrorMessage = response;
                 }
-            } catch (ConnectionFailureException e) {
-                errorMessage = "Failed to connect to server. Try again.";
-            }
+            } catch (ConnectionFailureException e) {}
             return null;
         }
 
@@ -89,7 +86,10 @@ public class SignUp extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                errorText.setText(errorMessage);
+                if (customErrorMessage.length() == 0) {
+                    customErrorMessage = "Failed to connect to server!";
+                }
+                Toast.makeText(SignUp.this, customErrorMessage, Toast.LENGTH_SHORT).show();
                 currentlySigningUp = false;
             }
         }
@@ -110,7 +110,6 @@ public class SignUp extends AppCompatActivity {
         this.optionFemale = (RadioButton)findViewById(R.id.sign_up_female);
         this.optionOther = (RadioButton)findViewById(R.id.sign_up_other);
         this.signUp = (Button)findViewById(R.id.sign_up_okay);
-        this.errorText = (TextView)findViewById(R.id.sign_up_error_text);
         this.optionStudent = (RadioButton)findViewById(R.id.sign_up_student);
         this.optionProfessor = (RadioButton)findViewById(R.id.sign_up_professor);
 
@@ -123,21 +122,27 @@ public class SignUp extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         if (v != null) {
-                            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         }
-
-                        errorText.setText("");
 
                         String firstName = SignUp.this.firstNameBox.getText().toString();
                         String lastName = SignUp.this.lastNameBox.getText().toString();
                         String email = SignUp.this.emailBox.getText().toString().toLowerCase();
                         String age = SignUp.this.ageBox.getText().toString();
 
-                        UserGender gender = UserGender.Unspecified;
-                        UserMode mode = UserMode.Unspecified;
+                        UserGender gender = UserGender.Male;
+                        UserMode mode = UserMode.PassengerMode;
+                        UserRole role = UserRole.Student;
 
-                        UserRole role = UserRole.Unspecified;
+                        boolean genderSelected =
+                                SignUp.this.optionMale.isChecked()
+                             || SignUp.this.optionFemale.isChecked()
+                             || SignUp.this.optionOther.isChecked();
+
+                        boolean roleSelected =
+                                SignUp.this.optionStudent.isChecked()
+                             || SignUp.this.optionProfessor.isChecked();
 
                         // Find the selected gender
                         if (SignUp.this.optionMale.isChecked()) gender = UserGender.Male;
@@ -149,39 +154,30 @@ public class SignUp extends AppCompatActivity {
 
                         // Find problems with the user input and report them.
                         if (firstName.length() == 0)
-                            SignUp.this.errorText.setText("Please input first name.");
+                            Toast.makeText(SignUp.this, "Invalid first name!", Toast.LENGTH_SHORT).show();
                         else if (lastName.length() == 0)
-                            SignUp.this.errorText.setText("Please input last name.");
+                            Toast.makeText(SignUp.this, "Invalid last name!", Toast.LENGTH_SHORT).show();
                         else if (email.length() == 0)
-                            SignUp.this.errorText.setText("Please input email.");
+                            Toast.makeText(SignUp.this, "Invalid email!", Toast.LENGTH_SHORT).show();
                         else if (!email.endsWith("@aub.edu.lb") && !email.endsWith("@mail.aub.edu") && !email.endsWith("@aub.edu"))
-                            SignUp.this.errorText.setText("Please use your university email.");
+                            Toast.makeText(SignUp.this, "Please use your university email!", Toast.LENGTH_SHORT).show();
                         else if (age.length() == 0)
-                            SignUp.this.errorText.setText("Please input age.");
-                        else if (gender == UserGender.Unspecified)
-                            SignUp.this.errorText.setText("Please specify gender.");
-                        else if (Integer.parseInt(age) < 5)
-                            SignUp.this.errorText.setText("Age too low.");
-                        else if (role == UserRole.Unspecified)
-                            SignUp.this.errorText.setText("Please specify role.");
+                            Toast.makeText(SignUp.this, "Invalid age!", Toast.LENGTH_SHORT).show();
+                        else if (!genderSelected)
+                            Toast.makeText(SignUp.this, "Specify your gender!", Toast.LENGTH_SHORT).show();
+                        else if (Integer.parseInt(age) < 14)
+                            Toast.makeText(SignUp.this, "Age doesn't look right!", Toast.LENGTH_SHORT).show();
+                        else if (!roleSelected)
+                            Toast.makeText(SignUp.this, "Specify your role!", Toast.LENGTH_SHORT).show();
                         else {
                             if (!currentlySigningUp) {
                                 currentlySigningUp = true;
-                                new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).execute();
+                                new AsyncSignUp(firstName, lastName, email, Integer.parseInt(age), mode, gender, role).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            } else {
+                                Toast.makeText(SignUp.this, "Hold your horses buddy.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 });
-
-        TextWatcher textClearer = new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count) { errorText.setText(""); }
-            public void afterTextChanged(Editable s) {}
-        };
-
-        firstNameBox.addTextChangedListener(textClearer);
-        lastNameBox.addTextChangedListener(textClearer);
-        emailBox.addTextChangedListener(textClearer);
-        ageBox.addTextChangedListener(textClearer);
     }
 }

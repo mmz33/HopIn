@@ -47,6 +47,7 @@
         <activity
             android:name="aub.hopin.SignPage"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,6 +58,7 @@
         <activity
             android:name="aub.hopin.SignIn"
             android:label="@string/title_activity_sign_in"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <intent-filter>
@@ -68,6 +70,7 @@
         <activity
             android:name="aub.hopin.SignUp"
             android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
@@ -80,6 +83,7 @@
         <activity
             android:name="aub.hopin.SignUpConfirm"
             android:label="SignUpConfirm"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -102,34 +106,36 @@
             android:required="true" />
 
         <activity
-            android:name="aub.hopin.ScheduleSettings"
-            android:label="@string/title_activity_schedule"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="aub.hopin.ContactInfoSettings"
             android:label="@string/title_activity_contact_information"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="aub.hopin.CarInfoSettings"
             android:label="@string/title_activity_car"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="aub.hopin.ProfileSettings"
             android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.FeedbackSettings"
             android:label="@string/title_activity_feedback"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.SendFeedback"
             android:label="@string/title_activity_send_feedback"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.ReportProblem"
             android:label="@string/title_activity_report_problem"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <intent-filter>
@@ -154,28 +160,34 @@
         </intent-filter>
 
         <activity
-            android:name="aub.hopin.SlideMenu"
+            android:name="aub.hopin.MainMap"
             android:label="Dashboard"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.Help"
             android:label="@string/title_activity_help"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.About"
             android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.TermsAndConditions"
             android:label="@string/title_activity_terms_and_conditions"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.Settings"
             android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="aub.hopin.RidePreferences"
             android:label="@string/title_activity_ride_preferences"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity

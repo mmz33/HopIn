@@ -7,19 +7,15 @@ public class ActiveUser {
     public static UserInfo getInfo() {
         return info;
     }
-
     public static String getEmail() {
         return getInfo().email;
     }
-
     public static void setInfo(UserInfo i) {
         info = i;
     }
-
     public static String getSessionId() {
         return sessionId;
     }
-
     public static void setSessionId(String id) {
         sessionId = id;
     }

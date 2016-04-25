@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="13dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="aub.hopin.SignUp"
     tools:showIn="@layout/activity_sign_up">
@@ -163,24 +163,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/sign_up_error_text"
-            android:textColor="#d91d1d"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_below="@+id/sign_up_okay"
-            android:layout_centerHorizontal="true" />
-
         <ProgressBar
             style="@style/GenericProgressIndicator"
             android:id="@+id/sign_up_loading"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginTop="-18dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/sign_up_error_text" />
 

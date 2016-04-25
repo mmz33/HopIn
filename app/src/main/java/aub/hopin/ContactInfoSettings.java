@@ -120,7 +120,7 @@ public class ContactInfoSettings extends AppCompatActivity {
                 }
                 if (!currentlyUpdating) {
                     currentlyUpdating = true;
-                    new AsyncContactInfoUpdate().execute();
+                    new AsyncContactInfoUpdate().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
