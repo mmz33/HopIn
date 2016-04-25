@@ -20,13 +20,10 @@ public abstract class UserInfoUpdater {
                 }
 
                 ArrayList<HashMap<String, String>> response = null;
-
                 try {
                     response = Server.queryUsersInfo(emails);
                 } catch (ConnectionFailureException e) {}
-
-                if (response == null)
-                    return;
+                if (response == null) return;
 
                 for (HashMap<String, String> map : response) {
                     String email = map.get("email");

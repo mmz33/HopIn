@@ -8,11 +8,10 @@ public abstract class UserMapMarkerUpdater {
     private static HashMap<String, UserMapMarker> userMarkerMap = new HashMap<>();
     private static HashMap<String, String> currentHashes = new HashMap<>();
     private static Timer updateTimer = null;
-    private static TimerTask updateTask = null;
 
     public static void start() {
         updateTimer = new Timer();
-        updateTask = new TimerTask() {
+        TimerTask updateTask = new TimerTask() {
             public void run() {
                 for (String email : userMarkerMap.keySet()) {
                     UserInfo info = UserInfoFactory.get(email);
@@ -23,32 +22,28 @@ public abstract class UserMapMarkerUpdater {
 
                     String oldHash = currentHashes.get(email);
                     String curHash = info.getProfileImageHash();
-                    if (oldHash != null && curHash != null && !oldHash.equals(curHash)) {
-                        marker.updateImage();
+                    if (!oldHash.equals(curHash)) {
                         currentHashes.put(email, curHash);
+                        marker.updateImage();
                     }
 
                     marker.setPosition(info.latitude, info.longitude);
                 }
             }
         };
-        updateTimer.scheduleAtFixedRate(updateTask, 1000, 3000);
+        updateTimer.scheduleAtFixedRate(updateTask, 1000, 1000);
     }
 
     public static void stop() {
+        updateTimer.cancel();
         currentHashes.clear();
         userMarkerMap.clear();
-        updateTimer.cancel();
-        updateTask = null;
     }
 
     public static void requestPeriodicUpdates(UserMapMarker marker) {
         if (marker != null) {
             String email = marker.getEmail();
             UserInfo info = UserInfoFactory.get(email);
-
-            assert info.getProfileImageHash() != null;
-
             currentHashes.put(email, info.getProfileImageHash());
             userMarkerMap.put(email, marker);
         }

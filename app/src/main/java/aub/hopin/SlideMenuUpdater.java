@@ -33,7 +33,6 @@ public class SlideMenuUpdater {
                 if (hash == null) return;
 
                 if (!currentHash.equals(hash)) {
-                    Log.e("slide", "hashes don't match");
                     currentHash = hash;
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         public void run() {
@@ -48,8 +47,6 @@ public class SlideMenuUpdater {
                             }
                         }
                     });
-                } else {
-                    Log.e("slide", "hashes match");
                 }
             }
         };

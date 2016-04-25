@@ -39,11 +39,11 @@ public class LocationSender {
                 if (info == null) return;
                 if (lastKnownLocation == null) return;
 
+                info.longitude = lastKnownLocation.getLongitude();
+                info.latitude = lastKnownLocation.getLatitude();
+
                 try {
-                    if (Server.sendGlobalPosition(info.email, lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude()).equals("OK")) {
-                        info.longitude = lastKnownLocation.getLongitude();
-                        info.latitude = lastKnownLocation.getLatitude();
-                    }
+                    Server.sendGlobalPosition(info.email, info.longitude, info.latitude);
                 } catch (ConnectionFailureException e) {}
             }
         };

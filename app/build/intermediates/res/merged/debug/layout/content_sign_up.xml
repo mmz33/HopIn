@@ -169,7 +169,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/sign_up_error_text" />
 

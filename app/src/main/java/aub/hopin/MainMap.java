@@ -245,6 +245,11 @@ public class MainMap extends AppCompatActivity implements
         slideMenuProfileImage = (ImageView)hView.findViewById(R.id.nav_header_image_view);
         slideMenuUserName = (TextView)hView.findViewById(R.id.nav_header_user_name);
         slideMenuUserEmail = (TextView)hView.findViewById(R.id.nav_header_user_email);
+
+        assert slideMenuProfileImage != null;
+        assert slideMenuUserEmail != null;
+        assert slideMenuUserName != null;
+
         SlideMenuUpdater.start(slideMenuProfileImage);
 
         userModeButton = (Button)hView.findViewById(R.id.nav_header_main_button1);
@@ -303,6 +308,14 @@ public class MainMap extends AppCompatActivity implements
                 }
             }
         });
+
+        UserInfo info = ActiveUser.getInfo();
+        if (info.getProfileImage() != null) {
+            slideMenuProfileImage.setImageBitmap(info.getProfileImage());
+        }
+
+        slideMenuUserName.setText(info.firstName + " " + info.lastName);
+        slideMenuUserEmail.setText(info.email);
     }
 
     @Override
@@ -325,19 +338,13 @@ public class MainMap extends AppCompatActivity implements
         navigationView.setItemIconTintList(null);
         sFm = getSupportFragmentManager();
 
-        UserInfo info = ActiveUser.getInfo();
-        if (info.getProfileImage() != null)
-            slideMenuProfileImage.setImageBitmap(info.getProfileImage());
-
-        slideMenuUserName.setText(info.firstName + " " + info.lastName);
-        slideMenuUserEmail.setText(info.email);
+        setupSlideMenu();
 
         // Show the map
         if (!supportMapFragment.isAdded()) {
             sFm.beginTransaction().add(R.id.content_frame, supportMapFragment).commit();
         }
         sFm.beginTransaction().show(supportMapFragment).commit();
-
 
         markerUpdater = new Timer();
         TimerTask task = new TimerTask() {
@@ -379,6 +386,7 @@ public class MainMap extends AppCompatActivity implements
                         markers.remove(email);
                     }
                 } catch (ConnectionFailureException e) {}
+
                 currentlySettingMarkers = false;
             }
         };
@@ -416,7 +424,7 @@ public class MainMap extends AppCompatActivity implements
 
         LocationRequest request = new LocationRequest();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setInterval(750);
+        request.setInterval(500);
 
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, request, this);
@@ -429,42 +437,18 @@ public class MainMap extends AppCompatActivity implements
         Toast.makeText(MainMap.this, "Connection to API client failed.", Toast.LENGTH_SHORT).show();
     }
 
-    boolean currentlySendingLogOut;
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
-        private boolean success;
-
         protected void onPreExecute() {
             super.onPreExecute();
-            success = false;
         }
-
         protected Void doInBackground(Void... params) {
             try {
-                success = Server.logout().equals("OK");
+                Server.logout();
             } catch (ConnectionFailureException e) {}
             return null;
         }
-
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (!success) {
-                Toast.makeText(MainMap.this, "Failed to logout.", Toast.LENGTH_SHORT).show();
-                currentlySendingLogOut = false;
-            } else {
-                markerUpdater.cancel();
-
-                UserMapMarkerUpdater.stop();
-                UserInfoUpdater.stop();
-                LocationSender.stop();
-                SlideMenuUpdater.stop();
-                UserInfoFactory.clear();
-                UserInfoUpdater.clear();
-
-                ActiveUser.clearSession();
-                SessionLoader.clean();
-
-                finish();
-            }
         }
     }
 
@@ -503,10 +487,16 @@ public class MainMap extends AppCompatActivity implements
             startActivity(new Intent(MainMap.this, RidePreferences.class));
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_logout) {
-            if (!currentlySendingLogOut) {
-                currentlySendingLogOut = true;
-                new AsyncLogout().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
+            if (markerUpdater != null) markerUpdater.cancel();
+            UserMapMarkerUpdater.stop();
+            UserInfoUpdater.stop();
+            LocationSender.stop();
+            SlideMenuUpdater.stop();
+            UserInfoFactory.clear();
+            UserInfoUpdater.clear();
+            SessionLoader.clean();
+            new AsyncLogout().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

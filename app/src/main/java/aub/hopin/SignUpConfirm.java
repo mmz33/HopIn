@@ -39,10 +39,9 @@ public class SignUpConfirm extends AppCompatActivity {
             try {
                 String response = Server.confirmCode(email, code);
                 if (response.startsWith("OK")) {
-                    String ssid = response.substring(3, response.indexOf('\n'));
-                    String userInfoContent = response.substring(response.indexOf('\n') + 1);
+                    String ssid = response.substring(3);
                     ActiveUser.setSessionId(ssid);
-                    ActiveUser.setInfo(UserInfoFactory.get(email, userInfoContent));
+                    ActiveUser.setInfo(UserInfoFactory.get(email, true));
                     success = true;
                 }
             } catch (ConnectionFailureException e) {}

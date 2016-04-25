@@ -46,10 +46,9 @@ public class SignIn extends AppCompatActivity {
             try {
                 String response = Server.signIn(emailText, passwordText);
                 if (response.startsWith("OK")) {
-                    String ssid = response.substring(3, response.indexOf('\n'));
-                    String userInfoContent = response.substring(response.indexOf('\n') + 1);
+                    String ssid = response.substring(3);
                     ActiveUser.setSessionId(ssid);
-                    ActiveUser.setInfo(UserInfoFactory.get(emailText, userInfoContent));
+                    ActiveUser.setInfo(UserInfoFactory.get(emailText, true));
                     success = true;
                 } else {
                     customErrorMessage = response;

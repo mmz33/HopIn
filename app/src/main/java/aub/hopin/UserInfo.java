@@ -73,15 +73,6 @@ public class UserInfo {
         this(email, false);
     }
 
-    public UserInfo(String email, String content) {
-        this.onLoadCallback = null;
-        this.vehicle = new Vehicle(email);
-        this.email = email;
-
-        Runnable loader = new UserInfoLoader(this, content);
-        loader.run();
-    }
-
     public UserInfo(String email, HashMap<String, String> hashmap) {
         this.onLoadCallback = null;
         this.vehicle = new Vehicle(email);

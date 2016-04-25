@@ -67,8 +67,6 @@ public class UserMapMarker {
     }
 
     private BitmapDescriptor getImageDescripter() {
-        if (userInfo.getProfileImage() == null)
-            return BitmapDescriptorFactory.fromBitmap(ResourceManager.getDefaultProfileImage());
         Bitmap bmp = ImageUtils.overlayRoundBorder(userInfo.getProfileImage(), ringColor());
         return BitmapDescriptorFactory.fromBitmap(bmp);
     }
