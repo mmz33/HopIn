@@ -68,18 +68,8 @@ public class UserInfo {
     public UserInfo(String email, boolean blocking) {
         this(email, blocking, null);
     }
-
     public UserInfo(String email) {
         this(email, false);
-    }
-
-    public UserInfo(String email, HashMap<String, String> hashmap) {
-        this.onLoadCallback = null;
-        this.vehicle = new Vehicle(email);
-        this.email = email;
-
-        Runnable loader = new UserInfoLoader(this, hashmap);
-        loader.run();
     }
 
     public Bitmap getProfileImage() {

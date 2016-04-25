@@ -23,12 +23,6 @@ public abstract class UserInfoFactory {
         }
     }
 
-    public static UserInfo get(String email, HashMap<String, String> response) {
-        UserInfo info = new UserInfo(email, response);
-        userInfoMap.put(email, info);
-        return info;
-    }
-
     public static void clear() {
         userInfoMap.clear();
     }

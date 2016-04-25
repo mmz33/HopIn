@@ -6,7 +6,6 @@ import java.util.TimerTask;
 
 public abstract class UserMapMarkerUpdater {
     private static HashMap<String, UserMapMarker> userMarkerMap = new HashMap<>();
-    private static HashMap<String, String> currentHashes = new HashMap<>();
     private static Timer updateTimer = null;
 
     public static void start() {
@@ -15,18 +14,12 @@ public abstract class UserMapMarkerUpdater {
             public void run() {
                 for (String email : userMarkerMap.keySet()) {
                     UserInfo info = UserInfoFactory.get(email);
+                    if (info == null) continue;
+
                     UserMapMarker marker = userMarkerMap.get(email);
+                    if (marker == null) continue;
 
-                    assert info != null;
-                    assert marker != null;
-
-                    String oldHash = currentHashes.get(email);
-                    String curHash = info.getProfileImageHash();
-                    if (!oldHash.equals(curHash)) {
-                        currentHashes.put(email, curHash);
-                        marker.updateImage();
-                    }
-
+                    marker.updateImage();
                     marker.setPosition(info.latitude, info.longitude);
                 }
             }
@@ -35,16 +28,17 @@ public abstract class UserMapMarkerUpdater {
     }
 
     public static void stop() {
-        updateTimer.cancel();
-        currentHashes.clear();
-        userMarkerMap.clear();
+        if (updateTimer != null) {
+            updateTimer.cancel();
+        }
+        if (userMarkerMap != null) {
+            userMarkerMap.clear();
+        }
     }
 
     public static void requestPeriodicUpdates(UserMapMarker marker) {
         if (marker != null) {
             String email = marker.getEmail();
-            UserInfo info = UserInfoFactory.get(email);
-            currentHashes.put(email, info.getProfileImageHash());
             userMarkerMap.put(email, marker);
         }
     }
@@ -53,7 +47,6 @@ public abstract class UserMapMarkerUpdater {
         if (marker != null) {
             String email = marker.getEmail();
             userMarkerMap.remove(email);
-            currentHashes.remove(email);
         }
     }
 }

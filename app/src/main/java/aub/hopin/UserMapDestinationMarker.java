@@ -16,7 +16,9 @@ public class UserMapDestinationMarker {
     private UserInfo userInfo;
 
     public UserMapDestinationMarker(GoogleMap map, String email, LatLng lt) {
-        if (map == null || email == null || lt == null || email.length() == 0) throw new IllegalArgumentException();
+        if (map == null || email == null || lt == null || email.length() == 0) {
+            throw new IllegalArgumentException();
+        }
 
         this.latLng = lt;
         this.parentMap = map;
@@ -27,7 +29,6 @@ public class UserMapDestinationMarker {
     public void showMarker() {
         if (marker != null) marker.setVisible(true);
     }
-
     public void hideMarker() {
         if (marker != null) marker.setVisible(false);
     }
@@ -35,12 +36,14 @@ public class UserMapDestinationMarker {
     public double getLatitude() {
         return latLng.latitude;
     }
-
     public double getLongitude() {
         return latLng.longitude;
     }
 
     public String getEmail() {
+        if (this.userInfo == null) return "";
+        if (this.userInfo.email == null) return "";
+
         return this.userInfo.email;
     }
 

@@ -50,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Semaphore;
 
 public class MainMap extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -289,8 +288,10 @@ public class MainMap extends AppCompatActivity implements
                         switch (info.state) {
                             case Wanting:
                                 switchToPassive();
-                                UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
-                                destinationMarker.destroy();
+                                if (destinationMarkers.containsKey(info.email)) {
+                                    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
+                                    destinationMarker.destroy();
+                                }
                                 new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
@@ -304,8 +305,10 @@ public class MainMap extends AppCompatActivity implements
                         switch (info.state) {
                             case Offering:
                                 switchToPassive();
-                                UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
-                                destinationMarker.destroy();
+                                if (destinationMarkers.containsKey(info.email)) {
+                                    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
+                                    destinationMarker.destroy();
+                                }
                                 new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
@@ -367,12 +370,15 @@ public class MainMap extends AppCompatActivity implements
                     // Setup the markers for the new users of interest.
                     for (String email : activeUsers) {
                         UserInfo info = UserInfoFactory.get(email, true);
+                        if (info == null) continue;
 
                         if (!markers.containsKey(email)) {
                             final String e = email;
                             MainMap.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    markers.put(e, new UserMapMarker(googleMap, e));
+                                    if (markers != null && googleMap != null) {
+                                        markers.put(e, new UserMapMarker(googleMap, e));
+                                    }
                                 }
                             });
                         }
@@ -552,6 +558,8 @@ public class MainMap extends AppCompatActivity implements
         });
 
         UserMapMarker.init(googleMap);
+        UserMapMarkerUpdater.start();
+        UserInfoUpdater.start();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

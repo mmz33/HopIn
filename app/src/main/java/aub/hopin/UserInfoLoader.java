@@ -10,11 +10,10 @@ public class UserInfoLoader implements Runnable {
         this.info = info;
     }
 
-    public UserInfoLoader(UserInfo info, HashMap<String, String> hashmap) {
-        this.info = info;
-    }
-
     public void run() {
+        if (info == null) return;
+        if (info.email == null) return;
+
         if (info.email.length() == 0) {
             return;
         } else {

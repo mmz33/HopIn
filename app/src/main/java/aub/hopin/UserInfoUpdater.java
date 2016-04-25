@@ -37,12 +37,13 @@ public abstract class UserInfoUpdater {
     }
 
     public static void requestPeriodicUpdates(UserInfo info) {
-        if (info == null) throw new IllegalArgumentException();
+        if (info == null) return;
         userInfoHashMap.put(info.email, info);
     }
 
     public static void remove(UserInfo info) {
-        if (info == null) throw new IllegalArgumentException();
+        if (info == null) return;
+
         String email = info.email;
         if (userInfoHashMap.containsKey(email)) {
             userInfoHashMap.remove(email);

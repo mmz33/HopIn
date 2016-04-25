@@ -43,9 +43,9 @@ public class UserMapMarker {
         }
     }
 
-    // // TODO:
-    // call once in the MainMap
     public static void init(GoogleMap map) {
+        if (map == null) return;
+
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
@@ -91,6 +91,9 @@ public class UserMapMarker {
     }
 
     public String getEmail() {
+        if (this.userInfo == null) return "";
+        if (this.userInfo.email == null) return "";
+
         return this.userInfo.email;
     }
 
