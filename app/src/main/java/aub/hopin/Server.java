@@ -239,8 +239,6 @@ public class Server {
             int responseCode = connection.getResponseCode();
             if (responseCode == 200) {
                 String contents = readContents(connection.getInputStream());
-                if (contents.equals("default"))
-                    return ResourceManager.getDefaultProfileImage();
                 return ImageUtils.decodeBase64(contents);
             } else {
                 Log.e("error", "bad response code: " + responseCode);

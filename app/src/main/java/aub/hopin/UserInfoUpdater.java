@@ -18,18 +18,15 @@ public abstract class UserInfoUpdater {
                 for (String email : userInfoHashMap.keySet()) {
                     emails.add(email);
                 }
-
-                ArrayList<HashMap<String, String>> response = null;
                 try {
-                    response = Server.queryUsersInfo(emails);
-                } catch (ConnectionFailureException e) {}
-                if (response == null) return;
+                    ArrayList<HashMap<String, String>> response = Server.queryUsersInfo(emails);
 
-                for (HashMap<String, String> map : response) {
-                    String email = map.get("email");
-                    UserInfo info = userInfoHashMap.get(email);
-                    UserInfoLoader.updateFromServerResponse(info, map);
-                }
+                    for (HashMap<String, String> map : response) {
+                        String email = map.get("email");
+                        UserInfo info = userInfoHashMap.get(email);
+                        UserInfoLoader.updateFromServerResponse(info, map);
+                    }
+                } catch (ConnectionFailureException e) {}
             }
         };
         updateTimer.scheduleAtFixedRate(updateTask, 1000, 1000);

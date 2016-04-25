@@ -5,50 +5,29 @@ import java.util.HashMap;
 
 public class UserInfoLoader implements Runnable {
     private UserInfo info;
-    private String content;
-    private HashMap<String, String> hashMap;
 
     public UserInfoLoader(UserInfo info) {
         this.info = info;
-        this.content = "";
-        this.hashMap = null;
-    }
-
-    public UserInfoLoader(UserInfo info, String content) {
-        this.info = info;
-        this.content = content;
-        this.hashMap = null;
     }
 
     public UserInfoLoader(UserInfo info, HashMap<String, String> hashmap) {
         this.info = info;
-        this.content = "";
-        this.hashMap = hashmap;
     }
 
     public void run() {
         if (info.email.length() == 0) {
             return;
         } else {
-            HashMap<String, String> hashmap;
-
-            if (content.length() > 0) {
-                hashmap = Server.parseMap(content);
-            } else if (hashMap != null) {
-                hashmap = hashMap;
-            } else {
-                try {
-                    hashmap = Server.queryUserInfo(info.email);
-                } catch (ConnectionFailureException e) { return; }
-            }
-
-            boolean success = updateFromServerResponse(info, hashmap);
-            if (success) {
-                if (info.onLoadCallback != null) {
-                    info.onLoadCallback.run();
+            try {
+                HashMap<String, String> hashmap = Server.queryUserInfo(info.email);
+                boolean success = updateFromServerResponse(info, hashmap);
+                if (success) {
+                    if (info.onLoadCallback != null) {
+                        info.onLoadCallback.run();
+                    }
+                    UserInfoUpdater.requestPeriodicUpdates(info);
                 }
-                UserInfoUpdater.requestPeriodicUpdates(info);
-            }
+            } catch (ConnectionFailureException e) { return; }
         }
     }
 
@@ -92,19 +71,9 @@ public class UserInfoLoader implements Runnable {
             String oldHash = info.getProfileImageHash();
             info.setProfileImageHash(response.get("profilehash"));
 
-            if (response.containsKey("imagebase64")) {
-                String data = response.get("imagebase64");
-                if (data.equals("default")) {
-                    info.setProfileImage(ResourceManager.getDefaultProfileImage());
-                } else {
-                    ResourceManager.setProfileImage(info.email, response.get("imagebase64"));
-                    info.setProfileImage(ResourceManager.getProfileImage(info.email));
-                }
-            } else {
-                if (!oldHash.equals(info.getProfileImageHash())) {
-                    ResourceManager.setProfileImageDirty(info.email);
-                    info.setProfileImage(ResourceManager.getProfileImage(info.email));
-                }
+            if (!oldHash.equals(info.getProfileImageHash())) {
+                ResourceManager.setProfileImageDirty(info.email);
+                info.setProfileImage(ResourceManager.getProfileImage(info.email));
             }
 
             // Load vehicle data.

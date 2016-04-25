@@ -136,6 +136,7 @@ public class MainMap extends AppCompatActivity implements
                 info.curDestinationLongitude = oldLon;
             }
             currentlySettingDestination = false;
+            updateUI();
         }
     }
 
@@ -178,6 +179,34 @@ public class MainMap extends AppCompatActivity implements
         currentlySettingDestination = true;
     }
 
+    private void updateUI() {
+        UserInfo info = ActiveUser.getInfo();
+
+        switch (info.mode) {
+            case DriverMode:
+                switchToDriver();
+                break;
+            case PassengerMode:
+                switchToPassenger();
+                break;
+        }
+        switch (info.state) {
+            case Passive:
+                switchToPassive();
+                break;
+            case Offering:
+                switchToOffering();
+                break;
+            case Wanting:
+                switchToWanting();
+                break;
+        }
+
+        slideMenuProfileImage.setImageBitmap(info.getProfileImage());
+        slideMenuUserName.setText(info.firstName + " " + info.lastName);
+        slideMenuUserEmail.setText(info.email);
+    }
+
     // Sends a mode change to the server.
     private class AsyncStateModeChange extends AsyncTask<Void, Void, Void> {
         private UserInfo info;
@@ -216,26 +245,7 @@ public class MainMap extends AppCompatActivity implements
                 Toast.makeText(MainMap.this, "Failed to switch state!", Toast.LENGTH_SHORT).show();
                 info.mode = oldMode;
                 info.state = oldState;
-
-                switch (oldMode) {
-                    case DriverMode:
-                        switchToDriver();
-                        break;
-                    case PassengerMode:
-                        switchToPassenger();
-                        break;
-                }
-                switch (oldState) {
-                    case Passive:
-                        switchToPassive();
-                        break;
-                    case Wanting:
-                        switchToWanting();
-                        break;
-                    case Offering:
-                        switchToOffering();
-                        break;
-                }
+                updateUI();
             }
         }
     }
@@ -309,13 +319,7 @@ public class MainMap extends AppCompatActivity implements
             }
         });
 
-        UserInfo info = ActiveUser.getInfo();
-        if (info.getProfileImage() != null) {
-            slideMenuProfileImage.setImageBitmap(info.getProfileImage());
-        }
-
-        slideMenuUserName.setText(info.firstName + " " + info.lastName);
-        slideMenuUserEmail.setText(info.email);
+        updateUI();
     }
 
     @Override
@@ -362,7 +366,7 @@ public class MainMap extends AppCompatActivity implements
 
                     // Setup the markers for the new users of interest.
                     for (String email : activeUsers) {
-                        UserInfo info = UserInfoFactory.get(email);
+                        UserInfo info = UserInfoFactory.get(email, true);
 
                         if (!markers.containsKey(email)) {
                             final String e = email;
