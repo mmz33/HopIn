@@ -180,6 +180,7 @@ public class MainMap extends AppCompatActivity implements
 
     private void updateUI() {
         UserInfo info = ActiveUser.getInfo();
+        if (info == null) return;
 
         switch (info.mode) {
             case DriverMode:
@@ -270,11 +271,11 @@ public class MainMap extends AppCompatActivity implements
                 switch (info.mode) {
                     case PassengerMode:
                         switchToDriver();
-                        new AsyncStateModeChange(UserMode.DriverMode, info.state).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new AsyncStateModeChange(UserMode.DriverMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         break;
                     case DriverMode:
                         switchToPassenger();
-                        new AsyncStateModeChange(UserMode.PassengerMode, info.state).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new AsyncStateModeChange(UserMode.PassengerMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         break;
                 }
             }
@@ -291,6 +292,7 @@ public class MainMap extends AppCompatActivity implements
                                 if (destinationMarkers.containsKey(info.email)) {
                                     UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
                                     destinationMarker.destroy();
+                                    destinationMarkers.remove(info.email);
                                 }
                                 new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
@@ -308,6 +310,7 @@ public class MainMap extends AppCompatActivity implements
                                 if (destinationMarkers.containsKey(info.email)) {
                                     UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
                                     destinationMarker.destroy();
+                                    destinationMarkers.remove(info.email);
                                 }
                                 new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
