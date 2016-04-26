@@ -52,16 +52,16 @@ public class UserMapMarker {
         overlays.put(this.overlay.getId(), this);
     }
 
-    public static void init(GoogleMap map, final LinearLayout groundov, final Animation slide_up, Animation slide_down) {
+    final Animation slide_up = AnimationUtils.loadAnimation(GlobalContext.get(), R.anim.slide_up);
+
+    public static void init(GoogleMap map, final LinearLayout groundov) {
         if (map == null) return;
 
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
-                Toast.makeText(GlobalContext.get(), "Overlay Clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GlobalContext.get(), "Clicked!", Toast.LENGTH_SHORT).show();
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
-
-                groundov.startAnimation(slide_up);
-
+                groundov.startAnimation(marker.slide_up);
             }
         });
     }

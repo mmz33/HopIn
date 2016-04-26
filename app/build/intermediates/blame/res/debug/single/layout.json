@@ -1,35 +1,35 @@
 [
     {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_list_menu_item_checkbox.xml"
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/content_settings.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/layout/content_settings.xml"
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
-        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/content_settings.xml",
-        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/layout/content_settings.xml"
+        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/activity_about.xml",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/layout/activity_about.xml"
     },
     {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_list_menu_item_icon.xml"
-    },
-    {
-        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
-        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_screen_simple_overlay_action_mode.xml"
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_action_menu_layout.xml"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
-        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
-        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_action_menu_layout.xml"
+        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
+        "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/abc_list_menu_item_icon.xml"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
@@ -234,6 +234,10 @@
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/content_car_info.xml",
         "source": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/res/layout/content_car_info.xml"
+    },
+    {
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/info_window.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/layout/info_window.xml"
     },
     {
         "merged": "/Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/res/merged/debug/layout/notification_media_cancel_action.xml",
@@ -738,6 +742,10 @@
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
         "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/layout/notification_template_lines.xml"
+    },
+    {
+        "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/groundoverlay_bar.xml",
+        "source": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/src/main/res/layout/groundoverlay_bar.xml"
     },
     {
         "merged": "/Users/mohammadzeineldeen/Documents/CMPS 253 Project/HopIn/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
