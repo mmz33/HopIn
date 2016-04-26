@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/groundoverlay_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="700dp">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        style="?android:attr/borderlessButtonStyle"
+        android:textStyle="bold"
+        android:textColor="#ffffffff"
+        android:background="#000"
+        android:text="profile"
+        android:id="@+id/bt_orders"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        style="?android:attr/borderlessButtonStyle"
+        android:textStyle="bold"
+        android:background="#000"
+        android:textColor="#ffffffff"
+        android:text="offer"
+        android:id="@+id/bt_credit"
+        android:layout_weight="1" />
+</LinearLayout>

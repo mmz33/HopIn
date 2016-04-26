@@ -80,6 +80,8 @@ public class MainMap extends AppCompatActivity implements
     private Button userStateButton;
     private LinearLayout selectDestination;
 
+    private LinearLayout groundoverlay;
+
     // This will run whenever the application gets a location update
     // from the google service.
     public void onLocationChanged(Location loc) {
@@ -341,6 +343,8 @@ public class MainMap extends AppCompatActivity implements
         supportMapFragment.getMapAsync(this);
         selectDestination = (LinearLayout)findViewById(R.id.select_destination_layout);
         selectDestination.setVisibility(LinearLayout.GONE);
+        groundoverlay = (LinearLayout)findViewById(R.id.groundoverlay_layout);
+        groundoverlay.setVisibility(LinearLayout.GONE);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -562,7 +566,7 @@ public class MainMap extends AppCompatActivity implements
             }
         });
 
-        UserMapMarker.init(googleMap);
+        UserMapMarker.init(googleMap, groundoverlay);
         UserMapMarkerUpdater.start();
         UserInfoUpdater.start();
     }
