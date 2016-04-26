@@ -35,12 +35,15 @@ public class UserMapMarker {
                 .image(getImageDescripter());
 
         this.overlay = parentMap.addGroundOverlay(options);
+        this.overlay.setClickable(true);
+
         UserMapMarkerUpdater.requestPeriodicUpdates(this);
 
         // The user himself should always be drawn over anyone standing very close to him.
         if (email.equals(ActiveUser.getEmail())) {
             overlay.setZIndex(1.0f);
         }
+        overlays.put(this.overlay.getId(), this);
     }
 
     public static void init(GoogleMap map) {
@@ -51,7 +54,6 @@ public class UserMapMarker {
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
 
                 Marker m = marker.parentMap.addMarker(new MarkerOptions().position(marker.location));
-                //m.setVisible(false);
                 m.showInfoWindow();
             }
         });

@@ -190,6 +190,7 @@ public class MainMap extends AppCompatActivity implements
                 switchToPassenger();
                 break;
         }
+
         switch (info.state) {
             case Passive:
                 switchToPassive();
@@ -226,6 +227,7 @@ public class MainMap extends AppCompatActivity implements
 
             info.mode = mode;
             info.state = state;
+            updateUI();
         }
 
         protected void onPreExecute() {
@@ -245,8 +247,8 @@ public class MainMap extends AppCompatActivity implements
                 Toast.makeText(MainMap.this, "Failed to switch state!", Toast.LENGTH_SHORT).show();
                 info.mode = oldMode;
                 info.state = oldState;
-                updateUI();
             }
+            updateUI();
         }
     }
 

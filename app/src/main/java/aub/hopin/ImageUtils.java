@@ -19,7 +19,7 @@ import java.text.BreakIterator;
 
 public class ImageUtils {
 
-    final static int borderWidth = 7;
+    final static int borderWidth = 10;
 
     // Takes a BitMap and creates a rounded version of it.
     public static Bitmap makeRounded(Bitmap bitmap) {
