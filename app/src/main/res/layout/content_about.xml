@@ -21,4 +21,17 @@
         android:textSize="35dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HopIn is a carpooling mobile application designed for students by students at the American University of Beirut. \n\nThis application was developed as a project for CMPS 253 taught by Mahmoud Bdeir."
+        android:id="@+id/about_text_paragraph"
+        android:textColor="#444"
+        android:textSize="18dp"
+        android:textStyle="italic"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"/>
+
 </RelativeLayout>

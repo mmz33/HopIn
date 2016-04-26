@@ -8,7 +8,7 @@
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_action_sett"
-            android:title="Settings" />
+            android:title="Map Gestures" />
 
         <item
             android:id="@+id/nav_profile"
@@ -24,11 +24,6 @@
             android:id="@+id/nav_ride_preferences"
             android:title="Ride Preferences"
             android:icon="@drawable/ic_action_preference"/>
-
-        <item
-            android:id="@+id/nav_daily_route"
-            android:title="Daily Route"
-            android:icon="@drawable/ic_action_schedule"/>
 
         <item
             android:id="@+id/nav_vehicle_type"

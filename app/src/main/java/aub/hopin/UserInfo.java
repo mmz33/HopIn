@@ -34,7 +34,7 @@ public class UserInfo {
     public boolean showingPhone   = false;
 
     public Vehicle vehicle         = null;
-    public Runnable onLoadCallback = null;
+    public OnLoad onLoadCallback = null;
 
     public double longitude = 0.0;
     public double latitude  = 0.0;
@@ -51,7 +51,11 @@ public class UserInfo {
     public double notificationRadius = 5.0;
     public boolean hasDestination = false;
 
-    public UserInfo(String email, boolean blocking, Runnable onLoad) {
+    public interface OnLoad {
+        public void onLoad(UserInfo info);
+    }
+
+    public UserInfo(String email, boolean blocking, OnLoad onLoad) {
         this.onLoadCallback = onLoad;
         this.vehicle = new Vehicle(email);
         this.email = email;

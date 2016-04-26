@@ -23,6 +23,17 @@ public abstract class UserInfoFactory {
         }
     }
 
+    public static UserInfo get(String email, boolean blocking, UserInfo.OnLoad onload) {
+        if (userInfoMap.containsKey(email)) {
+            onload.onLoad(userInfoMap.get(email));
+            return userInfoMap.get(email);
+        } else {
+            UserInfo info = new UserInfo(email, blocking, onload);
+            userInfoMap.put(email, info);
+            return info;
+        }
+    }
+
     public static void clear() {
         userInfoMap.clear();
     }

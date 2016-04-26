@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -559,6 +560,13 @@ public class Server {
         args.put("message", message);
         args.put("ssid", ActiveUser.getSessionId());
         return getResponse(buildRequest("leavemessage", args));
+    }
+
+    public static HashMap<String, String> checkMessages(String email) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponseMap(buildRequest("checkmessages", args));
     }
 
     public static String queryImageHash(String email) throws ConnectionFailureException {

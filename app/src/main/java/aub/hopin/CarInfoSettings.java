@@ -28,9 +28,12 @@ public class CarInfoSettings extends AppCompatActivity {
     private AutoCompleteTextView vehicleType;
     private AutoCompleteTextView vehicleColor;
     private boolean currentlySendingInfo;
-
     private ProgressBar loading;
 
+    /**
+     * The acknowledged car makes that the
+     * user can choose from in the auto-complete view.
+     */
     private static final String[] CAR_MAKES = new String[] {
             "Acura",     "Alfa Romeo",     "AMC",     "Ariel",     "Aston Martin",
             "Audi",     "Austin Healey",     "Bentley",     "BMW",     "Bugatti",
@@ -52,6 +55,10 @@ public class CarInfoSettings extends AppCompatActivity {
             "Vauxhall",     "VW",     "Volvo",     "Westfield"
     };
 
+    /**
+     * The acknowledged colors that the user can
+     * choose from the in the auto-complete view.
+     */
     private static final String[] COLORS = new String[] {
             "Red",     "Dark Green",     "Green",     "Blue",     "Light Blue",
             "Purple",     "Light Purple",     "Pink",     "Light Pink",     "Dark Blue",
@@ -59,6 +66,12 @@ public class CarInfoSettings extends AppCompatActivity {
             "Orange",     "Yellow",     "Grey",     "Dark Grey"
     };
 
+    /**
+     * Determines if make is a valid acknowledged car make.
+     *
+     * @param make  the car make
+     * @return      true if the car make is acknowledged, false otherwise
+     */
     private static boolean validCarMake(String make) {
         // Linear search is good enough since the
         // makes are going to be very small anyway.
@@ -68,6 +81,12 @@ public class CarInfoSettings extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Determines if color is a valid acknowledged car color.
+     *
+     * @param color the car color
+     * @return      true if the color is acknowledged
+     */
     private static boolean validCarColor(String color) {
         for (int i = 0; i < COLORS.length; ++i) {
             if (COLORS[i].equals(color)) return true;
@@ -75,6 +94,12 @@ public class CarInfoSettings extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Determines if a car capacity is valid.
+     *
+     * @param capacity  the car capacity
+     * @return          true if it's valid, false otherwise
+     */
     private static boolean validCarCapacity(int capacity) {
         return 2 <= capacity && capacity <= 9;
     }

@@ -9,6 +9,7 @@ public abstract class UserInfoUpdater {
     private static HashMap<String, UserInfo> userInfoHashMap = new HashMap<>();
     private static Timer updateTimer = null;
     private static TimerTask updateTask = null;
+    private static ArrayList<Runnable> onUpdateCallbacks = new ArrayList<>();
 
     public static void start() {
         updateTimer = new Timer();
@@ -27,9 +28,19 @@ public abstract class UserInfoUpdater {
                         UserInfoLoader.updateFromServerResponse(info, map);
                     }
                 } catch (ConnectionFailureException e) {}
+
+                try {
+                    for (Runnable f : onUpdateCallbacks) {
+                        f.run();
+                    }
+                } catch (Throwable t) {}
             }
         };
         updateTimer.scheduleAtFixedRate(updateTask, 1000, 1000);
+    }
+
+    public static void registerOnUpdate(Runnable f) {
+        onUpdateCallbacks.add(f);
     }
 
     public static void stop() {

@@ -22,7 +22,7 @@ public class UserInfoLoader implements Runnable {
                 boolean success = updateFromServerResponse(info, hashmap);
                 if (success) {
                     if (info.onLoadCallback != null) {
-                        info.onLoadCallback.run();
+                        info.onLoadCallback.onLoad(info);
                     }
                     UserInfoUpdater.requestPeriodicUpdates(info);
                 }

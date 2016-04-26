@@ -144,14 +144,27 @@ public class  ProfileSettings extends AppCompatActivity {
     // It's okay to change the user interface to things unrelated to
     // the profileInfo variable outside of this method.
     //
-    public void displayContent() {
+    public void displayContent(UserInfo info) {
+        if (info == null) return;
+        profileInfo = info;
+
         TextView title = (TextView)findViewById(R.id.profile_title);
         if (title != null) title.setText(profileInfo.firstName + " " + profileInfo.lastName);
 
         profileImage.setImageBitmap(profileInfo.getProfileImage());
         statusBox.setText(profileInfo.status);
 
-        profilePhone.setText(profileInfo.showingPhone ? profileInfo.phoneNumber : "Hidden");
+        if (profileInfo.email.equals(ActiveUser.getEmail())) {
+            profilePhone.setText(profileInfo.phoneNumber);
+            profileImage.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    loadProfileImage(v);
+                }
+            });
+        } else {
+            profilePhone.setText(profileInfo.showingPhone ? profileInfo.phoneNumber : "Hidden");
+        }
+
         profileEmail.setText(profileInfo.email);
 
         switch (profileInfo.role) {
@@ -173,7 +186,7 @@ public class  ProfileSettings extends AppCompatActivity {
             profileVehicle.setText("No vehicle.");
         }
 
-        if (clickListener == null) {
+        if (clickListener == null && profileInfo.email.equals(ActiveUser.getEmail())) {
             clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -238,15 +251,15 @@ public class  ProfileSettings extends AppCompatActivity {
         if (email == null) email = ActiveUser.getEmail();
 
         if (email.equals(ActiveUser.getEmail())) {
-            profileInfo = ActiveUser.getInfo();
-            displayContent();
+            displayContent(ActiveUser.getInfo());
         } else {
-            profileInfo = new UserInfo(email, false,
-                    new Runnable() {
-                        public void run() {
+            UserInfoFactory.get(email, false,
+                    new UserInfo.OnLoad() {
+                        public void onLoad(UserInfo info) {
+                            profileInfo = info;
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    displayContent();
+                                    displayContent(profileInfo);
                                 }
                             });
                         }
@@ -308,6 +321,10 @@ public class  ProfileSettings extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 if(extras != null) {
                     Bitmap photo = extras.getParcelable("data");
+                    if (photo == null) return;
+                    if (photo.getWidth() > 200 || photo.getHeight() > 200) {
+                        photo = ImageUtils.getResizedBitmap(photo, 200, 200);
+                    }
                     new AsyncUploadProfilePictureBitmap(photo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
                 break;

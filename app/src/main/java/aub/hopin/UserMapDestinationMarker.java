@@ -24,13 +24,32 @@ public class UserMapDestinationMarker {
         this.parentMap = map;
         this.userInfo = UserInfoFactory.get(email);
         this.marker = parentMap.addMarker(new MarkerOptions().position(this.latLng));
+
+        if (userInfo != null) {
+            this.marker.setTitle(userInfo.firstName + "'s Destination");
+        }
     }
 
     public void showMarker() {
-        if (marker != null) marker.setVisible(true);
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            public void run() {
+                if (marker != null) {
+                    marker.setVisible(true);
+                    marker.showInfoWindow();
+                }
+            }
+        });
     }
+
     public void hideMarker() {
-        if (marker != null) marker.setVisible(false);
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            public void run() {
+                if (marker != null) {
+                    marker.setVisible(false);
+                    marker.hideInfoWindow();
+                }
+            }
+        });
     }
 
     public double getLatitude() {

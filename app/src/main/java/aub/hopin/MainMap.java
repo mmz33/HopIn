@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -81,12 +82,30 @@ public class MainMap extends AppCompatActivity implements
     private LinearLayout selectDestination;
 
     private LinearLayout groundoverlay;
+    private Button profileButton;
+    private Button requestOrOfferButton;
+    public LinearLayout getProfileBar() {
+        return groundoverlay;
+    }
+    public Button getProfileBarProfileButton() {
+        return profileButton;
+    }
+    public Button getProfileBarRequestButton() {
+        return requestOrOfferButton;
+    }
+
+    private String showingDestinationMarkerFor = "";
+
+    public void setShowingDestinationMarker(String email) {
+        showingDestinationMarkerFor = email;
+        updateUI();
+    }
 
     // This will run whenever the application gets a location update
     // from the google service.
     public void onLocationChanged(Location loc) {
         if (loc == null) return;
-        Toast.makeText(MainMap.this, "Updated location: " + loc.getLatitude() + " " + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainMap.this, "Updated location: " + loc.getLatitude() + " " + loc.getLongitude(), Toast.LENGTH_SHORT).show();
         LocationSender.setCurrentLocation(loc);
         if (!zoomedInYet && googleMap != null) {
             zoomedInYet = true;
@@ -104,18 +123,12 @@ public class MainMap extends AppCompatActivity implements
         private boolean success;
         private double lat;
         private double lon;
-        private double oldLat;
-        private double oldLon;
 
         public AsyncSendDestination(UserInfo info, double latitude, double longitude) {
             this.info = info;
             success = false;
             lat = latitude;
             lon = longitude;
-            oldLat = this.info.curDestinationLatitude;
-            oldLon = this.info.curDestinationLongitude;
-            info.curDestinationLatitude = lat;
-            info.curDestinationLongitude = lon;
         }
 
         protected void onPreExecute() {
@@ -133,10 +146,10 @@ public class MainMap extends AppCompatActivity implements
             super.onPostExecute(aVoid);
             if (!success) {
                 Toast.makeText(MainMap.this, "Failed to send destination!", Toast.LENGTH_SHORT).show();
-                info.curDestinationLatitude = oldLat;
-                info.curDestinationLongitude = oldLon;
+            } else {
+                info.curDestinationLatitude = lat;
+                info.curDestinationLongitude = lon;
             }
-            currentlySettingDestination = false;
             updateUI();
         }
     }
@@ -208,7 +221,21 @@ public class MainMap extends AppCompatActivity implements
         slideMenuProfileImage.setImageBitmap(info.getProfileImage());
         slideMenuUserName.setText(info.firstName + " " + info.lastName);
         slideMenuUserEmail.setText(info.email);
+
+        for (String email : destinationMarkers.keySet()) {
+            UserMapDestinationMarker marker = destinationMarkers.get(email);
+            if (marker == null) continue;
+            if (email == null) continue;
+
+            if (email.equals(showingDestinationMarkerFor) || email.equals(info.email)) {
+                marker.showMarker();
+            } else {
+                marker.hideMarker();
+            }
+        }
     }
+
+    private boolean sendingStateModeChange = false;
 
     // Sends a mode change to the server.
     private class AsyncStateModeChange extends AsyncTask<Void, Void, Void> {
@@ -216,20 +243,12 @@ public class MainMap extends AppCompatActivity implements
         private boolean success;
         private UserMode mode;
         private UserState state;
-        private UserMode oldMode;
-        private UserState oldState;
 
         public AsyncStateModeChange(UserMode mode, UserState state) {
             this.info = ActiveUser.getInfo();
             this.mode = mode;
             this.state = state;
             this.success = false;
-            this.oldMode = info.mode;
-            this.oldState = info.state;
-
-            info.mode = mode;
-            info.state = state;
-            updateUI();
         }
 
         protected void onPreExecute() {
@@ -247,10 +266,17 @@ public class MainMap extends AppCompatActivity implements
             super.onPostExecute(result);
             if (!success) {
                 Toast.makeText(MainMap.this, "Failed to switch state!", Toast.LENGTH_SHORT).show();
-                info.mode = oldMode;
-                info.state = oldState;
+            } else {
+                info.mode = mode;
+                info.state = state;
+                updateUI();
             }
-            updateUI();
+            sendingStateModeChange = false;
+            boolean needsDest = (mode == UserMode.PassengerMode && state == UserState.Wanting);
+            needsDest = needsDest || (mode == UserMode.DriverMode    && state == UserState.Offering);
+            if (needsDest) {
+                dropDownSelectDestination();
+            }
         }
     }
 
@@ -271,14 +297,15 @@ public class MainMap extends AppCompatActivity implements
 
         userModeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (sendingStateModeChange) return;
+                sendingStateModeChange = true;
+
                 UserInfo info = ActiveUser.getInfo();
                 switch (info.mode) {
                     case PassengerMode:
-                        switchToDriver();
                         new AsyncStateModeChange(UserMode.DriverMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         break;
                     case DriverMode:
-                        switchToPassenger();
                         new AsyncStateModeChange(UserMode.PassengerMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         break;
                 }
@@ -287,41 +314,38 @@ public class MainMap extends AppCompatActivity implements
 
         userStateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (sendingStateModeChange) return;
+                sendingStateModeChange = true;
+
                 UserInfo info = ActiveUser.getInfo();
                 switch (info.mode) {
                     case PassengerMode:
                         switch (info.state) {
                             case Wanting:
-                                switchToPassive();
                                 if (destinationMarkers.containsKey(info.email)) {
                                     UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
                                     destinationMarker.destroy();
                                     destinationMarkers.remove(info.email);
                                 }
-                                new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new AsyncStateModeChange(UserMode.PassengerMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
-                                switchToWanting();
-                                dropDownSelectDestination();
-                                new AsyncStateModeChange(info.mode, UserState.Wanting).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new AsyncStateModeChange(UserMode.PassengerMode, UserState.Wanting).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                         }
                         break;
                     case DriverMode:
                         switch (info.state) {
                             case Offering:
-                                switchToPassive();
                                 if (destinationMarkers.containsKey(info.email)) {
                                     UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
                                     destinationMarker.destroy();
                                     destinationMarkers.remove(info.email);
                                 }
-                                new AsyncStateModeChange(info.mode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new AsyncStateModeChange(UserMode.DriverMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
-                                switchToOffering();
-                                dropDownSelectDestination();
-                                new AsyncStateModeChange(info.mode, UserState.Offering).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new AsyncStateModeChange(UserMode.DriverMode, UserState.Offering).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                         }
                         break;
@@ -353,6 +377,9 @@ public class MainMap extends AppCompatActivity implements
 
         groundoverlay = (LinearLayout)findViewById(R.id.groundoverlay_layout);
         groundoverlay.setVisibility(LinearLayout.GONE);
+        groundoverlay.setGravity(Gravity.BOTTOM);
+        profileButton = (Button)findViewById(R.id.bt_orders);
+        requestOrOfferButton = (Button)findViewById(R.id.bt_credit);
 
         setupSlideMenu();
 
@@ -391,18 +418,61 @@ public class MainMap extends AppCompatActivity implements
                                 }
                             });
                         }
-                    }
 
-                    // Remove the markers for the users who are no longer of interest.
-                    ArrayList<String> toRemove = new ArrayList<>();
-                    for (String email : markers.keySet()) {
-                        if (!activeUsers.contains(email)) {
-                            toRemove.add(email);
+                        if (!destinationMarkers.containsKey(email) && info.hasDestination) {
+                            final String e = email;
+                            MainMap.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    if (destinationMarkers != null && googleMap != null) {
+                                        UserInfo info = UserInfoFactory.get(e);
+                                        UserMapDestinationMarker marker = new UserMapDestinationMarker(googleMap, e, new LatLng(info.curDestinationLatitude, info.curDestinationLongitude));
+                                        destinationMarkers.put(e, marker);
+                                        marker.hideMarker();
+                                    }
+                                }
+                            });
                         }
                     }
-                    for (String email : toRemove) {
-                        markers.get(email).destroy();
+
+                    new Handler(Looper.getMainLooper()).post(
+                            new Runnable() {
+                                public void run() {
+                                    updateUI();
+                                }
+                            });
+
+                    // Remove the markers for the users who are no longer of interest.
+                    ArrayList<String> toRemoveMarkers = new ArrayList<>();
+                    ArrayList<String> toRemoveDestMarkers = new ArrayList<>();
+                    for (String email : markers.keySet()) {
+                        if (!activeUsers.contains(email)) {
+                            toRemoveMarkers.add(email);
+                        }
+                    }
+                    for (String email : destinationMarkers.keySet()) {
+                        UserInfo info = UserInfoFactory.get(email);
+                        if (info == null) continue;
+                        UserMapDestinationMarker marker = destinationMarkers.get(email);
+                        if (marker == null) continue;
+
+                        double deltaLat = Math.abs(info.curDestinationLatitude - marker.getLatitude());
+                        double deltaLon = Math.abs(info.curDestinationLongitude - marker.getLongitude());
+                        boolean changed = (deltaLat + deltaLon > 0.0000001);
+                        if (!activeUsers.contains(email) || !info.hasDestination || changed) {
+                            toRemoveDestMarkers.add(email);
+                        }
+                    }
+                    for (String email : toRemoveMarkers) {
+                        UserMapMarker marker = markers.get(email);
+                        if (marker == null) continue;
+                        marker.destroy();
                         markers.remove(email);
+                    }
+                    for (String email : toRemoveDestMarkers) {
+                        UserMapDestinationMarker marker = destinationMarkers.get(email);
+                        if (marker == null) continue;
+                        marker.destroy();
+                        destinationMarkers.remove(email);
                     }
                 } catch (ConnectionFailureException e) {}
 
@@ -418,6 +488,7 @@ public class MainMap extends AppCompatActivity implements
                 .build();
 
         LocationSender.start();
+        //MessagesHandler.start();
     }
 
     public void onStart() {
@@ -435,11 +506,11 @@ public class MainMap extends AppCompatActivity implements
     }
 
     public void onConnectionSuspended(int i) {
-        Toast.makeText(MainMap.this, "Connection to API client suspended", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainMap.this, "Connection to API client suspended", Toast.LENGTH_SHORT).show();
     }
 
     public void onConnected(Bundle bundle) {
-        Toast.makeText(MainMap.this, "Connected to API client", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainMap.this, "Connected to API client", Toast.LENGTH_SHORT).show();
 
         LocationRequest request = new LocationRequest();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -453,7 +524,7 @@ public class MainMap extends AppCompatActivity implements
     }
 
     public void onConnectionFailed(ConnectionResult result) {
-        Toast.makeText(MainMap.this, "Connection to API client failed.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainMap.this, "Connection to API client failed.", Toast.LENGTH_SHORT).show();
     }
 
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
@@ -507,6 +578,7 @@ public class MainMap extends AppCompatActivity implements
             sFm.beginTransaction().show(supportMapFragment).commit();
         } else if (id == R.id.nav_logout) {
             if (markerUpdater != null) markerUpdater.cancel();
+            //MessagesHandler.stop();
             UserMapMarkerUpdater.stop();
             UserInfoUpdater.stop();
             LocationSender.stop();
@@ -551,22 +623,15 @@ public class MainMap extends AppCompatActivity implements
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             public void onMapLongClick(LatLng latLng) {
                 if (currentlySettingDestination) {
-                    String e = ActiveUser.getEmail();
-                    if (destinationMarkers.containsKey(e)) {
-                        destinationMarkers.get(e).destroy();
-                        destinationMarkers.remove(e);
-                    }
-                    destinationMarkers.put(e, new UserMapDestinationMarker(googleMap, e, latLng));
                     final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
                     selectDestination.startAnimation(slide_up);
-
-                    currentlySettingDestination = false;
                     new AsyncSendDestination(ActiveUser.getInfo(), latLng.latitude, latLng.longitude).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    currentlySettingDestination = false;
                 }
             }
         });
 
-        UserMapMarker.init(googleMap, groundoverlay);
+        UserMapMarker.init(googleMap, this);
         UserMapMarkerUpdater.start();
         UserInfoUpdater.start();
     }

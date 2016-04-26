@@ -51,7 +51,6 @@
                 android:layout_height="170dp"
                 android:id="@+id/profile_image_view"
                 android:src="@drawable/missing_profile"
-                android:onClick="loadProfileImage"
                 android:scaleType="fitXY"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"

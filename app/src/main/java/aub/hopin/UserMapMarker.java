@@ -1,11 +1,15 @@
 package aub.hopin;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,6 +26,7 @@ import java.util.HashMap;
 
 public class UserMapMarker {
     private static HashMap<String, UserMapMarker> overlays = new HashMap<>();
+    private static MainMap mainAct = null;
 
     private GoogleMap parentMap;
     private GroundOverlay overlay;
@@ -36,11 +41,10 @@ public class UserMapMarker {
         this.location = new LatLng(userInfo.latitude, userInfo.longitude);
 
         GroundOverlayOptions options = new GroundOverlayOptions()
-                .position(this.location, 100f, 100f)
+                .position(this.location, 80f, 80f)
                 .image(getImageDescripter());
 
         this.overlay = parentMap.addGroundOverlay(options);
-        this.overlays.put(overlay.getId(), this);
         this.overlay.setClickable(true);
 
         UserMapMarkerUpdater.requestPeriodicUpdates(this);
@@ -52,16 +56,122 @@ public class UserMapMarker {
         overlays.put(this.overlay.getId(), this);
     }
 
-    final Animation slide_up = AnimationUtils.loadAnimation(GlobalContext.get(), R.anim.slide_up);
+    private static boolean isSomethingCurrentlyClicked = false;
+    private static UserMapMarker currentlyClicked = null;
+    private static UserInfo currentlyConsidered = null;
 
-    public static void init(GoogleMap map, final LinearLayout groundov) {
+    private static class AsyncSendMessage extends AsyncTask<Void, Void, Void> {
+        private UserInfo info;
+        private String recipient;
+        private String message;
+        private boolean success;
+
+        public AsyncSendMessage(String recip, String mes) {
+            this.info = ActiveUser.getInfo();
+            this.recipient = recip;
+            this.message = mes;
+            this.success = false;
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Void doInBackground(Void... params) {
+            try {
+                success = Server.leaveMessage(info.email, recipient, message).equals("OK");
+            } catch (ConnectionFailureException e) {}
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success) {
+                Toast.makeText(mainAct, "Sent!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mainAct, "Failed to send!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public static void init(GoogleMap map, final MainMap mainActivity) {
         if (map == null) return;
+
+        mainAct = mainActivity;
 
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
-                Toast.makeText(GlobalContext.get(), "Clicked!", Toast.LENGTH_SHORT).show();
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
-                groundov.startAnimation(marker.slide_up);
+                String email = marker.getEmail();
+                if (email == null) return;
+                if (email == "") return;
+
+                UserInfo info = UserInfoFactory.get(email);
+                if (info == null) return;
+
+                if (email.equals(ActiveUser.getEmail())) return;
+
+                //Toast.makeText(GlobalContext.get(), "Clicked!", Toast.LENGTH_SHORT).show();
+                Animation slide_up = AnimationUtils.loadAnimation(mainAct, R.anim.slide_up);
+                Animation slide_down = AnimationUtils.loadAnimation(mainAct, R.anim.slide_down);
+                slide_up.setFillAfter(true);
+                slide_down.setFillAfter(true);
+
+                //if (isSomethingCurrentlyClicked) {
+                mainAct.getProfileBar().startAnimation(slide_up);
+                mainAct.getProfileBar().setVisibility(LinearLayout.VISIBLE);
+                mainAct.getProfileBarProfileButton().setText(info.firstName + "'s Profile");
+
+                mainAct.setShowingDestinationMarker(email);
+
+                //mainAct.showDestinationMarker(email);
+
+                UserInfo me = ActiveUser.getInfo();
+                if (me == null) return;
+
+                if (me.mode == UserMode.DriverMode && info.mode == UserMode.PassengerMode) {
+                    mainAct.getProfileBarRequestButton().setText("Offer Ride!");
+                    mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Animation slide_down = AnimationUtils.loadAnimation(mainAct, R.anim.slide_down);
+                            slide_down.setFillAfter(true);
+                            mainAct.getProfileBar().startAnimation(slide_down);
+                            new AsyncSendMessage(currentlyConsidered.email, "OFFER").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    });
+                } else if (me.mode == UserMode.PassengerMode && info.mode == UserMode.DriverMode) {
+                    mainAct.getProfileBarRequestButton().setText("Request Ride!");
+                    mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Animation slide_down = AnimationUtils.loadAnimation(mainAct, R.anim.slide_down);
+                            slide_down.setFillAfter(true);
+                            mainAct.getProfileBar().startAnimation(slide_down);
+                            new AsyncSendMessage(currentlyConsidered.email, "REQUEST").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    });
+                } else {
+                    mainAct.getProfileBarRequestButton().setText("");
+                    mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {}
+                    });
+                }
+
+                mainAct.getProfileBarProfileButton().setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Animation slide_down = AnimationUtils.loadAnimation(mainAct, R.anim.slide_down);
+                        slide_down.setFillAfter(true);
+
+                        mainAct.getProfileBar().startAnimation(slide_down);
+                        Intent intent = new Intent(mainAct, ProfileSettings.class);
+                        intent.putExtra("email", currentlyConsidered.email);
+                        mainAct.startActivity(intent);
+                    }
+                });
+
+                // Update info
+                isSomethingCurrentlyClicked = true;
+                currentlyClicked = marker;
+                currentlyConsidered = info;
             }
         });
     }
