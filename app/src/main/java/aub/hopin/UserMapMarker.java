@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -49,16 +52,16 @@ public class UserMapMarker {
         overlays.put(this.overlay.getId(), this);
     }
 
-    public static void init(GoogleMap map) {
+    public static void init(GoogleMap map, final LinearLayout groundov, final Animation slide_up, Animation slide_down) {
         if (map == null) return;
 
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
                 Toast.makeText(GlobalContext.get(), "Overlay Clicked!", Toast.LENGTH_SHORT).show();
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
-                Marker m = marker.parentMap.addMarker(new MarkerOptions().position(marker.location));
-                m.setVisible(false);
-                m.showInfoWindow();
+
+                groundov.startAnimation(slide_up);
+
             }
         });
     }
