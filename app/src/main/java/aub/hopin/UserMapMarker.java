@@ -3,6 +3,8 @@ package aub.hopin;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -35,6 +37,8 @@ public class UserMapMarker {
                 .image(getImageDescripter());
 
         this.overlay = parentMap.addGroundOverlay(options);
+        this.overlays.put(overlay.getId(), this);
+        this.overlay.setClickable(true);
         UserMapMarkerUpdater.requestPeriodicUpdates(this);
 
         // The user himself should always be drawn over anyone standing very close to him.
@@ -48,10 +52,10 @@ public class UserMapMarker {
 
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
+                Toast.makeText(GlobalContext.get(), "Overlay Clicked!", Toast.LENGTH_SHORT).show();
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
-
-                Marker m = marker.parentMap.addMarker(new MarkerOptions().position(marker.location));
-                //m.setVisible(false);
+                Marker m = marker.parentMap.addMarker(new MarkerOptions().position(marker.location).title("Hello"));
+                m.setVisible(false);
                 m.showInfoWindow();
             }
         });
