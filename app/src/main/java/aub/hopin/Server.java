@@ -552,6 +552,15 @@ public class Server {
         return getResponse(buildRequest("sendbundle", args));
     }
 
+    public static String leaveMessage(String email, String recipient, String message) throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("email", email);
+        args.put("recipient", recipient);
+        args.put("message", message);
+        args.put("ssid", ActiveUser.getSessionId());
+        return getResponse(buildRequest("leavemessage", args));
+    }
+
     public static String queryImageHash(String email) throws ConnectionFailureException {
         HashMap<String, String> args = new HashMap<>();
         args.put("email", email);
