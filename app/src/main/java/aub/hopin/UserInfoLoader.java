@@ -51,7 +51,7 @@ public class UserInfoLoader implements Runnable {
             info.poBox = response.get("pobox");
             info.showingAddress = response.get("showaddress").equals("1");
             info.showingPhone = response.get("showphone").equals("1");
-            info.active = response.get("active").equals("1");
+            //info.active = response.get("active").equals("1");
 
             info.latitude = Double.parseDouble(response.get("latitude"));
             info.longitude = Double.parseDouble(response.get("longitude"));

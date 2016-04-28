@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 public class MainMap extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -68,11 +69,21 @@ public class MainMap extends AppCompatActivity implements
     private GoogleApiClient apiClient;
 
     private Timer markerUpdater = new Timer();
-    private boolean zoomedInYet = false;
+
+    // The user markers that appear on the map.
     private HashMap<String, UserMapMarker> markers = new HashMap<>();
+    private Semaphore markersSemaphore = new Semaphore(1);
+
+    // The destination markers that appear on the map.
     private HashMap<String, UserMapDestinationMarker> destinationMarkers = new HashMap<>();
+    private Semaphore destinationMarkersSemaphore = new Semaphore(1);
+
     private boolean currentlySettingDestination = false;
     private boolean currentlySettingMarkers = false;
+
+    public boolean isShowingDestinationSetter() {
+        return currentlySettingDestination;
+    }
 
     private ImageView slideMenuProfileImage;
     private TextView slideMenuUserName;
@@ -94,8 +105,9 @@ public class MainMap extends AppCompatActivity implements
         return requestOrOfferButton;
     }
 
+    // Sets the one and only email of the active destination marker that
+    // the user can see at the current time besides his own.
     private String showingDestinationMarkerFor = "";
-
     public void setShowingDestinationMarker(String email) {
         showingDestinationMarkerFor = email;
         updateUI();
@@ -103,15 +115,17 @@ public class MainMap extends AppCompatActivity implements
 
     // This will run whenever the application gets a location update
     // from the google service.
+    private boolean zoomedInYet = false;
     public void onLocationChanged(Location loc) {
         if (loc == null) return;
-        //Toast.makeText(MainMap.this, "Updated location: " + loc.getLatitude() + " " + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+
         LocationSender.setCurrentLocation(loc);
+
         if (!zoomedInYet && googleMap != null) {
             zoomedInYet = true;
             LatLng target = new LatLng(loc.getLatitude(), loc.getLongitude());
             CameraPosition.Builder builder = new CameraPosition.Builder();
-            builder.zoom(15);
+            builder.zoom(17);
             builder.target(target);
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
         }
@@ -154,33 +168,7 @@ public class MainMap extends AppCompatActivity implements
         }
     }
 
-    private void switchToDriver() {
-        switchToPassive();
-        userModeButton.setText("Driver");
-        userModeButton.setBackgroundResource(R.color.colorOrange);
-    }
-
-    private void switchToPassenger() {
-        switchToPassive();
-        userModeButton.setText("Passenger");
-        userModeButton.setBackgroundResource(R.color.colorBlue);
-    }
-
-    private void switchToPassive() {
-        userStateButton.setText("Passive");
-        userStateButton.setBackgroundResource(R.color.colorGrey);
-    }
-
-    private void switchToOffering() {
-        userStateButton.setText("Offering");
-        userStateButton.setBackgroundResource(R.color.colorGreen);
-    }
-
-    private void switchToWanting() {
-        userStateButton.setText("Wanting");
-        userStateButton.setBackgroundResource(R.color.colorRed);
-    }
-
+    // Slides down the 'Hold Destination' bar.
     private void dropDownSelectDestination() {
         final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -191,41 +179,67 @@ public class MainMap extends AppCompatActivity implements
         selectDestination.startAnimation(slide_down);
         slide_down.setFillAfter(true);
         currentlySettingDestination = true;
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
+    // Slides up the 'Hold Destination' bar.
+    private void slideUpSelectDestination() {
+        final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+        selectDestination.startAnimation(slide_up);
+        slide_up.setFillAfter(true);
+        currentlySettingDestination = false;
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    // Updates the User interface.
     private void updateUI() {
         UserInfo info = ActiveUser.getInfo();
         if (info == null) return;
 
+        // Refresh the user interface according to the
+        // user information mode.
         switch (info.mode) {
             case DriverMode:
-                switchToDriver();
+                userStateButton.setText("Passive");
+                userStateButton.setBackgroundResource(R.color.colorGrey);
+                userModeButton.setText("Driver");
+                userModeButton.setBackgroundResource(R.color.colorOrange);
                 break;
             case PassengerMode:
-                switchToPassenger();
+                userStateButton.setText("Passive");
+                userStateButton.setBackgroundResource(R.color.colorGrey);
+                userModeButton.setText("Passenger");
+                userModeButton.setBackgroundResource(R.color.colorBlue);
                 break;
         }
 
+        // Refresh the user interface according to the
+        // user information state.
         switch (info.state) {
             case Passive:
-                switchToPassive();
+                userStateButton.setText("Passive");
+                userStateButton.setBackgroundResource(R.color.colorGrey);
                 break;
             case Offering:
-                switchToOffering();
+                userStateButton.setText("Offering");
+                userStateButton.setBackgroundResource(R.color.colorGreen);
                 break;
             case Wanting:
-                switchToWanting();
+                userStateButton.setText("Wanting");
+                userStateButton.setBackgroundResource(R.color.colorRed);
                 break;
         }
 
+        // Setup the slide menu information.
         slideMenuProfileImage.setImageBitmap(info.getProfileImage());
         slideMenuUserName.setText(info.firstName + " " + info.lastName);
         slideMenuUserEmail.setText(info.email);
 
+        // Setup the visibility of all the destination markers.
+        try { destinationMarkersSemaphore.acquire(); } catch (InterruptedException e) {}
         for (String email : destinationMarkers.keySet()) {
             UserMapDestinationMarker marker = destinationMarkers.get(email);
             if (marker == null) continue;
-            if (email == null) continue;
 
             if (email.equals(showingDestinationMarkerFor) || email.equals(info.email)) {
                 marker.showMarker();
@@ -233,6 +247,7 @@ public class MainMap extends AppCompatActivity implements
                 marker.hideMarker();
             }
         }
+        destinationMarkersSemaphore.release();
     }
 
     private boolean sendingStateModeChange = false;
@@ -269,14 +284,14 @@ public class MainMap extends AppCompatActivity implements
             } else {
                 info.mode = mode;
                 info.state = state;
+                boolean needsDest = (mode == UserMode.PassengerMode && state == UserState.Wanting);
+                needsDest = needsDest || (mode == UserMode.DriverMode && state == UserState.Offering);
+                if (needsDest) {
+                    dropDownSelectDestination();
+                }
                 updateUI();
             }
             sendingStateModeChange = false;
-            boolean needsDest = (mode == UserMode.PassengerMode && state == UserState.Wanting);
-            needsDest = needsDest || (mode == UserMode.DriverMode    && state == UserState.Offering);
-            if (needsDest) {
-                dropDownSelectDestination();
-            }
         }
     }
 
@@ -322,11 +337,11 @@ public class MainMap extends AppCompatActivity implements
                     case PassengerMode:
                         switch (info.state) {
                             case Wanting:
-                                if (destinationMarkers.containsKey(info.email)) {
-                                    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
-                                    destinationMarker.destroy();
-                                    destinationMarkers.remove(info.email);
-                                }
+                                //if (destinationMarkers.containsKey(info.email)) {
+                                //    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
+                                //    destinationMarker.destroy();
+                                //    destinationMarkers.remove(info.email);
+                                //}
                                 new AsyncStateModeChange(UserMode.PassengerMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
@@ -337,11 +352,11 @@ public class MainMap extends AppCompatActivity implements
                     case DriverMode:
                         switch (info.state) {
                             case Offering:
-                                if (destinationMarkers.containsKey(info.email)) {
-                                    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
-                                    destinationMarker.destroy();
-                                    destinationMarkers.remove(info.email);
-                                }
+                                //if (destinationMarkers.containsKey(info.email)) {
+                                //    UserMapDestinationMarker destinationMarker = destinationMarkers.get(info.email);
+                                //    destinationMarker.destroy();
+                                //    destinationMarkers.remove(info.email);
+                                //}
                                 new AsyncStateModeChange(UserMode.DriverMode, UserState.Passive).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 break;
                             case Passive:
@@ -389,7 +404,6 @@ public class MainMap extends AppCompatActivity implements
         }
         sFm.beginTransaction().show(supportMapFragment).commit();
 
-        markerUpdater = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
                 if (currentlySettingMarkers) return;
@@ -408,6 +422,7 @@ public class MainMap extends AppCompatActivity implements
                         UserInfo info = UserInfoFactory.get(email, true);
                         if (info == null) continue;
 
+                        try { markersSemaphore.acquire(); } catch (InterruptedException e) {}
                         if (!markers.containsKey(email)) {
                             final String e = email;
                             MainMap.this.runOnUiThread(new Runnable() {
@@ -418,7 +433,9 @@ public class MainMap extends AppCompatActivity implements
                                 }
                             });
                         }
+                        markersSemaphore.release();
 
+                        try { destinationMarkersSemaphore.acquire(); } catch (InterruptedException e) {}
                         if (!destinationMarkers.containsKey(email) && info.hasDestination) {
                             final String e = email;
                             MainMap.this.runOnUiThread(new Runnable() {
@@ -432,6 +449,7 @@ public class MainMap extends AppCompatActivity implements
                                 }
                             });
                         }
+                        destinationMarkersSemaphore.release();
                     }
 
                     new Handler(Looper.getMainLooper()).post(
@@ -442,6 +460,8 @@ public class MainMap extends AppCompatActivity implements
                             });
 
                     // Remove the markers for the users who are no longer of interest.
+                    try { markersSemaphore.acquire();
+                          destinationMarkersSemaphore.acquire(); } catch (InterruptedException e) {}
                     ArrayList<String> toRemoveMarkers = new ArrayList<>();
                     ArrayList<String> toRemoveDestMarkers = new ArrayList<>();
                     for (String email : markers.keySet()) {
@@ -474,8 +494,9 @@ public class MainMap extends AppCompatActivity implements
                         marker.destroy();
                         destinationMarkers.remove(email);
                     }
+                    markersSemaphore.release();
+                    destinationMarkersSemaphore.release();
                 } catch (ConnectionFailureException e) {}
-
                 currentlySettingMarkers = false;
             }
         };
@@ -488,7 +509,7 @@ public class MainMap extends AppCompatActivity implements
                 .build();
 
         LocationSender.start();
-        //MessagesHandler.start();
+        MessagesHandler.start();
     }
 
     public void onStart() {
@@ -505,17 +526,10 @@ public class MainMap extends AppCompatActivity implements
         }
     }
 
-    public void onConnectionSuspended(int i) {
-        //Toast.makeText(MainMap.this, "Connection to API client suspended", Toast.LENGTH_SHORT).show();
-    }
-
     public void onConnected(Bundle bundle) {
-        //Toast.makeText(MainMap.this, "Connected to API client", Toast.LENGTH_SHORT).show();
-
         LocationRequest request = new LocationRequest();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setInterval(500);
-
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, request, this);
         } catch (SecurityException e) {
@@ -523,9 +537,9 @@ public class MainMap extends AppCompatActivity implements
         }
     }
 
-    public void onConnectionFailed(ConnectionResult result) {
-        //Toast.makeText(MainMap.this, "Connection to API client failed.", Toast.LENGTH_SHORT).show();
-    }
+    // These will not be implemented.
+    public void onConnectionSuspended(int i) {}
+    public void onConnectionFailed(ConnectionResult result) {}
 
     private class AsyncLogout extends AsyncTask<Void, Void, Void> {
         protected void onPreExecute() {
@@ -547,48 +561,62 @@ public class MainMap extends AppCompatActivity implements
         if (supportMapFragment.isAdded())
             sFm.beginTransaction().hide(supportMapFragment).commit();
 
-        if (id == R.id.nav_settings) {
-            startActivity(new Intent(MainMap.this, Settings.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(MainMap.this, ProfileSettings.class);
-            intent.putExtra("email", ActiveUser.getEmail());
-            startActivity(intent);
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_feedback) {
-            startActivity(new Intent(MainMap.this, FeedbackSettings.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_vehicle_type) {
-            startActivity(new Intent(MainMap.this, CarInfoSettings.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_help) {
-            startActivity(new Intent(MainMap.this, Help.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_about) {
-            startActivity(new Intent(MainMap.this, About.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_terms_conditions) {
-            startActivity(new Intent(MainMap.this, TermsAndConditions.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_contact_info) {
-            startActivity(new Intent(MainMap.this, ContactInfoSettings.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_ride_preferences) {
-            startActivity(new Intent(MainMap.this, RidePreferences.class));
-            sFm.beginTransaction().show(supportMapFragment).commit();
-        } else if (id == R.id.nav_logout) {
-            if (markerUpdater != null) markerUpdater.cancel();
-            //MessagesHandler.stop();
-            UserMapMarkerUpdater.stop();
-            UserInfoUpdater.stop();
-            LocationSender.stop();
-            SlideMenuUpdater.stop();
-            UserInfoFactory.clear();
-            UserInfoUpdater.clear();
-            SessionLoader.clean();
-            new AsyncLogout().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            finish();
+        switch (id) {
+            case R.id.nav_settings:
+                startActivity(new Intent(MainMap.this, Settings.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_profile:
+                Intent intent = new Intent(MainMap.this, ProfileSettings.class);
+                intent.putExtra("email", ActiveUser.getEmail());
+                startActivity(intent);
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_feedback:
+                startActivity(new Intent(MainMap.this, FeedbackSettings.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_vehicle_type:
+                startActivity(new Intent(MainMap.this, CarInfoSettings.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_help:
+                startActivity(new Intent(MainMap.this, Help.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_about:
+                startActivity(new Intent(MainMap.this, About.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_terms_conditions:
+                startActivity(new Intent(MainMap.this, TermsAndConditions.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_contact_info:
+                startActivity(new Intent(MainMap.this, ContactInfoSettings.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_ride_preferences:
+                startActivity(new Intent(MainMap.this, RidePreferences.class));
+                sFm.beginTransaction().show(supportMapFragment).commit();
+                break;
+            case R.id.nav_logout:
+                if (markerUpdater != null) markerUpdater.cancel();
+
+                MessagesHandler.stop();
+                UserMapMarkerUpdater.stop();
+                UserInfoUpdater.stop();
+                LocationSender.stop();
+                SlideMenuUpdater.stop();
+                UserInfoFactory.clear();
+                UserInfoUpdater.clear();
+                SessionLoader.clean();
+
+                new AsyncLogout().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                finish();
+                break;
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -601,12 +629,14 @@ public class MainMap extends AppCompatActivity implements
         }
     }
 
+    // Updates the available map gestures.
     public void updateMapUiSettings() {
         googleMap.getUiSettings().setRotateGesturesEnabled(LocalUserPreferences.getRotateMap());
         googleMap.getUiSettings().setTiltGesturesEnabled(LocalUserPreferences.getTiltMap());
         googleMap.getUiSettings().setZoomGesturesEnabled(LocalUserPreferences.getZoomMap());
     }
 
+    // This will execute when the map is ready.
     public void onMapReady(GoogleMap map) {
         googleMap = map;
 
@@ -623,10 +653,8 @@ public class MainMap extends AppCompatActivity implements
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             public void onMapLongClick(LatLng latLng) {
                 if (currentlySettingDestination) {
-                    final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-                    selectDestination.startAnimation(slide_up);
+                    slideUpSelectDestination();
                     new AsyncSendDestination(ActiveUser.getInfo(), latLng.latitude, latLng.longitude).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    currentlySettingDestination = false;
                 }
             }
         });

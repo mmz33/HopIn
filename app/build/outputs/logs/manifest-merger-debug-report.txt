@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:2:1-182:12
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:2:1-183:12
 	package
 		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:3:5-24
 		INJECTED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml
@@ -72,20 +72,24 @@ uses-permission#com.aub.hopin.permission.MAPS_RECEIVE
 ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:14:5-77
 	android:name
 		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:14:22-74
+uses-permission#android.permission.CALL_PHONE
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:15:5-85
+	android:name
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:15:22-66
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:21:5-79
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:21:22-76
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:22-76
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:5-80
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:23:5-80
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:22:22-78
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:23:22-78
 supports-screens
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:24:5-53
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:25:5-53
 	android:largeScreens
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:24:23-50
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:25:23-50
 application
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:29:5-180:19
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:30:5-181:19
 MERGED from [com.android.support:appcompat-v7:23.2.1] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-v4:23.2.1] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:animated-vector-drawable:23.2.1] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/AndroidManifest.xml:7:5-20
@@ -212,91 +216,91 @@ MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Deskto
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.2.1] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:32:9-41
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:33:9-41
 	android:supportsRtl
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:33:9-35
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:34:9-35
 	android:allowBackup
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:30:9-35
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:31:9-35
 	android:icon
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:31:9-38
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:32:9-38
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:34:9-40
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:35:9-40
 activity#aub.hopin.SignPage
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:35:9-45:20
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:36:9-46:20
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:38:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:39:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:37:13-45
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:38:13-45
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:39:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:40:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:36:13-37
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:37:13-37
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:40:13-44:29
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:41:13-45:29
 action#android.intent.action.MAIN
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:41:17-69
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:42:17-69
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:41:25-66
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:42:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:43:17-77
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:44:17-77
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:43:27-74
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:44:27-74
 activity#aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:46:9-50:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:47:9-51:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:49:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:50:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:48:13-59
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:49:13-59
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:50:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:51:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:47:13-35
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:48:13-35
 intent-filter#android.intent.category.DEFAULT+aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:52:9-56:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:53:9-57:25
 action#aub.hopin.SignIn
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:53:13-55
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:54:13-55
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:53:21-52
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:54:21-52
 category#android.intent.category.DEFAULT
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:55:13-72
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:56:13-72
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:55:23-69
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:56:23-69
 activity#aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:58:9-63:57
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:59:9-64:57
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:61:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:62:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:60:13-59
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:61:13-59
 	android:windowSoftInputMode
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:63:13-54
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:64:13-54
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:62:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:63:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:59:13-35
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:60:13-35
 intent-filter#android.intent.category.DEFAULT+aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:65:9-69:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:66:9-70:25
 action#aub.hopin.SignUp
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:66:13-55
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:67:13-55
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:66:21-52
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:67:21-52
 activity#aub.hopin.SignUpConfirm
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:71:9-75:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:72:9-76:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:74:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:75:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:73:13-42
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:74:13-42
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:75:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:76:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:72:13-42
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:73:13-42
 meta-data#com.google.android.geo.API_KEY
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:85:9-87:55
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:86:9-88:55
 	android:value
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:87:13-52
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:88:13-52
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:86:13-58
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:87:13-58
 meta-data#com.google.android.gms.version
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:88:9-90:69
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:89:9-91:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
@@ -332,168 +336,168 @@ MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/De
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:90:13-66
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:91:13-66
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:89:13-58
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:90:13-58
 uses-feature#0x00020000
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:92:9-94:39
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:93:9-95:39
 MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/AndroidManifest.xml:22:5-24:33
 MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/AndroidManifest.xml:22:5-24:33
 MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/AndroidManifest.xml:22:5-24:33
 MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/AndroidManifest.xml:22:5-24:33
 MERGED from [com.google.android.gms:play-services-maps:8.4.0] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/AndroidManifest.xml:22:5-24:33
 	android:glEsVersion
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:93:13-45
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:94:13-45
 	android:required
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:94:13-36
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:95:13-36
 activity#aub.hopin.ContactInfoSettings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:96:9-101:57
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:97:9-102:57
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:99:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:100:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:98:13-71
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:99:13-71
 	android:windowSoftInputMode
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:101:13-54
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:102:13-54
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:100:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:101:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:97:13-48
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:98:13-48
 activity#aub.hopin.CarInfoSettings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:102:9-107:57
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:103:9-108:57
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:105:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:106:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:104:13-55
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:105:13-55
 	android:windowSoftInputMode
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:107:13-54
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:108:13-54
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:106:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:107:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:103:13-44
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:104:13-44
 activity#aub.hopin.ProfileSettings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:108:9-112:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:109:9-113:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:111:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:112:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:110:13-59
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:111:13-59
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:112:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:113:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:109:13-44
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:110:13-44
 activity#aub.hopin.FeedbackSettings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:113:9-117:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:114:9-118:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:116:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:117:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:115:13-60
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:116:13-60
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:117:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:118:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:114:13-45
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:115:13-45
 activity#aub.hopin.SendFeedback
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:118:9-122:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:119:9-123:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:121:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:122:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:120:13-65
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:121:13-65
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:122:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:123:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:119:13-41
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:120:13-41
 activity#aub.hopin.ReportProblem
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:123:9-127:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:124:9-128:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:126:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:127:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:125:13-66
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:126:13-66
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:127:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:128:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:124:13-42
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:125:13-42
 intent-filter#android.intent.category.DEFAULT+aub.hopin.Map2Activity
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:129:9-133:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:130:9-134:25
 action#aub.hopin.Map2Activity
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:130:13-61
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:131:13-61
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:130:21-58
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:131:21-58
 intent-filter#android.intent.category.DEFAULT+aub.hopin.SwipeLeft
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:134:9-138:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:135:9-139:25
 action#aub.hopin.SwipeLeft
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:135:13-58
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:136:13-58
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:135:21-55
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:136:21-55
 intent-filter#android.intent.category.DEFAULT+aub.hopin.MapsActivity
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:139:9-143:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:140:9-144:25
 action#aub.hopin.MapsActivity
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:140:13-61
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:141:13-61
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:140:21-58
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:141:21-58
 intent-filter#android.intent.category.DEFAULT+aub.hopin.Settings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:144:9-148:25
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:145:9-149:25
 action#aub.hopin.Settings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:145:13-57
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:146:13-57
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:145:21-54
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:146:21-54
 activity#aub.hopin.MainMap
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:150:9-154:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:151:9-155:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:153:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:154:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:152:13-38
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:153:13-38
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:154:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:155:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:151:13-36
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:152:13-36
 activity#aub.hopin.Help
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:155:9-159:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:156:9-160:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:158:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:159:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:157:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:158:13-56
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:159:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:160:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:156:13-33
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:157:13-33
 activity#aub.hopin.About
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:160:9-164:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:161:9-165:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:163:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:164:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:162:13-57
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:163:13-57
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:164:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:165:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:161:13-34
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:162:13-34
 activity#aub.hopin.TermsAndConditions
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:165:9-169:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:166:9-170:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:168:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:169:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:167:13-72
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:168:13-72
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:169:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:170:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:166:13-47
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:167:13-47
 activity#aub.hopin.Settings
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:170:9-174:59
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:171:9-175:59
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:173:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:174:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:172:13-60
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:173:13-60
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:174:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:175:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:171:13-37
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:172:13-37
 activity#aub.hopin.RidePreferences
-ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:175:9-179:68
+ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:176:9-180:68
 	android:screenOrientation
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:178:13-49
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:179:13-49
 	android:label
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:177:13-68
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:178:13-68
 	android:theme
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:179:13-56
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:180:13-56
 	android:name
-		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:176:13-44
+		ADDED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml:177:13-44
 uses-sdk
 INJECTED from /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.2.1] /Users/cmps/Desktop/Zein El Deen/Bdeir/HopIn/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/AndroidManifest.xml:21:5-23:78

@@ -1,10 +1,14 @@
 package aub.hopin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.DialogPreference;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -41,7 +45,7 @@ public class UserMapMarker {
         this.location = new LatLng(userInfo.latitude, userInfo.longitude);
 
         GroundOverlayOptions options = new GroundOverlayOptions()
-                .position(this.location, 80f, 80f)
+                .position(this.location, 25f, 25f)
                 .image(getImageDescripter());
 
         this.overlay = parentMap.addGroundOverlay(options);
@@ -94,17 +98,127 @@ public class UserMapMarker {
         }
     }
 
+    private static boolean alertBoxBeingDisplayed = false;
+
+
     public static void init(GoogleMap map, final MainMap mainActivity) {
         if (map == null) return;
 
         mainAct = mainActivity;
+
+        MessagesHandler.registerOnMessageEvent(
+            new MessagesHandler.OnMessageWaiting() {
+                public void onMessage() {
+                    if (alertBoxBeingDisplayed) return;
+                    if (mainAct.isShowingDestinationSetter()) return;
+
+                    alertBoxBeingDisplayed = true;
+
+                    String messageInfo = MessagesHandler.pollMessage();
+                    final String sender = messageInfo.substring(0, messageInfo.indexOf(' '));
+                    final String content = messageInfo.substring(messageInfo.indexOf(' ') + 1);
+
+                    // content is either:
+                    //      OFFER, REQUEST, ACCEPT_OFFER, DECLINE_OFFER, ACCEPT_REQUEST, DECLINE_REQUEST
+
+                   new Handler(Looper.getMainLooper()).post(new Runnable() {
+                       @Override
+                       public void run() {
+                           UserInfo senderInfo = UserInfoFactory.get(sender);
+                           AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
+                           if(content.equals("OFFER")) {
+                               builder.setTitle("Offer from " + senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ")");
+                               builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                        new AsyncSendMessage(sender, "ACCEPT_OFFER").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       new AsyncSendMessage(sender, "DECLINE_OFFER").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                       dialog.cancel();
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.show();
+
+                           } else if(content.equals("REQUEST")) {
+                               builder.setTitle("Request from " + senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ")");
+                               builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       new AsyncSendMessage(sender, "ACCEPT_REQUEST").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       new AsyncSendMessage(sender, "DECLINE_REQUEST").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                       alertBoxBeingDisplayed = false;
+                                       dialog.cancel();
+                                   }
+                               });
+                               builder.show();
+                           } else if(content.equals("ACCEPT_OFFER")) {
+                               builder.setTitle(senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ") has accepted your offer!");
+                               builder.setMessage("Call on this number: " + senderInfo.phoneNumber);
+                               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       dialog.cancel();
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.show();
+
+                           } else if(content.equals("ACCEPT_REQUEST")) {
+                               builder.setTitle(senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ") has accepted your request!");
+                               builder.setMessage("Call on this number: " + senderInfo.phoneNumber);
+                               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       dialog.cancel();
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.show();
+                           } else if(content.equals("DECLINE_OFFER")) {
+                               builder.setTitle(senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ") has declined your offer!");
+                               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       dialog.cancel();
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.show();
+
+                           } else if(content.equals("DECLINE_REQUEST")) {
+                               builder.setTitle(senderInfo.firstName + " (" + senderInfo.email.substring(0, senderInfo.email.indexOf('@')) + ") has declined your request!");
+                               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       dialog.cancel();
+                                       alertBoxBeingDisplayed = false;
+                                   }
+                               });
+                               builder.show();
+                           }
+                       }
+                   });
+                }
+            });
 
         map.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
             public void onGroundOverlayClick(GroundOverlay groundOverlay) {
                 UserMapMarker marker = overlays.get(groundOverlay.getId());
                 String email = marker.getEmail();
                 if (email == null) return;
-                if (email == "") return;
+                if (email.equals("")) return;
 
                 UserInfo info = UserInfoFactory.get(email);
                 if (info == null) return;
@@ -129,7 +243,10 @@ public class UserMapMarker {
                 UserInfo me = ActiveUser.getInfo();
                 if (me == null) return;
 
-                if (me.mode == UserMode.DriverMode && info.mode == UserMode.PassengerMode) {
+                if (me.mode == UserMode.DriverMode && info.mode == UserMode.PassengerMode
+                        && me.state != UserState.Passive && info.state != UserState.Passive
+                        && me.phoneNumber.length() > 0 && info.phoneNumber.length() > 0)
+                {
                     mainAct.getProfileBarRequestButton().setText("Offer Ride!");
                     mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -139,7 +256,9 @@ public class UserMapMarker {
                             new AsyncSendMessage(currentlyConsidered.email, "OFFER").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     });
-                } else if (me.mode == UserMode.PassengerMode && info.mode == UserMode.DriverMode) {
+                } else if (me.mode == UserMode.PassengerMode && info.mode == UserMode.DriverMode
+                        && me.state != UserState.Passive && info.state != UserState.Passive
+                        && me.phoneNumber.length() > 0 && info.phoneNumber.length() > 0) {
                     mainAct.getProfileBarRequestButton().setText("Request Ride!");
                     mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -152,7 +271,8 @@ public class UserMapMarker {
                 } else {
                     mainAct.getProfileBarRequestButton().setText("");
                     mainAct.getProfileBarRequestButton().setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {}
+                        public void onClick(View v) {
+                        }
                     });
                 }
 
@@ -186,6 +306,10 @@ public class UserMapMarker {
     }
 
     private BitmapDescriptor getImageDescripter() {
+        if (userInfo.getProfileImage() == null) {
+            Bitmap bmp = ImageUtils.overlayRoundBorder(ResourceManager.getDefaultProfileImage(), ringColor());
+            return BitmapDescriptorFactory.fromBitmap(bmp);
+        }
         Bitmap bmp = ImageUtils.overlayRoundBorder(userInfo.getProfileImage(), ringColor());
         return BitmapDescriptorFactory.fromBitmap(bmp);
     }

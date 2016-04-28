@@ -88,7 +88,7 @@ public class SignPage extends AppCompatActivity {
             new AsyncAutologin(ssid, email).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             Toast.makeText(SignPage.this, "Logging in automatically...", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(SignPage.this, "No session found...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(SignPage.this, "No session found...", Toast.LENGTH_SHORT).show();
         }
 
         // Create buttons.

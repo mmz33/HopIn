@@ -1,15 +1,21 @@
 package aub.hopin;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-public class MessagesHandler {
+public abstract class MessagesHandler {
     private static ArrayList<String> messageQueue = new ArrayList<>();
     private static Semaphore semaphore = new Semaphore(1);
     private static Timer checkTimer = null;
+    private static ArrayList<OnMessageWaiting> callbacks = new ArrayList<>();
+
+    public interface OnMessageWaiting {
+        public void onMessage();
+    }
 
     public static void start() {
         checkTimer = new Timer();
@@ -28,12 +34,15 @@ public class MessagesHandler {
                         if (sender == null) continue;
                         String message = response.get(sender);
                         if (message == null) continue;
-                        try {
-                            semaphore.acquire();
-                        } catch (InterruptedException e) {
-                        }
+                        try { semaphore.acquire(); } catch (InterruptedException e) {}
                         messageQueue.add(sender + " " + message);
                         semaphore.release();
+                    }
+
+                    if (anyMessages()) {
+                        for (OnMessageWaiting f : callbacks) {
+                            f.onMessage();
+                        }
                     }
                 } catch (ConnectionFailureException e) {
                 }
@@ -64,5 +73,9 @@ public class MessagesHandler {
         }
         semaphore.release();
         return result;
+    }
+
+    public static void registerOnMessageEvent(OnMessageWaiting f) {
+        callbacks.add(f);
     }
 }

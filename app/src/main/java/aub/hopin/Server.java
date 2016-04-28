@@ -34,6 +34,29 @@ public class Server {
         return "http://" + URL_ADDRESS;
     }
 
+    /**
+     * Determines if a string is an integer.
+     *
+     * @param s     the input string
+     * @return      true if s is an integer, false otherwise
+     */
+    private static boolean isInteger(String s) {
+        if (s == null) return false;
+        if (s.length() == 0) return false;
+        int start = 0;
+        if (s.charAt(0) == '-') {
+            if (s.length() == 1)
+                return false;
+            else
+                start = 1;
+        }
+        for (int i = start; i < s.length(); ++i) {
+            if (!Character.isDigit(s.charAt(i)))
+                return false;
+        }
+        return true;
+    }
+
     // Constructs a request url.
     private static String buildRequest(String name, HashMap<String, String> args) {
         try {
@@ -107,16 +130,26 @@ public class Server {
         String contents = readContents(stream);
         Scanner scanner = new Scanner(contents);
         ArrayList<HashMap<String, String>> result = new ArrayList<>();
-        int count = Integer.parseInt(scanner.nextLine());
-        for (int i = 0; i < count; ++i) {
-            int xi = Integer.parseInt(scanner.nextLine());
-            HashMap<String, String> hmap = new HashMap<>();
-            for (int j = 0; j < xi; ++j) {
-                String key = scanner.nextLine();
-                String value = scanner.nextLine();
-                hmap.put(key, value);
+        if (scanner.hasNextLine()) {
+            String countString = scanner.nextLine();
+            if (isInteger(countString)) {
+                int count = Integer.parseInt(countString);
+                for (int i = 0; i < count; ++i) {
+                    try {
+                        int xi = Integer.parseInt(scanner.nextLine());
+                        HashMap<String, String> hmap = new HashMap<>();
+                        for (int j = 0; j < xi; ++j) {
+                            String key = scanner.nextLine();
+                            String value = scanner.nextLine();
+                            hmap.put(key, value);
+                        }
+                        result.add(hmap);
+                    } catch (NumberFormatException nfe) {
+                        result = new ArrayList<>();
+                        break;
+                    }
+                }
             }
-            result.add(hmap);
         }
         scanner.close();
         return result;
@@ -494,17 +527,18 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", ActiveUser.getSessionId());
         args.put("email", ActiveUser.getEmail());
-
-        ArrayList<HashMap<String, String>> response = getResponseListMap(buildRequest("queryinteresting", args));
+        ArrayList<String> response = getResponseList(buildRequest("queryinteresting", args));
         if (response == null) return new ArrayList<>();
+        return response;
+    }
 
-        ArrayList<String> emails = new ArrayList<>();
-        for (int i = 0; i < response.size(); ++i) {
-            String email = response.get(i).get("email");
-            emails.add(email);
-        }
-
-        return emails;
+    public static ArrayList<String> queryActive() throws ConnectionFailureException {
+        HashMap<String, String> args = new HashMap<>();
+        args.put("ssid", ActiveUser.getSessionId());
+        args.put("email", ActiveUser.getEmail());
+        ArrayList<String> response = getResponseList(buildRequest("queryactive", args));
+        if (response == null) return new ArrayList<>();
+        return response;
     }
 
     // This will get all the users from the server.
@@ -512,7 +546,9 @@ public class Server {
         HashMap<String, String> args = new HashMap<>();
         args.put("ssid", ActiveUser.getSessionId());
         args.put("email", ActiveUser.getEmail());
-        return getResponseList(buildRequest("queryallusers", args));
+        ArrayList<String> response = getResponseList(buildRequest("queryallusers", args));
+        if (response == null) return new ArrayList<>();
+        return response;
     }
 
     public static HashMap<String, String> queryUserInfo(String email) throws ConnectionFailureException {

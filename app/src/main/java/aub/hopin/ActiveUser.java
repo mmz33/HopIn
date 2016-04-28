@@ -7,7 +7,7 @@ public class ActiveUser {
     /**
      * Returns the information object of the
      * active user.
-     * @return
+     * @return  the information object of the active user.
      */
     public static UserInfo getInfo() {
         return info;

@@ -38,7 +38,7 @@ public class UserInfo {
 
     public double longitude = 0.0;
     public double latitude  = 0.0;
-    public boolean active   = true;
+    //public boolean active   = true;
 
     public double curDestinationLatitude = 0.0;
     public double curDestinationLongitude = 0.0;

@@ -23,10 +23,17 @@ public class UserMapDestinationMarker {
         this.latLng = lt;
         this.parentMap = map;
         this.userInfo = UserInfoFactory.get(email);
-        this.marker = parentMap.addMarker(new MarkerOptions().position(this.latLng));
 
         if (userInfo != null) {
-            this.marker.setTitle(userInfo.firstName + "'s Destination");
+            new Handler(Looper.getMainLooper()).post(
+                    new Runnable() {
+                        public void run() {
+                            marker = parentMap.addMarker(new MarkerOptions().position(latLng));
+                            marker.setTitle(userInfo.firstName + "'s Destination");
+                            marker.setVisible(false);
+                            marker.showInfoWindow();
+                        }
+                    });
         }
     }
 

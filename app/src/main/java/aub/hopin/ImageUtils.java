@@ -80,15 +80,16 @@ public class ImageUtils {
     public static Bitmap overlayRoundBorder(Bitmap bitmap, String colorHex) {
         Bitmap border = makeRoundBorder(bitmap, colorHex);
         Bitmap result = Bitmap.createBitmap(border.getWidth(), border.getHeight(), border.getConfig());
+        Bitmap mmm = makeRounded(bitmap);
 
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
         paint.setAntiAlias(true);
         Canvas canvas = new Canvas(result);
 
-        float left = canvas.getWidth()/2.0f  - bitmap.getWidth()/2.0f;
-        float top  = canvas.getHeight()/2.0f - bitmap.getHeight()/2.0f;
-        canvas.drawBitmap(bitmap, left, top, paint);
+        float left = canvas.getWidth()/2.0f  - mmm.getWidth()/2.0f;
+        float top  = canvas.getHeight()/2.0f - mmm.getHeight()/2.0f;
+        canvas.drawBitmap(mmm, left, top, paint);
 
         canvas.drawBitmap(border, new Matrix(), paint);
 
