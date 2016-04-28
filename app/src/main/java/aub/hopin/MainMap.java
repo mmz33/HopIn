@@ -410,7 +410,7 @@ public class MainMap extends AppCompatActivity implements
                 currentlySettingMarkers = true;
 
                 try {
-                    ArrayList<String> activeUsers = Server.queryUsersOfInterest();
+                    ArrayList<String> activeUsers = Server.queryActive();
 
                     Log.e("users", "There are " + activeUsers.size() + " users of interest.");
                     for (int i = 0; i < activeUsers.size(); ++i) {
